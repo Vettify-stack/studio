@@ -50,11 +50,11 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const [activePath, setActivePath] = useState(pathname);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setActivePath(pathname);
-  }, [pathname]);
+    setIsMounted(true);
+  }, []);
 
 
   const getPageTitle = () => {
@@ -84,6 +84,11 @@ export default function DashboardLayout({
 
   if (!showSidebar) {
     return <>{children}</>;
+  }
+
+  if (!isMounted) {
+    // Render a skeleton or null during SSR to avoid hydration mismatch
+    return null;
   }
   
   return (
