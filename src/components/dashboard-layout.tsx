@@ -56,11 +56,14 @@ export default function DashboardLayout({
     setIsMounted(true);
   }, []);
 
-
   const getPageTitle = () => {
+    // Since page.tsx now renders the Admin Dashboard, we can simplify this.
+    // The title can be made more dynamic later based on the selected view.
+    if (pathname === '/') {
+      return 'Super Admin Dashboard';
+    }
+
     switch (pathname) {
-      case '/':
-        return 'Company Dashboard';
       case '/fleet':
         return 'Fleet Dashboard';
       case '/alerts':
@@ -69,7 +72,7 @@ export default function DashboardLayout({
         return 'Dispute Management';
       case '/driver':
         return 'Driver Dashboard';
-       case '/admin':
+      case '/admin':
         return 'Admin Dashboard';
       case '/training':
         return 'Training & Jobs';
@@ -90,7 +93,7 @@ export default function DashboardLayout({
     // Render a skeleton or null during SSR to avoid hydration mismatch
     return null;
   }
-  
+
   return (
     <SidebarProvider defaultOpen>
       <Sidebar>
@@ -107,22 +110,10 @@ export default function DashboardLayout({
         </SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
-             <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname === '/admin'}
-                tooltip={{ children: 'Super Admin' }}
-              >
-                <Link href="/admin">
-                  <ShieldHalf />
-                  <span>Super Admin</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={pathname === '/'}
+                isActive={pathname === '/' || pathname === '/admin'}
                 tooltip={{ children: 'Dashboard' }}
               >
                 <Link href="/">
@@ -131,39 +122,7 @@ export default function DashboardLayout({
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
-             <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname === '/driver'}
-                tooltip={{ children: 'Driver' }}
-              >
-                <Link href="/driver">
-                  <User />
-                  Driver Dashboard
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
             <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname === '/fleet'}
-                tooltip={{ children: 'Fleet' }}
-              >
-                <Link href="/fleet">
-                  <Users />
-                  Fleet View
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip={{ children: 'Vehicles' }}>
-                <Link href="#">
-                  <Car />
-                  Vehicles
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
                 isActive={pathname === '/alerts'}
@@ -229,13 +188,16 @@ export default function DashboardLayout({
                 className="flex items-center justify-start gap-2 w-full px-2"
               >
                 <Avatar className="h-8 w-8">
-                  <AvatarImage src="https://placehold.co/100x100.png" data-ai-hint="person portrait" />
-                  <AvatarFallback>VO</AvatarFallback>
+                  <AvatarImage
+                    src="https://placehold.co/100x100.png"
+                    data-ai-hint="person portrait"
+                  />
+                  <AvatarFallback>SA</AvatarFallback>
                 </Avatar>
                 <div className="text-left group-data-[collapsible=icon]:hidden">
-                  <p className="font-medium text-sm">Vehicle Owner</p>
+                  <p className="font-medium text-sm">Super Admin</p>
                   <p className="text-xs text-muted-foreground">
-                    owner@email.com
+                    admin@vettify.io
                   </p>
                 </div>
               </Button>
@@ -263,7 +225,9 @@ export default function DashboardLayout({
       <SidebarInset>
         <header className="sticky top-0 z-10 flex h-16 items-center justify-between gap-4 border-b bg-background/95 px-6 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <SidebarTrigger className="md:hidden" />
-          <h1 className="text-xl font-semibold hidden md:block">{getPageTitle()}</h1>
+          <h1 className="text-xl font-semibold hidden md:block">
+            {getPageTitle()}
+          </h1>
           <div className="flex items-center gap-4">
             <DataUploadDialog />
           </div>

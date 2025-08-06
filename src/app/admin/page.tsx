@@ -5,6 +5,13 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { ShieldCheck, Users, BarChart2 } from 'lucide-react';
 
 export default function AdminDashboardPage() {
@@ -12,13 +19,30 @@ export default function AdminDashboardPage() {
     <div className="flex flex-col gap-6">
       <Card>
         <CardHeader>
-          <div className="flex items-center gap-4">
-            <ShieldCheck className="w-8 h-8 text-primary" />
-            <div>
-              <CardTitle>Vettify Super Admin</CardTitle>
-              <CardDescription>
-                Platform-wide management and oversight.
-              </CardDescription>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <ShieldCheck className="w-8 h-8 text-primary" />
+              <div>
+                <CardTitle>Vettify Super Admin</CardTitle>
+                <CardDescription>
+                  Platform-wide management and oversight.
+                </CardDescription>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium text-muted-foreground">
+                Switch View:
+              </span>
+              <Select defaultValue="admin">
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Select a view" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="admin">Super Admin</SelectItem>
+                  <SelectItem value="company">Company View</SelectItem>
+                  <SelectItem value="driver">Driver View</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </CardHeader>
