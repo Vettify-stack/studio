@@ -283,7 +283,7 @@ export default function Telemedicine() {
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="consultation">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="h-auto">
             <TabsTrigger value="consultation">
               <Video className="mr-2 h-4 w-4" />
               Consult
