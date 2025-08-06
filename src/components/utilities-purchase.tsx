@@ -47,15 +47,35 @@ import { useToast } from '@/hooks/use-toast';
 
 const airtimeSchema = z.object({
   network: z.string().min(1, 'Please select a network provider'),
-  phoneNumber: z.string().regex(/^0\d{9}$/, 'Invalid phone number (e.g., 0821234567)'),
+  recipient: z.enum(['registered', 'alternative']),
+  phoneNumber: z.string().optional(),
   amount: z.string().min(1, 'Please select an amount'),
+}).refine((data) => {
+    if (data.recipient === 'alternative') {
+        return !!data.phoneNumber && /^0\d{9}$/.test(data.phoneNumber);
+    }
+    return true;
+    }, {
+    message: "A valid phone number (e.g., 0821234567) is required for alternative recipients.",
+    path: ['phoneNumber'],
 });
+
 
 const dataSchema = z.object({
   network: z.string().min(1, 'Please select a network provider'),
-  phoneNumber: z.string().regex(/^0\d{9}$/, 'Invalid phone number'),
+  recipient: z.enum(['registered', 'alternative']),
+  phoneNumber: z.string().optional(),
   bundle: z.string().min(1, 'Please select a bundle'),
+}).refine((data) => {
+    if (data.recipient === 'alternative') {
+        return !!data.phoneNumber && /^0\d{9}$/.test(data.phoneNumber);
+    }
+    return true;
+    }, {
+    message: "A valid phone number (e.g., 0821234567) is required for alternative recipients.",
+    path: ['phoneNumber'],
 });
+
 
 const electricitySchema = z.object({
   meterNumber: z.string().min(6, 'Invalid meter number'),
@@ -75,18 +95,21 @@ export default function UtilitiesPurchase() {
   
   const airtimeForm = useForm<z.infer<typeof airtimeSchema>>({
     resolver: zodResolver(airtimeSchema),
-    defaultValues: { network: '', phoneNumber: '', amount: '' },
+    defaultValues: { network: '', recipient: 'registered', phoneNumber: '', amount: '' },
   });
   
   const dataForm = useForm<z.infer<typeof dataSchema>>({
     resolver: zodResolver(dataSchema),
-    defaultValues: { network: '', phoneNumber: '', bundle: '' },
+    defaultValues: { network: '', recipient: 'registered', phoneNumber: '', bundle: '' },
   });
 
   const electricityForm = useForm<z.infer<typeof electricitySchema>>({
     resolver: zodResolver(electricitySchema),
     defaultValues: { meterNumber: '', amount: '' },
   });
+
+  const airtimeRecipient = airtimeForm.watch('recipient');
+  const dataRecipient = dataForm.watch('recipient');
 
   const handlePurchase = async (type: 'Airtime' | 'Data' | 'Electricity', data: any) => {
     setIsLoading(true);
@@ -199,18 +222,41 @@ export default function UtilitiesPurchase() {
                 />
                 <FormField
                   control={airtimeForm.control}
-                  name="phoneNumber"
+                  name="recipient"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Phone Number</FormLabel>
-                      <FormControl>
-                        <Input placeholder="0821234567" {...field} />
-                      </FormControl>
-                      <FormDescription>Enter the number to top-up.</FormDescription>
+                      <FormLabel>Send to</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a recipient" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="registered">Registered Number</SelectItem>
+                          <SelectItem value="alternative">Alternative Number</SelectItem>
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
+                {airtimeRecipient === 'alternative' && (
+                  <FormField
+                    control={airtimeForm.control}
+                    name="phoneNumber"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Phone Number</FormLabel>
+                        <FormControl>
+                          <Input placeholder="0821234567" {...field} />
+                        </FormControl>
+                        <FormDescription>Enter the number to top-up.</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
                 <FormField
                   control={airtimeForm.control}
                   name="amount"
@@ -270,18 +316,41 @@ export default function UtilitiesPurchase() {
                 />
                 <FormField
                   control={dataForm.control}
-                  name="phoneNumber"
+                  name="recipient"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Phone Number</FormLabel>
-                      <FormControl>
-                        <Input placeholder="0821234567" {...field} />
-                      </FormControl>
-                       <FormDescription>Enter the number to send data to.</FormDescription>
+                      <FormLabel>Send to</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a recipient" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="registered">Registered Number</SelectItem>
+                          <SelectItem value="alternative">Alternative Number</SelectItem>
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
+                {dataRecipient === 'alternative' && (
+                  <FormField
+                    control={dataForm.control}
+                    name="phoneNumber"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Phone Number</FormLabel>
+                        <FormControl>
+                          <Input placeholder="0821234567" {...field} />
+                        </FormControl>
+                         <FormDescription>Enter the number to send data to.</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
                 <FormField
                   control={dataForm.control}
                   name="bundle"
