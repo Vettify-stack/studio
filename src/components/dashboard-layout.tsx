@@ -103,7 +103,7 @@ export default function DashboardLayout({
               >
                 <Link href="/admin">
                   <ShieldHalf />
-                  Super Admin
+                  <span>Super Admin</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
