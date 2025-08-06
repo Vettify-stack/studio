@@ -1,7 +1,7 @@
 
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
   FileText,
@@ -50,6 +50,13 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const [activePath, setActivePath] = useState(pathname);
+
+  useEffect(() => {
+    setActivePath(pathname);
+  }, [pathname]);
+
+
   const getPageTitle = () => {
     switch (pathname) {
       case '/':
@@ -98,7 +105,7 @@ export default function DashboardLayout({
              <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={pathname === '/admin'}
+                isActive={activePath === '/admin'}
                 tooltip={{ children: 'Super Admin' }}
               >
                 <Link href="/admin">
@@ -110,7 +117,7 @@ export default function DashboardLayout({
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={pathname === '/'}
+                isActive={activePath === '/'}
                 tooltip={{ children: 'Dashboard' }}
               >
                 <Link href="/">
@@ -122,7 +129,7 @@ export default function DashboardLayout({
              <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={pathname === '/driver'}
+                isActive={activePath === '/driver'}
                 tooltip={{ children: 'Driver' }}
               >
                 <Link href="/driver">
@@ -134,7 +141,7 @@ export default function DashboardLayout({
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={pathname === '/fleet'}
+                isActive={activePath === '/fleet'}
                 tooltip={{ children: 'Fleet' }}
               >
                 <Link href="/fleet">
@@ -154,7 +161,7 @@ export default function DashboardLayout({
              <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={pathname === '/alerts'}
+                isActive={activePath === '/alerts'}
                 tooltip={{ children: 'Alerts' }}
               >
                 <Link href="/alerts">
@@ -174,7 +181,7 @@ export default function DashboardLayout({
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={pathname === '/disputes'}
+                isActive={activePath === '/disputes'}
                 tooltip={{ children: 'Disputes' }}
               >
                 <Link href="/disputes">
@@ -186,7 +193,7 @@ export default function DashboardLayout({
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={pathname === '/training'}
+                isActive={activePath === '/training'}
                 tooltip={{ children: 'Training & Jobs' }}
               >
                 <Link href="/training">
@@ -198,7 +205,7 @@ export default function DashboardLayout({
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={pathname === '/utilities'}
+                isActive={activePath === '/utilities'}
                 tooltip={{ children: 'Utilities' }}
               >
                 <Link href="/utilities">
