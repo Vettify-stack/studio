@@ -45,60 +45,54 @@ const statusColors = {
 export default function DriverDashboardPage() {
   return (
     <div className="flex flex-col gap-6 p-4 sm:p-6">
-      {/* Driver Profile Header */}
-      <Card>
-        <CardHeader className="flex flex-row items-center gap-4">
-          <Avatar className="h-16 w-16">
-            <AvatarImage src="https://placehold.co/100x100.png" data-ai-hint="person portrait" />
-            <AvatarFallback>{driverData.initials}</AvatarFallback>
-          </Avatar>
-          <div>
-            <CardTitle className="text-2xl">{driverData.name}</CardTitle>
-            <CardDescription>{driverData.employmentStatus}</CardDescription>
-          </div>
-        </CardHeader>
-      </Card>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {/* Compliance Status */}
+        {/* Driver Profile & Compliance */}
         <Card className="lg:col-span-2">
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <ShieldCheck className="h-6 w-6 text-primary" />
-              <CardTitle>Compliance Status</CardTitle>
-            </div>
-            <CardDescription>Your current compliance overview.</CardDescription>
-          </CardHeader>
-          <CardContent className="grid grid-cols-2 gap-4">
-            <div className="flex items-center gap-2 rounded-md border p-4">
-              <FileText className="h-6 w-6 text-muted-foreground" />
+           <CardHeader className="flex flex-row items-center gap-4">
+              <Avatar className="h-16 w-16">
+                <AvatarImage src="https://placehold.co/100x100.png" data-ai-hint="person portrait" />
+                <AvatarFallback>{driverData.initials}</AvatarFallback>
+              </Avatar>
               <div>
-                <p className="font-bold text-lg">{driverData.outstandingFines}</p>
-                <p className="text-sm text-muted-foreground">Outstanding Fines</p>
+                <CardTitle className="text-2xl">{driverData.name}</CardTitle>
+                <CardDescription>{driverData.employmentStatus}</CardDescription>
+                 <Badge variant="outline" className={`mt-2 ${statusColors[driverData.idStatus]}`}>ID: {driverData.idStatus}</Badge>
               </div>
-            </div>
-            <div className="flex items-center gap-2 rounded-md border p-4">
-              <AlertTriangle className="h-6 w-6 text-muted-foreground" />
-              <div>
-                <p className="font-bold text-lg">{driverData.demeritPoints}</p>
-                <p className="text-sm text-muted-foreground">AARTO Points</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2 rounded-md border p-4">
-              <BadgeCheck className="h-6 w-6 text-muted-foreground" />
-              <div>
-                <p className={`font-bold text-lg`}>
-                  {driverData.licenseStatus}
-                </p>
-                <p className="text-sm text-muted-foreground">License Status</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2 rounded-md border p-4">
-              <Car className="h-6 w-6 text-muted-foreground" />
-              <div>
-                <p className="font-bold text-lg">{driverData.vehicles.length}</p>
-                <p className="text-sm text-muted-foreground">Linked Vehicles</p>
-              </div>
+            </CardHeader>
+          <CardContent className="mt-4">
+             <h3 className="font-semibold mb-4 text-lg">Compliance Status</h3>
+            <div className="grid grid-cols-2 gap-4">
+                <div className="flex items-center gap-2 rounded-md border p-4">
+                <FileText className="h-6 w-6 text-muted-foreground" />
+                <div>
+                    <p className="font-bold text-lg">{driverData.outstandingFines}</p>
+                    <p className="text-sm text-muted-foreground">Outstanding Fines</p>
+                </div>
+                </div>
+                <div className="flex items-center gap-2 rounded-md border p-4">
+                <AlertTriangle className="h-6 w-6 text-muted-foreground" />
+                <div>
+                    <p className="font-bold text-lg">{driverData.demeritPoints}</p>
+                    <p className="text-sm text-muted-foreground">AARTO Points</p>
+                </div>
+                </div>
+                <div className="flex items-center gap-2 rounded-md border p-4">
+                <BadgeCheck className="h-6 w-6 text-muted-foreground" />
+                <div>
+                    <p className={`font-bold text-lg`}>
+                    {driverData.licenseStatus}
+                    </p>
+                    <p className="text-sm text-muted-foreground">License Status</p>
+                </div>
+                </div>
+                <div className="flex items-center gap-2 rounded-md border p-4">
+                <Car className="h-6 w-6 text-muted-foreground" />
+                <div>
+                    <p className="font-bold text-lg">{driverData.vehicles.length}</p>
+                    <p className="text-sm text-muted-foreground">Linked Vehicles</p>
+                </div>
+                </div>
             </div>
           </CardContent>
         </Card>
