@@ -46,3 +46,10 @@ export interface Appointment {
   type: string;
   status: 'Confirmed' | 'Pending';
 }
+
+export interface Document {
+  id: string;
+  name: string;
+  status: 'Verified' | 'Expiring Soon' | 'Missing' | 'Expired';
+  expiryDate?: string;
+}

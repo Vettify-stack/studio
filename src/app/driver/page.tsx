@@ -7,21 +7,16 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
 import {
-  ShieldCheck,
   AlertTriangle,
   FileText,
-  BookOpen,
-  Bell,
-  Award,
-  MessageSquare,
   BadgeCheck,
   Car,
 } from 'lucide-react';
 import type { DriverProfile } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
 import Telemedicine from '@/components/telemedicine';
+import DocumentManagement from '@/components/document-management';
 
 const driverData: DriverProfile = {
   name: 'John Mokoena',
@@ -46,9 +41,9 @@ export default function DriverDashboardPage() {
   return (
     <div className="flex flex-col gap-6 p-4 sm:p-6">
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         {/* Driver Profile & Compliance */}
-        <Card className="lg:col-span-2">
+        <Card className="md:col-span-2">
            <CardHeader className="flex flex-row items-center gap-4">
               <Avatar className="h-16 w-16">
                 <AvatarImage src="https://placehold.co/100x100.png" data-ai-hint="person portrait" />
@@ -99,75 +94,10 @@ export default function DriverDashboardPage() {
         
         <Telemedicine />
 
-        {/* Notifications & Alerts */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <Bell className="h-6 w-6 text-primary" />
-              <CardTitle>Notifications</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <p className="text-sm text-muted-foreground">
-              You have 2 new alerts.
-            </p>
-            <Button className="w-full">View Alerts</Button>
-          </CardContent>
-        </Card>
+        <div className="md:col-span-3">
+            <DocumentManagement />
+        </div>
 
-        {/* Learning & Certification */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <BookOpen className="h-6 w-6 text-primary" />
-              <CardTitle>Learning</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <p className="text-sm text-muted-foreground">
-              Your next module is ready.
-            </p>
-            <Button variant="outline" className="w-full">
-              Go to Learning
-            </Button>
-          </CardContent>
-        </Card>
-
-        {/* Referral & Rewards */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <Award className="h-6 w-6 text-primary" />
-              <CardTitle>Refer & Earn</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <p className="text-sm text-muted-foreground">
-              Total Earned: R{driverData.referralEarnings.toFixed(2)}
-            </p>
-            <Button variant="outline" className="w-full">
-              My Referrals
-            </Button>
-          </CardContent>
-        </Card>
-
-        {/* Support & Disputes */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <MessageSquare className="h-6 w-6 text-primary" />
-              <CardTitle>Support</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <p className="text-sm text-muted-foreground">
-              Need help? Submit a dispute or contact support.
-            </p>
-            <Button variant="outline" className="w-full">
-              Contact Support
-            </Button>
-          </CardContent>
-        </Card>
       </div>
     </div>
   );
