@@ -14,6 +14,7 @@ import {
   Gavel,
   Bell,
   Users,
+  Briefcase,
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -62,6 +63,8 @@ export default function DashboardLayout({
         return 'Driver Dashboard';
        case '/admin':
         return 'Admin Dashboard';
+      case '/training':
+        return 'Training & Jobs';
       default:
         return 'Dashboard';
     }
@@ -174,6 +177,18 @@ export default function DashboardLayout({
                 <Link href="/disputes">
                   <Gavel />
                   Disputes
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname === '/training'}
+                tooltip={{ children: 'Training & Jobs' }}
+              >
+                <Link href="/training">
+                  <Briefcase />
+                  Training & Jobs
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
