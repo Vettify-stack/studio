@@ -1,3 +1,4 @@
+
 import {
   Car,
   ShieldCheck,
@@ -12,7 +13,7 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-} from '@/components/ui/card';
+} from '@/app/card';
 import {
   Table,
   TableBody,

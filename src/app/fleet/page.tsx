@@ -1,3 +1,4 @@
+
 'use client';
 
 import {
@@ -6,7 +7,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from '@/app/card';
 import {
   Table,
   TableBody,
