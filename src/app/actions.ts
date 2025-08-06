@@ -1,6 +1,7 @@
 'use server';
 
 import { complianceSummarizerForOwner } from '@/ai/flows/compliance-summarizer';
+import { ocrFlow } from '@/ai/flows/ocr-flow';
 
 export async function getComplianceSummary(complianceData: string) {
   try {
@@ -9,5 +10,15 @@ export async function getComplianceSummary(complianceData: string) {
   } catch (error) {
     console.error('Error in getComplianceSummary:', error);
     throw new Error('Failed to get compliance summary from AI.');
+  }
+}
+
+export async function extractTextFromImage(imageDataUri: string) {
+  try {
+    const result = await ocrFlow({ imageDataUri });
+    return result;
+  } catch (error) {
+    console.error('Error in extractTextFromImage:', error);
+    throw new Error('Failed to extract text from image using AI.');
   }
 }
