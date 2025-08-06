@@ -52,9 +52,9 @@ const SeverityBadge = ({
   severity: 'High' | 'Medium' | 'Low';
 }) => {
   const colorClass = {
-    High: 'bg-red-100 text-red-800 border-red-200',
-    Medium: 'bg-yellow-100 text-yellow-800 border-yellow-200',
-    Low: 'bg-blue-100 text-blue-800 border-blue-200',
+    High: 'bg-destructive/20 text-destructive-foreground border-destructive/20',
+    Medium: 'bg-yellow-500/20 text-yellow-600 border-yellow-500/20',
+    Low: 'bg-primary/20 text-primary border-primary/20',
   }[severity];
 
   return (
