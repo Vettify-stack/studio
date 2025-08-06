@@ -1,22 +1,37 @@
+
+'use client';
+
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import DashboardLayout from '@/components/dashboard-layout';
+import React, { useState, useEffect } from 'react';
 
-export const metadata: Metadata = {
-  title: 'Vettify MCI Compliance View',
-  description:
-    'A real-time compliance, behavioural intelligence, and operational insights platform tailored for the taxi and commercial transport industry.',
-};
+// export const metadata: Metadata = {
+//   title: 'Vettify MCI Compliance View',
+//   description:
+//     'A real-time compliance, behavioural intelligence, and operational insights platform tailored for the taxi and commercial transport industry.',
+// };
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <title>Vettify MCI Compliance View</title>
+        <meta
+          name="description"
+          content="A real-time compliance, behavioural intelligence, and operational insights platform tailored for the taxi and commercial transport industry."
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -30,7 +45,7 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased" suppressHydrationWarning>
         <DashboardLayout>{children}</DashboardLayout>
-        <Toaster />
+        {isMounted && <Toaster />}
       </body>
     </html>
   );
