@@ -99,11 +99,11 @@ export default function DashboardLayout({
               <SidebarMenuButton
                 asChild
                 isActive={pathname === '/admin'}
-                tooltip={{ children: 'Admin' }}
+                tooltip={{ children: 'Super Admin' }}
               >
                 <Link href="/admin">
                   <ShieldHalf />
-                  Admin
+                  Super Admin
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
