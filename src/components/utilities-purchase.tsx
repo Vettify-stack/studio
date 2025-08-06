@@ -45,11 +45,13 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 
 const airtimeSchema = z.object({
+  network: z.string().min(1, 'Please select a network provider'),
   phoneNumber: z.string().regex(/^0\d{9}$/, 'Invalid phone number (e.g., 0821234567)'),
   amount: z.string().min(1, 'Please select an amount'),
 });
 
 const dataSchema = z.object({
+  network: z.string().min(1, 'Please select a network provider'),
   phoneNumber: z.string().regex(/^0\d{9}$/, 'Invalid phone number'),
   bundle: z.string().min(1, 'Please select a bundle'),
 });
@@ -59,26 +61,35 @@ const electricitySchema = z.object({
   amount: z.string().min(2, 'Amount must be at least R50').refine(val => parseInt(val) >= 50, {message: 'Amount must be at least R50'}),
 });
 
+type PurchaseResult = {
+  type: 'Airtime' | 'Data' | 'Electricity';
+  message: string;
+  token?: string;
+}
+
 export default function UtilitiesPurchase() {
   const [isLoading, setIsLoading] = useState(false);
-  const [purchaseSuccess, setPurchaseSuccess] = useState<string | null>(null);
+  const [purchaseResult, setPurchaseResult] = useState<PurchaseResult | null>(null);
   const { toast } = useToast();
   
   const airtimeForm = useForm<z.infer<typeof airtimeSchema>>({
     resolver: zodResolver(airtimeSchema),
+    defaultValues: { network: '', phoneNumber: '', amount: '' },
   });
   
   const dataForm = useForm<z.infer<typeof dataSchema>>({
     resolver: zodResolver(dataSchema),
+    defaultValues: { network: '', phoneNumber: '', bundle: '' },
   });
 
   const electricityForm = useForm<z.infer<typeof electricitySchema>>({
     resolver: zodResolver(electricitySchema),
+    defaultValues: { meterNumber: '', amount: '' },
   });
 
-  const handlePurchase = async (type: string, data: any) => {
+  const handlePurchase = async (type: 'Airtime' | 'Data' | 'Electricity', data: any) => {
     setIsLoading(true);
-    setPurchaseSuccess(null);
+    setPurchaseResult(null);
     await new Promise(resolve => setTimeout(resolve, 1500));
     setIsLoading(false);
 
@@ -86,7 +97,31 @@ export default function UtilitiesPurchase() {
       title: 'Purchase Successful!',
       description: `Your ${type} purchase was completed.`,
     });
-    setPurchaseSuccess(`Your ${type} purchase was successful! A confirmation has been sent.`);
+    
+    let result: PurchaseResult = {
+      type,
+      message: `Your ${type} purchase was successful! A confirmation has been sent.`
+    };
+    
+    if (type === 'Electricity') {
+      // Generate a random token for simulation
+      const token = [
+        Math.floor(Math.random() * 10000),
+        Math.floor(Math.random() * 10000),
+        Math.floor(Math.random() * 10000),
+        Math.floor(Math.random() * 10000),
+        Math.floor(Math.random() * 10000)
+      ].join(' ').padStart(20, '0');
+      result.token = token;
+      result.message = 'Electricity purchase successful! Your token is displayed below.'
+    }
+    
+    setPurchaseResult(result);
+
+    // Reset forms
+    airtimeForm.reset();
+    dataForm.reset();
+    electricityForm.reset();
   };
 
   const renderSuccessMessage = () => (
@@ -94,13 +129,19 @@ export default function UtilitiesPurchase() {
       <CheckCircle className="w-16 h-16 text-green-500" />
       <h3 className="text-xl font-bold">Purchase Complete</h3>
       <p className="text-muted-foreground">
-        {purchaseSuccess}
+        {purchaseResult?.message}
       </p>
-      <Button onClick={() => setPurchaseSuccess(null)}>Make Another Purchase</Button>
+      {purchaseResult?.type === 'Electricity' && purchaseResult.token && (
+        <div className="w-full p-4 my-2 bg-muted rounded-lg">
+          <p className="text-sm font-semibold text-muted-foreground">Your electricity token:</p>
+          <p className="text-2xl font-mono tracking-widest text-primary">{purchaseResult.token}</p>
+        </div>
+      )}
+      <Button onClick={() => setPurchaseResult(null)}>Make Another Purchase</Button>
     </div>
   )
 
-  if (purchaseSuccess) {
+  if (purchaseResult) {
     return renderSuccessMessage();
   }
 
@@ -131,7 +172,30 @@ export default function UtilitiesPurchase() {
           
           <TabsContent value="airtime" className="mt-4">
             <Form {...airtimeForm}>
-              <form onSubmit={airtimeForm.handleSubmit((data) => handlePurchase('airtime', data))} className="space-y-6">
+              <form onSubmit={airtimeForm.handleSubmit((data) => handlePurchase('Airtime', data))} className="space-y-6">
+                 <FormField
+                  control={airtimeForm.control}
+                  name="network"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Network</FormLabel>
+                       <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a network provider" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="vodacom">Vodacom</SelectItem>
+                          <SelectItem value="mtn">MTN</SelectItem>
+                          <SelectItem value="cellc">Cell C</SelectItem>
+                          <SelectItem value="telkom">Telkom</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 <FormField
                   control={airtimeForm.control}
                   name="phoneNumber"
@@ -141,6 +205,7 @@ export default function UtilitiesPurchase() {
                       <FormControl>
                         <Input placeholder="0821234567" {...field} />
                       </FormControl>
+                      <FormDescription>Enter the number to top-up.</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -154,7 +219,7 @@ export default function UtilitiesPurchase() {
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select an amount to top-up" />
+                            <SelectValue placeholder="Select an amount" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -178,7 +243,30 @@ export default function UtilitiesPurchase() {
 
           <TabsContent value="data" className="mt-4">
              <Form {...dataForm}>
-              <form onSubmit={dataForm.handleSubmit((data) => handlePurchase('data', data))} className="space-y-6">
+              <form onSubmit={dataForm.handleSubmit((data) => handlePurchase('Data', data))} className="space-y-6">
+                 <FormField
+                  control={dataForm.control}
+                  name="network"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Network</FormLabel>
+                       <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a network provider" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="vodacom">Vodacom</SelectItem>
+                          <SelectItem value="mtn">MTN</SelectItem>
+                          <SelectItem value="cellc">Cell C</SelectItem>
+                          <SelectItem value="telkom">Telkom</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 <FormField
                   control={dataForm.control}
                   name="phoneNumber"
@@ -188,6 +276,7 @@ export default function UtilitiesPurchase() {
                       <FormControl>
                         <Input placeholder="0821234567" {...field} />
                       </FormControl>
+                       <FormDescription>Enter the number to send data to.</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -225,7 +314,7 @@ export default function UtilitiesPurchase() {
 
           <TabsContent value="electricity" className="mt-4">
              <Form {...electricityForm}>
-              <form onSubmit={electricityForm.handleSubmit((data) => handlePurchase('electricity', data))} className="space-y-6">
+              <form onSubmit={electricityForm.handleSubmit((data) => handlePurchase('Electricity', data))} className="space-y-6">
                 <FormField
                   control={electricityForm.control}
                   name="meterNumber"
