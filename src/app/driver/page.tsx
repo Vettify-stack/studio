@@ -18,6 +18,7 @@ import { Badge } from '@/components/ui/badge';
 import DocumentManagement from '@/components/document-management';
 import ComplianceScore from '@/components/compliance-score';
 import QRCodeCard from '@/components/qr-code-card';
+import Telemedicine from '@/components/telemedicine';
 
 const driverData: DriverProfile = {
   name: 'John Mokoena',
@@ -42,10 +43,10 @@ const statusColors = {
 
 export default function DriverDashboardPage() {
   return (
-    <div className="flex flex-col gap-6 p-4 sm:p-6">
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-        {/* Driver Profile */}
-        <Card className="md:col-span-2">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/* Left Column */}
+      <div className="md:col-span-2 space-y-6">
+        <Card>
           <CardHeader className="flex flex-row items-center gap-4">
             <Avatar className="h-16 w-16">
               <AvatarImage src="https://placehold.co/100x100.png" data-ai-hint="person portrait" />
@@ -93,17 +94,15 @@ export default function DriverDashboardPage() {
             </div>
           </CardContent>
         </Card>
+        
+        <DocumentManagement />
+      </div>
 
-        {/* Right Sidebar */}
-        <div className="space-y-6">
-            <ComplianceScore score={driverData.complianceScore} />
-            <QRCodeCard qrCodeUrl={driverData.qrCodeUrl} />
-        </div>
-
-
-        <div className="md:col-span-3">
-          <DocumentManagement />
-        </div>
+      {/* Right Column */}
+      <div className="space-y-6">
+          <ComplianceScore score={driverData.complianceScore} />
+          <QRCodeCard qrCodeUrl={driverData.qrCodeUrl} />
+          <Telemedicine />
       </div>
     </div>
   );

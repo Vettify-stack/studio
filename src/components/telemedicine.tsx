@@ -82,7 +82,7 @@ export default function Telemedicine() {
     },
   });
 
-  const handlePaymentSubmit = async (values: z.infer<typeof paymentSchema>) => {
+  const handlePaymentSubmit = async (values: z.infer<typeof paymentSchema>>) => {
     setIsLoading(true);
     await new Promise((resolve) => setTimeout(resolve, 2000));
     setIsLoading(false);
@@ -301,12 +301,12 @@ export default function Telemedicine() {
               Notes
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="consultation" className="mt-4" forceMount>
+          <TabsContent value="consultation" className="mt-4">
             {step === 'selection' && renderSelectionStep()}
             {step === 'payment' && renderPaymentStep()}
             {step === 'confirmation' && renderConfirmationStep()}
           </TabsContent>
-           <TabsContent value="appointments" className="mt-4" forceMount>
+           <TabsContent value="appointments" className="mt-4">
             <div className="space-y-4">
               {appointments.length > 0 ? (
                 appointments.map((appt) => (
@@ -333,14 +333,14 @@ export default function Telemedicine() {
               )}
             </div>
           </TabsContent>
-          <TabsContent value="prescriptions" className="mt-4" forceMount>
+          <TabsContent value="prescriptions" className="mt-4">
             <div className="text-center p-4 border rounded-lg">
                 <p className="text-sm text-muted-foreground">
                     No e-prescriptions found.
                 </p>
             </div>
           </TabsContent>
-          <TabsContent value="notes" className="mt-4" forceMount>
+          <TabsContent value="notes" className="mt-4">
             <div className="text-center p-4 border rounded-lg">
                 <p className="text-sm text-muted-foreground">
                     No doctor's notes found.
