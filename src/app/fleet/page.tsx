@@ -1,0 +1,237 @@
+'use client';
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
+import { ShieldCheck, AlertTriangle, Car, Users } from 'lucide-react';
+import type { Vehicle } from '@/lib/types';
+
+const fleetVehicles: Vehicle[] = [
+    {
+    id: '1',
+    registration: 'CA 123-456',
+    make: 'Toyota',
+    model: 'Avanza',
+    type: 'Taxi',
+    status: 'Compliant',
+    licenseExpiry: '2025-08-15',
+    fines: 0,
+  },
+  {
+    id: '2',
+    registration: 'GP 789-BCE',
+    make: 'Nissan',
+    model: 'NV350',
+    type: 'Taxi',
+    status: 'Non-Compliant',
+    licenseExpiry: '2024-02-20',
+    fines: 2,
+  },
+  {
+    id: '3',
+    registration: 'KZN 555-LMN',
+    make: 'Mercedes-Benz',
+    model: 'Sprinter',
+    type: 'Taxi',
+    status: 'At Risk',
+    licenseExpiry: '2024-07-30',
+    fines: 1,
+  },
+  {
+    id: '4',
+    registration: 'WP 987-ZYX',
+    make: 'Toyota',
+    model: 'Quantum',
+    type: 'Taxi',
+    status: 'Compliant',
+    licenseExpiry: '2026-01-10',
+    fines: 0,
+  },
+  {
+    id: '5',
+    registration: 'FS 321-QRS',
+    make: 'VW',
+    model: 'Polo',
+    type: 'Delivery',
+    status: 'Compliant',
+    licenseExpiry: '2025-11-05',
+    fines: 0,
+  },
+  {
+    id: '6',
+    registration: 'EC 456-TUV',
+    make: 'Isuzu',
+    model: 'D-Max',
+    type: 'Delivery',
+    status: 'Non-Compliant',
+    licenseExpiry: '2023-12-01',
+    fines: 3,
+  },
+  {
+    id: '7',
+    registration: 'LP 789-WXY',
+    make: 'Ford',
+    model: 'Ranger',
+    type: 'Delivery',
+    status: 'Compliant',
+    licenseExpiry: '2025-06-22',
+    fines: 0,
+  },
+  {
+    id: '8',
+    registration: 'NW 101-ABC',
+    make: 'Hyundai',
+    model: 'H1',
+    type: 'Taxi',
+    status: 'At Risk',
+    licenseExpiry: '2024-08-01',
+    fines: 1,
+  },
+];
+
+const StatusBadge = ({
+  status,
+}: {
+  status: 'Compliant' | 'At Risk' | 'Non-Compliant';
+}) => {
+  const colorClass = {
+    Compliant: 'bg-green-100 text-green-800 border-green-200',
+    'At Risk': 'bg-yellow-100 text-yellow-800 border-yellow-200',
+    'Non-Compliant': 'bg-red-100 text-red-800 border-red-200',
+  }[status];
+
+  const icon = {
+    Compliant: <ShieldCheck className="mr-1 h-3 w-3" />,
+    'At Risk': <AlertTriangle className="mr-1 h-3 w-3" />,
+    'Non-Compliant': <AlertTriangle className="mr-1 h-3 w-3" />,
+  }[status];
+
+  return (
+    <Badge variant="outline" className={`capitalize ${colorClass}`}>
+      {icon}
+      {status}
+    </Badge>
+  );
+};
+
+export default function FleetPage() {
+  const compliantCount = fleetVehicles.filter(
+    (v) => v.status === 'Compliant'
+  ).length;
+  const atRiskCount = fleetVehicles.filter(
+    (v) => v.status === 'At Risk'
+  ).length;
+  const nonCompliantCount = fleetVehicles.filter(
+    (v) => v.status === 'Non-Compliant'
+  ).length;
+
+  return (
+    <div className="flex flex-col gap-8">
+      <Card>
+        <CardHeader>
+            <div className="flex items-center gap-4">
+            <Users className="w-8 h-8 text-primary" />
+            <div>
+              <CardTitle>Fleet Compliance Overview</CardTitle>
+              <CardDescription>
+                A real-time look at your entire fleet's compliance status.
+              </CardDescription>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="grid gap-6 md:grid-cols-3">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Compliant</CardTitle>
+              <ShieldCheck className="h-4 w-4 text-green-500" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{compliantCount}</div>
+              <p className="text-xs text-muted-foreground">
+                Vehicles meeting all requirements
+              </p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">At Risk</CardTitle>
+              <AlertTriangle className="h-4 w-4 text-yellow-500" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{atRiskCount}</div>
+              <p className="text-xs text-muted-foreground">
+                Vehicles with upcoming expiries or issues
+              </p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Non-Compliant
+              </CardTitle>
+              <AlertTriangle className="h-4 w-4 text-red-500" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{nonCompliantCount}</div>
+              <p className="text-xs text-muted-foreground">
+                Vehicles with violations or expired documents
+              </p>
+            </CardContent>
+          </Card>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>All Vehicles</CardTitle>
+          <CardDescription>
+            Detailed list of all vehicles in your fleet.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Registration</TableHead>
+                <TableHead>Vehicle</TableHead>
+                <TableHead>Type</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead className="text-right">Fines</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {fleetVehicles.map((vehicle) => (
+                <TableRow key={vehicle.id}>
+                  <TableCell className="font-medium">
+                    {vehicle.registration}
+                  </TableCell>
+                  <TableCell>
+                    {vehicle.make} {vehicle.model}
+                  </TableCell>
+                  <TableCell>{vehicle.type}</TableCell>
+                  <TableCell>
+                    <StatusBadge status={vehicle.status} />
+                  </TableCell>
+                  <TableCell className="text-right">{vehicle.fines}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}

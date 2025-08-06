@@ -12,6 +12,7 @@ import {
   ShieldHalf,
   Gavel,
   Bell,
+  Users,
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -71,6 +72,18 @@ export default function DashboardLayout({
                 <Link href="/">
                   <LayoutDashboard />
                   Dashboard
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname === '/fleet'}
+                tooltip={{ children: 'Fleet' }}
+              >
+                <Link href="/fleet">
+                  <Users />
+                  Fleet View
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
