@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Button } from '@/components/ui/button';
@@ -18,6 +19,7 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { PlusCircle } from 'lucide-react';
+import SafeDate from './safe-date';
 
 const disputes = [
   {
@@ -69,7 +71,9 @@ export default function DisputeManagement() {
               <TableRow key={dispute.id}>
                 <TableCell className="font-medium">{dispute.fineId}</TableCell>
                 <TableCell>{dispute.vehicle}</TableCell>
-                <TableCell>{dispute.date}</TableCell>
+                <TableCell>
+                  <SafeDate dateString={dispute.date} />
+                </TableCell>
                 <TableCell>
                   <Badge
                     variant={
