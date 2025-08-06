@@ -105,7 +105,7 @@ export default function DashboardLayout({
              <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={activePath === '/admin'}
+                isActive={pathname === '/admin'}
                 tooltip={{ children: 'Super Admin' }}
               >
                 <Link href="/admin">
@@ -117,7 +117,7 @@ export default function DashboardLayout({
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={activePath === '/'}
+                isActive={pathname === '/'}
                 tooltip={{ children: 'Dashboard' }}
               >
                 <Link href="/">
@@ -129,7 +129,7 @@ export default function DashboardLayout({
              <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={activePath === '/driver'}
+                isActive={pathname === '/driver'}
                 tooltip={{ children: 'Driver' }}
               >
                 <Link href="/driver">
@@ -141,7 +141,7 @@ export default function DashboardLayout({
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={activePath === '/fleet'}
+                isActive={pathname === '/fleet'}
                 tooltip={{ children: 'Fleet' }}
               >
                 <Link href="/fleet">
@@ -161,7 +161,7 @@ export default function DashboardLayout({
              <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={activePath === '/alerts'}
+                isActive={pathname === '/alerts'}
                 tooltip={{ children: 'Alerts' }}
               >
                 <Link href="/alerts">
@@ -181,7 +181,7 @@ export default function DashboardLayout({
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={activePath === '/disputes'}
+                isActive={pathname === '/disputes'}
                 tooltip={{ children: 'Disputes' }}
               >
                 <Link href="/disputes">
@@ -193,7 +193,7 @@ export default function DashboardLayout({
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={activePath === '/training'}
+                isActive={pathname === '/training'}
                 tooltip={{ children: 'Training & Jobs' }}
               >
                 <Link href="/training">
@@ -205,7 +205,7 @@ export default function DashboardLayout({
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={activePath === '/utilities'}
+                isActive={pathname === '/utilities'}
                 tooltip={{ children: 'Utilities' }}
               >
                 <Link href="/utilities">
