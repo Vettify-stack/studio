@@ -30,6 +30,8 @@ import {
   Loader2,
   CreditCard,
   Banknote,
+  Download,
+  List,
 } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import {
@@ -45,6 +47,7 @@ import { useToast } from '@/hooks/use-toast';
 import type { Appointment } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import SafeDate from './safe-date';
+import { Badge } from './ui/badge';
 
 const timeSlots = ['09:00', '11:00', '14:00', '16:00'];
 
@@ -66,9 +69,7 @@ export default function Telemedicine() {
     'selection'
   );
   const [isLoading, setIsLoading] = useState(false);
-  const [bookedAppointment, setBookedAppointment] = useState<Appointment | null>(
-    null
-  );
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof paymentSchema>>({
@@ -88,13 +89,14 @@ export default function Telemedicine() {
     
     // Use dummy data check
     if (values.cardNumber === '4111111111111111' && values.expiryDate === '12/26' && values.cvv === '123') {
-      const appointment: Appointment = {
+      const newAppointment: Appointment = {
         id: new Date().toISOString(),
         date: selectedDate!,
         time: selectedTime!,
         type: 'Virtual Consultation',
+        status: 'Confirmed',
       };
-      setBookedAppointment(appointment);
+      setAppointments(prev => [...prev, newAppointment]);
       setStep('confirmation');
       toast({
         title: 'Payment Successful!',
@@ -108,6 +110,12 @@ export default function Telemedicine() {
       });
     }
   };
+  
+  const resetBookingFlow = () => {
+    setStep('selection');
+    setSelectedTime(null);
+    form.reset();
+  }
 
   const renderSelectionStep = () => (
     <div className="space-y-4">
@@ -241,25 +249,25 @@ export default function Telemedicine() {
     </div>
   );
 
-  const renderConfirmationStep = () => (
-    <div className="text-center p-4 border rounded-lg flex flex-col items-center gap-4">
-      <CheckCircle className="w-16 h-16 text-green-500" />
-      <h3 className="text-xl font-bold">Booking Confirmed!</h3>
-      <p className="text-muted-foreground">
-        Your virtual consultation is scheduled.
-      </p>
-      <div className="p-4 bg-muted rounded-md text-left w-full">
-        <p><strong>Type:</strong> {bookedAppointment?.type}</p>
-        <p><strong>Date:</strong> <SafeDate dateString={bookedAppointment!.date.toISOString()} /></p>
-        <p><strong>Time:</strong> {bookedAppointment?.time}</p>
-      </div>
-      <Button className="w-full" onClick={() => {
-        setStep('selection');
-        setSelectedTime(null);
-        form.reset();
-      }}>Book Another</Button>
-    </div>
-  );
+  const renderConfirmationStep = () => {
+    const latestAppointment = appointments[appointments.length - 1];
+    return (
+        <div className="text-center p-4 border rounded-lg flex flex-col items-center gap-4">
+        <CheckCircle className="w-16 h-16 text-green-500" />
+        <h3 className="text-xl font-bold">Booking Confirmed!</h3>
+        <p className="text-muted-foreground">
+            Your virtual consultation is scheduled.
+        </p>
+        {latestAppointment && (
+            <div className="p-4 bg-muted rounded-md text-left w-full">
+            <p><strong>Type:</strong> {latestAppointment.type}</p>
+            <p><strong>Date:</strong> <SafeDate dateString={latestAppointment.date.toISOString()} /></p>
+            <p><strong>Time:</strong> {latestAppointment.time}</p>
+            </div>
+        )}
+        <Button className="w-full" onClick={resetBookingFlow}>Book Another</Button>
+        </div>
+  )};
 
 
   return (
@@ -275,10 +283,14 @@ export default function Telemedicine() {
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="consultation">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="consultation">
               <Video className="mr-2 h-4 w-4" />
               Consult
+            </TabsTrigger>
+            <TabsTrigger value="appointments">
+              <List className="mr-2 h-4 w-4" />
+              Appointments
             </TabsTrigger>
             <TabsTrigger value="prescriptions">
               <FileText className="mr-2 h-4 w-4" />
@@ -293,6 +305,33 @@ export default function Telemedicine() {
             {step === 'selection' && renderSelectionStep()}
             {step === 'payment' && renderPaymentStep()}
             {step === 'confirmation' && renderConfirmationStep()}
+          </TabsContent>
+           <TabsContent value="appointments" className="mt-4">
+            <div className="space-y-4">
+              {appointments.length > 0 ? (
+                appointments.map((appt) => (
+                  <div key={appt.id} className="flex items-center justify-between rounded-lg border p-4">
+                    <div className="grid gap-1">
+                      <p className="font-semibold">{appt.type}</p>
+                      <p className="text-sm text-muted-foreground">
+                        <SafeDate dateString={appt.date.toISOString()} /> at {appt.time}
+                      </p>
+                       <Badge variant={appt.status === 'Confirmed' ? 'default' : 'secondary'}>{appt.status}</Badge>
+                    </div>
+                    <Button variant="outline" size="sm">
+                        <Download className="mr-2 h-4 w-4"/>
+                        Download
+                    </Button>
+                  </div>
+                ))
+              ) : (
+                <div className="text-center p-4 border rounded-lg">
+                  <p className="text-sm text-muted-foreground">
+                    No upcoming appointments.
+                  </p>
+                </div>
+              )}
+            </div>
           </TabsContent>
           <TabsContent value="prescriptions" className="mt-4">
             <div className="text-center p-4 border rounded-lg">

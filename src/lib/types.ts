@@ -44,4 +44,5 @@ export interface Appointment {
   date: Date;
   time: string;
   type: string;
+  status: 'Confirmed' | 'Pending';
 }
