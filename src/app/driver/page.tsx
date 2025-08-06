@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import type { DriverProfile } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
+import Telemedicine from '@/components/telemedicine';
 
 const driverData: DriverProfile = {
   name: 'John Mokoena',
@@ -101,6 +102,8 @@ export default function DriverDashboardPage() {
             </div>
           </CardContent>
         </Card>
+        
+        <Telemedicine />
 
         {/* Notifications & Alerts */}
         <Card>
