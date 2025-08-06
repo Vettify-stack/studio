@@ -1,4 +1,5 @@
 
+
 export interface Vehicle {
   id: string;
   registration: string;
@@ -37,6 +38,8 @@ export interface DriverProfile {
   employmentStatus: string;
   lmsProgress: number;
   referralEarnings: number;
+  complianceScore: number;
+  qrCodeUrl: string;
 }
 
 export interface Appointment {
@@ -50,6 +53,7 @@ export interface Appointment {
 export interface Document {
   id: string;
   name: string;
-  status: 'Verified' | 'Expiring Soon' | 'Missing' | 'Expired';
+  status: 'Verified' | 'Expiring Soon' | 'Missing' | 'Expired' | 'Pending' | 'Flagged';
   expiryDate?: string;
+  adminActions?: ('Approve' | 'Flag' | 'Suspend')[];
 }

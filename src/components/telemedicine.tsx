@@ -82,7 +82,7 @@ export default function Telemedicine() {
     },
   });
 
-  const handlePaymentSubmit = async (values: z.infer<typeof paymentSchema>)=> {
+  const handlePaymentSubmit = async (values: z.infer<typeof paymentSchema>) => {
     setIsLoading(true);
     await new Promise((resolve) => setTimeout(resolve, 2000));
     setIsLoading(false);
