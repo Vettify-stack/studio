@@ -53,7 +53,7 @@ export default function DashboardLayout({
   const getPageTitle = () => {
     switch (pathname) {
       case '/':
-        return 'Owner Dashboard';
+        return 'Company Dashboard';
       case '/fleet':
         return 'Fleet Dashboard';
       case '/alerts':
