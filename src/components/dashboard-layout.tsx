@@ -10,6 +10,7 @@ import {
   Car,
   User,
   ShieldHalf,
+  Gavel,
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -36,12 +37,14 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import DataUploadDialog from '@/components/data-upload';
 import { Button } from './ui/button';
+import { usePathname } from 'next/navigation';
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
   return (
     <SidebarProvider defaultOpen>
       <Sidebar>
@@ -61,7 +64,7 @@ export default function DashboardLayout({
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive
+                isActive={pathname === '/'}
                 tooltip={{ children: 'Dashboard' }}
               >
                 <Link href="/">
@@ -83,6 +86,18 @@ export default function DashboardLayout({
                 <Link href="#">
                   <FileText />
                   Fines
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname === '/disputes'}
+                tooltip={{ children: 'Disputes' }}
+              >
+                <Link href="/disputes">
+                  <Gavel />
+                  Disputes
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
