@@ -27,9 +27,9 @@ const DriverDashboardPage = dynamic(() => import('@/app/driver/page'), {
   loading: () => <DashboardSkeleton />,
 });
 
-const FadeIn = ({ children, key }: { children: React.ReactNode, key: string }) => {
+const FadeIn = ({ children }: { children: React.ReactNode }) => {
     return (
-        <div key={key} className="animate-in fade-in duration-500">
+        <div className="animate-in fade-in duration-500">
             {children}
         </div>
     )
