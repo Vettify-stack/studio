@@ -301,12 +301,12 @@ export default function Telemedicine() {
               Notes
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="consultation" className="mt-4">
+          <TabsContent value="consultation" className="mt-4" forceMount>
             {step === 'selection' && renderSelectionStep()}
             {step === 'payment' && renderPaymentStep()}
             {step === 'confirmation' && renderConfirmationStep()}
           </TabsContent>
-           <TabsContent value="appointments" className="mt-4">
+           <TabsContent value="appointments" className="mt-4" forceMount>
             <div className="space-y-4">
               {appointments.length > 0 ? (
                 appointments.map((appt) => (
@@ -333,14 +333,14 @@ export default function Telemedicine() {
               )}
             </div>
           </TabsContent>
-          <TabsContent value="prescriptions" className="mt-4">
+          <TabsContent value="prescriptions" className="mt-4" forceMount>
             <div className="text-center p-4 border rounded-lg">
                 <p className="text-sm text-muted-foreground">
                     No e-prescriptions found.
                 </p>
             </div>
           </TabsContent>
-          <TabsContent value="notes" className="mt-4">
+          <TabsContent value="notes" className="mt-4" forceMount>
             <div className="text-center p-4 border rounded-lg">
                 <p className="text-sm text-muted-foreground">
                     No doctor's notes found.
