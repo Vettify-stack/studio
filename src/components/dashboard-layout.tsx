@@ -60,11 +60,19 @@ export default function DashboardLayout({
         return 'Dispute Management';
       case '/driver':
         return 'Driver Dashboard';
+       case '/admin':
+        return 'Admin Dashboard';
       default:
         return 'Dashboard';
     }
   };
 
+  const showSidebar = !['/login', '/register'].includes(pathname);
+
+  if (!showSidebar) {
+    return <>{children}</>;
+  }
+  
   return (
     <SidebarProvider defaultOpen>
       <Sidebar>
@@ -81,6 +89,18 @@ export default function DashboardLayout({
         </SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
+             <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname === '/admin'}
+                tooltip={{ children: 'Admin' }}
+              >
+                <Link href="/admin">
+                  <ShieldHalf />
+                  Admin
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
