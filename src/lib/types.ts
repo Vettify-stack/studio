@@ -15,3 +15,12 @@ export interface OwnerStats {
   totalFines: number;
   demeritPoints: number;
 }
+
+export interface Alert {
+  id: string;
+  vehicle: string;
+  type: string;
+  severity: 'High' | 'Medium' | 'Low';
+  date: string;
+  message: string;
+}

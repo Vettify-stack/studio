@@ -11,6 +11,7 @@ import {
   User,
   ShieldHalf,
   Gavel,
+  Bell,
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -78,6 +79,18 @@ export default function DashboardLayout({
                 <Link href="#">
                   <Car />
                   Vehicles
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+             <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname === '/alerts'}
+                tooltip={{ children: 'Alerts' }}
+              >
+                <Link href="/alerts">
+                  <Bell />
+                  Alerts
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
