@@ -24,6 +24,7 @@ import {
 } from '@/components/ui/table';
 import type { Vehicle, OwnerStats } from '@/lib/types';
 import ComplianceAISummary from '@/components/compliance-ai-summary';
+import SafeDate from '@/components/safe-date';
 
 const ownerStats: OwnerStats = {
   totalVehicles: 5,
@@ -222,7 +223,7 @@ export default function Home() {
                       {vehicle.make} {vehicle.model}
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
-                      {new Date(vehicle.licenseExpiry).toLocaleDateString()}
+                      <SafeDate dateString={vehicle.licenseExpiry} />
                     </TableCell>
                     <TableCell>
                       <StatusBadge status={vehicle.status} />

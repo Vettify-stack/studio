@@ -1,3 +1,4 @@
+
 import { Bell, AlertTriangle } from 'lucide-react';
 import {
   Card,
@@ -8,6 +9,7 @@ import {
 } from '@/components/ui/card';
 import { type Alert as AlertType } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
+import SafeDate from '@/components/safe-date';
 
 const alerts: AlertType[] = [
   {
@@ -95,7 +97,7 @@ export default function AlertsPage() {
                   {alert.message}
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  {new Date(alert.date).toLocaleDateString()}
+                  <SafeDate dateString={alert.date} />
                 </p>
               </div>
             </div>
