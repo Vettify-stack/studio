@@ -1,3 +1,4 @@
+
 'use client';
 
 import React from 'react';
@@ -47,6 +48,23 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const getPageTitle = () => {
+    switch (pathname) {
+      case '/':
+        return 'Owner Dashboard';
+      case '/fleet':
+        return 'Fleet Dashboard';
+      case '/alerts':
+        return 'Compliance Alerts';
+      case '/disputes':
+        return 'Dispute Management';
+      case '/driver':
+        return 'Driver Dashboard';
+      default:
+        return 'Dashboard';
+    }
+  };
+
   return (
     <SidebarProvider defaultOpen>
       <Sidebar>
@@ -72,6 +90,18 @@ export default function DashboardLayout({
                 <Link href="/">
                   <LayoutDashboard />
                   Dashboard
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+             <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname === '/driver'}
+                tooltip={{ children: 'Driver' }}
+              >
+                <Link href="/driver">
+                  <User />
+                  Driver Dashboard
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -171,7 +201,7 @@ export default function DashboardLayout({
       <SidebarInset>
         <header className="sticky top-0 z-10 flex h-16 items-center justify-between gap-4 border-b bg-background/95 px-6 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <SidebarTrigger className="md:hidden" />
-          <h1 className="text-xl font-semibold hidden md:block">Owner Dashboard</h1>
+          <h1 className="text-xl font-semibold hidden md:block">{getPageTitle()}</h1>
           <div className="flex items-center gap-4">
             <DataUploadDialog />
           </div>

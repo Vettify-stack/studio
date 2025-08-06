@@ -1,3 +1,4 @@
+
 export interface Vehicle {
   id: string;
   registration: string;
@@ -23,4 +24,17 @@ export interface Alert {
   severity: 'High' | 'Medium' | 'Low';
   date: string;
   message: string;
+}
+
+export interface DriverProfile {
+  name: string;
+  initials: string;
+  idStatus: 'Verified' | 'Pending' | 'Rejected';
+  licenseStatus: 'Valid' | 'Expired' | 'Suspended';
+  demeritPoints: number;
+  outstandingFines: number;
+  vehicles: string[];
+  employmentStatus: string;
+  lmsProgress: number;
+  referralEarnings: number;
 }
