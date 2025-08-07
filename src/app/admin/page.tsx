@@ -72,28 +72,44 @@ const DashboardSkeleton = () => (
 
 const AdminView = () => {
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="md:col-span-2 lg:col-span-1">
                 <PlatformOverviewCard />
+            </div>
+            <div className="md:col-span-2 lg:col-span-2">
+                <OverallComplianceCard />
+            </div>
+            <AartoPointsTrackerCard />
+            <CompanyFineManagement />
+            <TrainingMatrix />
+            <VerificationsCenterCard />
+            <div className="lg:col-span-2">
+                <GpsTrackingCard />
+            </div>
+            <RegionalDataCard />
+            <div className="lg:col-span-3">
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <JobPostingCard />
                     <MatchingApplicantsCard />
                 </div>
-                <VerificationsCenterCard />
-                <OverallComplianceCard />
-                <TrainingMatrix />
-                <CompanyDocumentsCard />
-                <VehicleManagementCard />
-                <CompanyFineManagement />
-                <EmployeeAttendancePerformance />
-                <DisciplinaryManagementCard />
-                <CoreDataIntegrationsCard />
             </div>
-             <div className="space-y-6">
+             <div className="lg:col-span-3">
+                <CompanyDocumentsCard />
+             </div>
+             <div className="lg:col-span-3">
+                <VehicleManagementCard />
+             </div>
+              <div className="lg:col-span-3">
+                <EmployeeAttendancePerformance />
+             </div>
+             <div className="lg:col-span-3">
+                <DisciplinaryManagementCard />
+             </div>
+            <div className="lg:col-span-3">
+                 <CoreDataIntegrationsCard />
+            </div>
+             <div className="lg:col-span-3">
                 <NosyCorner />
-                <AartoPointsTrackerCard />
-                <GpsTrackingCard />
-                <RegionalDataCard />
              </div>
         </div>
     )

@@ -1,3 +1,4 @@
+
 'use client';
 
 import {
@@ -11,7 +12,7 @@ import { Eye, ListChecks } from 'lucide-react';
 
 export default function AartoPointsTrackerCard() {
   return (
-    <Card className="bg-orange-500 text-white">
+    <Card className="bg-orange-500 text-white transition-all hover:shadow-lg hover:-translate-y-1">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>AARTO Points Tracker</CardTitle>
@@ -19,7 +20,8 @@ export default function AartoPointsTrackerCard() {
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="font-semibold">Total Points Tracked: 15020, High Risk Entities: 5</p>
+        <p className="font-semibold text-lg">Total Points Tracked: 15020</p>
+        <p className="text-sm">High Risk Entities: 5</p>
         <Button
           variant="outline"
           className="w-full bg-white/20 border-white/30 hover:bg-white/30 text-white"

@@ -41,22 +41,22 @@ const entities = [
 
 export default function OverallComplianceCard() {
   return (
-    <Card className="bg-sky-500 text-white">
+    <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white transition-all hover:shadow-lg hover:-translate-y-1 h-full">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>Overall Compliance</CardTitle>
           <ShieldAlert className="h-5 w-5" />
         </div>
-        <CardDescription className="text-sky-100">
+        <CardDescription className="text-blue-100">
           Compliance status of all companies & associations.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <h3 className="text-lg font-semibold mb-2">Entity Compliance Scores</h3>
-        <div className="border rounded-lg border-sky-300/50">
+        <div className="border rounded-lg border-blue-400/50 bg-blue-500/50">
           <Table>
             <TableHeader>
-              <TableRow className="border-b-sky-300/50 hover:bg-sky-400/50">
+              <TableRow className="border-b-blue-400/50 hover:bg-blue-400/30">
                 <TableHead className="text-white">ENTITY</TableHead>
                 <TableHead className="text-white">TYPE</TableHead>
                 <TableHead className="text-white">SCORE (%)</TableHead>
@@ -67,7 +67,7 @@ export default function OverallComplianceCard() {
               {entities.map((entity) => (
                 <TableRow
                   key={entity.name}
-                  className="border-b-sky-300/50 last:border-b-0 hover:bg-sky-400/50"
+                  className="border-b-blue-400/50 last:border-b-0 hover:bg-blue-400/30"
                 >
                   <TableCell className="font-medium">{entity.name}</TableCell>
                   <TableCell>{entity.type}</TableCell>

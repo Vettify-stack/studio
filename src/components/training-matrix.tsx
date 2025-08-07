@@ -18,93 +18,61 @@ import {
 } from '@/components/ui/table';
 import {
   BarChartHorizontal,
-  Search,
-  PlusCircle,
-  Download,
   CheckCircle2,
-  XCircle,
+  View,
 } from 'lucide-react';
 import { Button } from './ui/button';
-import { Input } from './ui/input';
+import { Badge } from './ui/badge';
 
-const drivers = [
-  { name: 'John Doe', license: true, pdp: false, firstAid: false, firefighting: false },
-  { name: 'Jane Smith', license: true, pdp: true, firstAid: false, firefighting: false },
-  { name: 'Mike Ross', license: true, pdp: true, firstAid: false, firefighting: false },
-  { name: 'Sarah Connor', license: true, pdp: true, firstAid: false, firefighting: false },
+const entities = [
+  { name: 'ABC Transport', compliant: 48, total: 50, rate: 96 },
+  { name: 'Metro Taxi Assoc', compliant: 150, total: 200, rate: 75 },
 ];
 
-const StatusIcon = ({ completed }: { completed: boolean }) => {
-  if (completed) {
-    return <CheckCircle2 className="h-5 w-5 text-green-300" />;
-  }
-  return <XCircle className="h-5 w-5 text-red-300" />;
-};
 
 export default function TrainingMatrix() {
   return (
-    <Card className="bg-green-600 text-white">
+    <Card className="bg-gradient-to-br from-green-500 to-emerald-600 text-white transition-all hover:shadow-lg hover:-translate-y-1">
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle>Training Matrix</CardTitle>
+          <CardTitle>Training & Certification Compliance</CardTitle>
           <BarChartHorizontal className="h-5 w-5" />
         </div>
         <CardDescription className="text-green-100">
-          Track driver training and certifications.
+          Training compliance rates across entities.
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col sm:flex-row gap-2 mb-4">
-          <div className="relative flex-1">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-green-200" />
-            <Input
-              placeholder="Search by driver name..."
-              className="pl-8 bg-green-500/50 border-green-400 placeholder:text-green-200 text-white"
-            />
-          </div>
-          <div className="flex gap-2">
-            <Button variant="outline" className="bg-transparent border-green-300 hover:bg-green-500">
-              <PlusCircle className="mr-2 h-4 w-4" />
-              Assign
-            </Button>
-            <Button variant="outline" className="bg-transparent border-green-300 hover:bg-green-500">
-              <Download className="mr-2 h-4 w-4" />
-              Export
-            </Button>
-          </div>
-        </div>
-        <div className="border rounded-lg border-green-500">
-          <Table>
-            <TableHeader>
-              <TableRow className="border-b-green-500 bg-green-700/80 hover:bg-green-700">
-                <TableHead className="text-white">DRIVER</TableHead>
-                <TableHead className="text-white">DRIVER'S LICENSE</TableHead>
-                <TableHead className="text-white">PDP</TableHead>
-                <TableHead className="text-white">FIRST AID</TableHead>
-                <TableHead className="text-white">FIREFIGHTING</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {drivers.map((driver) => (
-                <TableRow key={driver.name} className="border-b-green-500 hover:bg-green-600/50">
-                  <TableCell className="font-medium">{driver.name}</TableCell>
-                  <TableCell>
-                    <StatusIcon completed={driver.license} />
-                  </TableCell>
-                  <TableCell>
-                    <StatusIcon completed={driver.pdp} />
-                  </TableCell>
-                  <TableCell>
-                    <StatusIcon completed={driver.firstAid} />
-                  </TableCell>
-                  <TableCell>
-                    <StatusIcon completed={driver.firefighting} />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+         <h3 className="text-lg font-semibold mb-2">Training Rates</h3>
+         <div className="border rounded-lg border-green-400/50 bg-green-500/50">
+            <Table>
+                <TableHeader>
+                    <TableRow className="border-b-green-400/50 hover:bg-green-400/30">
+                        <TableHead className="text-white">ENTITY</TableHead>
+                        <TableHead className="text-white">COMPLIANT</TableHead>
+                        <TableHead className="text-white">TOTAL</TableHead>
+                        <TableHead className="text-white">RATE</TableHead>
+                         <TableHead className="text-white">ACTIONS</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                {entities.map((entity) => (
+                    <TableRow key={entity.name} className="border-b-green-400/50 last:border-b-0 hover:bg-green-400/30">
+                        <TableCell className="font-medium">{entity.name}</TableCell>
+                        <TableCell>{entity.compliant}</TableCell>
+                        <TableCell>{entity.total}</TableCell>
+                        <TableCell><Badge variant="outline" className="bg-white/20 border-white/30 text-white">{entity.rate}%</Badge></TableCell>
+                         <TableCell>
+                            <Button size="sm" variant="outline" className="bg-white/20 border-white/30 hover:bg-white/30 text-white">
+                                <View className="mr-2 h-4 w-4" />
+                                View
+                            </Button>
+                        </TableCell>
+                    </TableRow>
+                ))}
+                </TableBody>
+            </Table>
+         </div>
       </CardContent>
     </Card>
   );
