@@ -25,6 +25,7 @@ import DriverComplianceOverview from '@/components/driver-compliance-overview';
 import CompanyPlanAndRewards from '@/components/company-plan-and-rewards';
 import Telemedicine from '@/components/telemedicine';
 import CommunicationsHub from '@/components/communications-hub';
+import GpsTrackingCard from '@/components/gps-tracking-card';
 
 const fleetVehicles: Vehicle[] = [
     {
@@ -243,6 +244,7 @@ export default function FleetPage() {
       </div>
       <div className="space-y-6">
         <CompanyComplianceCard />
+        <GpsTrackingCard />
         <CompanyPlanAndRewards />
         <Telemedicine />
         <CommunicationsHub />
