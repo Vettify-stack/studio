@@ -53,7 +53,7 @@ export default function DriverDashboardPage() {
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {/* Left Column */}
       <div className="lg:col-span-2 space-y-6">
-        <Card>
+        <Card className="transition-all hover:shadow-lg">
           <CardHeader className="flex flex-row items-center gap-4">
             <Avatar className="h-16 w-16">
               <AvatarImage src="https://placehold.co/100x100.png" data-ai-hint="person portrait" />

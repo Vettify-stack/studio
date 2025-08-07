@@ -1,19 +1,23 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
+  CardFooter,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { UploadCloud, FileCheck2, FileClock, FileX2, FileWarning, ShieldAlert, File, MoreVertical, Trash2, Download, Eye, FileUp } from 'lucide-react';
+import { UploadCloud, FileCheck2, FileClock, FileX2, FileWarning, ShieldAlert, File, MoreVertical, Trash2, Download, Eye, FileUp, Loader2, Sparkles, AlertTriangle } from 'lucide-react';
 import type { Document } from '@/lib/types';
 import SafeDate from './safe-date';
+import { Input } from './ui/input';
+import { extractTextFromImage } from '@/app/actions';
+import { Alert, AlertDescription, AlertTitle } from './ui/alert';
 
 const initialDocuments: Document[] = [
   {
@@ -74,7 +78,7 @@ const StatusBadge = ({ status }: { status: Document['status'] }) => {
 
 const DocumentCard = ({ doc }: { doc: Document}) => {
     return (
-        <Card>
+        <Card className="transition-all hover:shadow-md">
             <CardHeader className='pb-2'>
                 <div className='flex items-start justify-between'>
                     <div className='flex items-center gap-2'>
@@ -101,30 +105,91 @@ const DocumentCard = ({ doc }: { doc: Document}) => {
 
 export default function DocumentManagement() {
   const [documents, setDocuments] = useState<Document[]>(initialDocuments);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [ocrResult, setOcrResult] = useState('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setIsLoading(true);
+    setError('');
+    setOcrResult('');
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = async () => {
+      try {
+        const result = await extractTextFromImage(reader.result as string);
+        setOcrResult(result.text);
+      } catch (e) {
+        setError('Failed to extract text from the document. Please try again.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    reader.onerror = () => {
+      setError('Failed to read file.');
+      setIsLoading(false);
+    };
+  };
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
+  };
 
   return (
-    <Card>
+    <Card className="transition-all hover:shadow-lg">
       <CardHeader>
         <div className="flex items-center justify-between">
             <CardTitle>Documents</CardTitle>
-            <div className="flex items-center gap-2">
-                <Button variant="ghost" size="icon">
-                    <UploadCloud className="h-5 w-5" />
-                </Button>
-                 <Button variant="ghost" size="icon">
-                    <FileUp className="h-5 w-5" />
-                </Button>
-            </div>
+            <Button variant="outline" size="sm" onClick={handleUploadClick}>
+                <FileUp className="mr-2 h-4 w-4" />
+                Upload & Scan
+            </Button>
         </div>
         <CardDescription>
-          Upload CV, ID/Passport, Work Permit/Visa, Proof of address.
+          Upload CV, ID/Passport, Work Permit/Visa, Proof of address. Scanned documents will be read by AI.
         </CardDescription>
+        <Input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            className="hidden"
+            accept="image/png, image/jpeg, image/webp"
+        />
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {documents.map((doc) => (
-            <DocumentCard key={doc.id} doc={doc} />
-          ))}
+        <div className="space-y-4">
+            {isLoading && (
+            <div className="flex items-center justify-center rounded-md border border-dashed p-8">
+                <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+                <p className="ml-2">Scanning document...</p>
+            </div>
+            )}
+            {error && (
+            <Alert variant="destructive">
+                <AlertTriangle className="h-4 w-4" />
+                <AlertTitle>Error</AlertTitle>
+                <AlertDescription>{error}</AlertDescription>
+            </Alert>
+            )}
+            {ocrResult && (
+            <Alert>
+                <Sparkles className="h-4 w-4" />
+                <AlertTitle>AI Scan Result</AlertTitle>
+                <AlertDescription className="whitespace-pre-wrap font-mono text-xs max-h-48 overflow-auto">
+                {ocrResult}
+                </AlertDescription>
+            </Alert>
+            )}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {documents.map((doc) => (
+                <DocumentCard key={doc.id} doc={doc} />
+            ))}
+            </div>
         </div>
       </CardContent>
     </Card>
