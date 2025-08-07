@@ -34,6 +34,7 @@ import TrainingMatrix from '@/components/training-matrix';
 import JobPostingCard from '@/components/job-posting-card';
 import MatchingApplicantsCard from '@/components/matching-applicants-card';
 import CompanyDocumentsCard from '@/components/company-documents-card';
+import AartoComplianceCard from '@/components/aarto-compliance-card';
 
 const fleetVehicles: Vehicle[] = [
     {
@@ -262,6 +263,7 @@ export default function FleetPage() {
       </div>
       <div className="space-y-6">
         <CompanyComplianceCard />
+        <AartoComplianceCard />
         <GpsTrackingCard />
         <CompanyPlanAndRewards />
         <Telemedicine />
