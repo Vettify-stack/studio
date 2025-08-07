@@ -44,7 +44,7 @@ export default function CompanyPlanAndRewards() {
                         </Badge>
                     </div>
                     <div className="space-y-1 text-sm text-muted-foreground">
-                        <p>Status: <Badge className="bg-green-100 text-green-800 hover:bg-green-100">Active</Badge></p>
+                        <div className="flex items-center gap-1">Status: <Badge className="bg-green-100 text-green-800 hover:bg-green-100">Active</Badge></div>
                         <p>Next Billing Date: <SafeDate dateString="2025-09-07" /></p>
                         <p>Price: <span className="font-semibold text-foreground">R2499/month</span></p>
                     </div>
