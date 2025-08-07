@@ -16,6 +16,7 @@ export default {
         body: ['Open Sans', ...fontFamily.sans],
       },
       colors: {
+        teal: '#00B8B0',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
