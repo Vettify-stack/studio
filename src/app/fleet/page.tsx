@@ -21,6 +21,7 @@ import { ShieldCheck, AlertTriangle, Car, Users } from 'lucide-react';
 import type { Vehicle } from '@/lib/types';
 import NosyCorner from '@/components/nosy-corner';
 import CompanyComplianceCard from '@/components/company-compliance-card';
+import DriverComplianceOverview from '@/components/driver-compliance-overview';
 
 const fleetVehicles: Vehicle[] = [
     {
@@ -197,6 +198,7 @@ export default function FleetPage() {
               </Card>
             </CardContent>
         </Card>
+        <DriverComplianceOverview />
         <Card>
             <CardHeader>
             <CardTitle>All Vehicles</CardTitle>
