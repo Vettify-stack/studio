@@ -35,6 +35,7 @@ import EmployeeAttendancePerformance from '@/components/employee-attendance-perf
 import DisciplinaryManagementCard from '@/components/disciplinary-management-card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PlatformOverviewCard from '@/components/platform-overview-card';
+import OverallComplianceCard from '@/components/overall-compliance-card';
 
 const FleetPage = dynamic(() => import('@/app/fleet/page'), {
   loading: () => <DashboardSkeleton />,
@@ -75,6 +76,7 @@ const AdminView = () => {
                     <JobPostingCard />
                     <MatchingApplicantsCard />
                 </div>
+                <OverallComplianceCard />
                 <TrainingMatrix />
                 <CompanyDocumentsCard />
                 <VehicleManagementCard />
