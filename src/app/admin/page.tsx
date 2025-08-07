@@ -38,6 +38,7 @@ import PlatformOverviewCard from '@/components/platform-overview-card';
 import OverallComplianceCard from '@/components/overall-compliance-card';
 import AartoPointsTrackerCard from '@/components/aarto-points-tracker-card';
 import VerificationsCenterCard from '@/components/verifications-center-card';
+import RegionalDataCard from '@/components/regional-data-card';
 
 const FleetPage = dynamic(() => import('@/app/fleet/page'), {
   loading: () => <DashboardSkeleton />,
@@ -92,6 +93,7 @@ const AdminView = () => {
                 <NosyCorner />
                 <AartoPointsTrackerCard />
                 <GpsTrackingCard />
+                <RegionalDataCard />
              </div>
         </div>
     )
