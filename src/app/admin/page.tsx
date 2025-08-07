@@ -33,6 +33,7 @@ import VehicleManagementCard from '@/components/vehicle-management-card';
 import CompanyFineManagement from '@/components/company-fine-management';
 import EmployeeAttendancePerformance from '@/components/employee-attendance-performance';
 import DisciplinaryManagementCard from '@/components/disciplinary-management-card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const FleetPage = dynamic(() => import('@/app/fleet/page'), {
   loading: () => <DashboardSkeleton />,
@@ -133,9 +134,16 @@ const AdminView = () => {
     )
 }
 
+const PlaceholderContent = ({ title }: { title: string }) => (
+    <div className="flex items-center justify-center h-96 border-2 border-dashed rounded-lg">
+        <p className="text-muted-foreground">{title} content will be displayed here.</p>
+    </div>
+);
+
 
 export default function AdminDashboardPage() {
   const [view, setView] = useState('admin');
+  const [activeTab, setActiveTab] = useState('overview');
 
   const renderContent = () => {
     switch (view) {
@@ -147,43 +155,72 @@ export default function AdminDashboardPage() {
         return <FadeIn key="gp"><GpDashboardPage /></FadeIn>;
       case 'admin':
       default:
-        return <FadeIn key="admin"><AdminView /></FadeIn>;
+        return (
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+                <TabsList>
+                    <TabsTrigger value="overview">Platform Overview</TabsTrigger>
+                    <TabsTrigger value="user_management">User Management</TabsTrigger>
+                    <TabsTrigger value="referrals">Referrals</TabsTrigger>
+                    <TabsTrigger value="ai_trainer">AI Trainer</TabsTrigger>
+                    <TabsTrigger value="documents">Documents</TabsTrigger>
+                    <TabsTrigger value="services_insights">Services Insights</TabsTrigger>
+                    <TabsTrigger value="medical_insights">Medical Insights</TabsTrigger>
+                </TabsList>
+                <TabsContent value="overview" className="mt-6">
+                    <FadeIn key="admin"><AdminView /></FadeIn>
+                </TabsContent>
+                <TabsContent value="user_management" className="mt-6">
+                     <PlaceholderContent title="User Management" />
+                </TabsContent>
+                <TabsContent value="referrals" className="mt-6">
+                     <PlaceholderContent title="Referrals" />
+                </TabsContent>
+                <TabsContent value="ai_trainer" className="mt-6">
+                     <PlaceholderContent title="AI Trainer" />
+                </TabsContent>
+                <TabsContent value="documents" className="mt-6">
+                     <PlaceholderContent title="Documents" />
+                </TabsContent>
+                <TabsContent value="services_insights" className="mt-6">
+                     <PlaceholderContent title="Services Insights" />
+                </TabsContent>
+                <TabsContent value="medical_insights" className="mt-6">
+                     <PlaceholderContent title="Medical Insights" />
+                </TabsContent>
+            </Tabs>
+        )
     }
   };
 
   return (
     <div className="flex flex-col gap-6">
-      <Card>
-        <CardHeader>
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="flex items-center gap-4">
-              <ShieldCheck className="w-8 h-8 text-primary" />
-              <div>
-                <CardTitle>Vettify Super Admin</CardTitle>
-                <CardDescription>
-                  Platform-wide management and oversight.
-                </CardDescription>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-muted-foreground">
-                Switch View:
-              </span>
-              <Select value={view} onValueChange={setView}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Select a view" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="admin">Super Admin</SelectItem>
-                  <SelectItem value="company">Company View</SelectItem>
-                  <SelectItem value="driver">Driver View</SelectItem>
-                  <SelectItem value="gp">Medical GP View</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="flex items-center gap-4">
+          <ShieldCheck className="w-8 h-8 text-primary" />
+          <div>
+            <h1 className="text-2xl font-bold">Super Admin Dashboard</h1>
+            <p className="text-muted-foreground">
+              Platform-wide management and oversight.
+            </p>
           </div>
-        </CardHeader>
-      </Card>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium text-muted-foreground">
+            Switch View:
+          </span>
+          <Select value={view} onValueChange={setView}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select a view" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="admin">Super Admin</SelectItem>
+              <SelectItem value="company">Company View</SelectItem>
+              <SelectItem value="driver">Driver View</SelectItem>
+              <SelectItem value="gp">Medical GP View</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
       
       {renderContent()}
 
