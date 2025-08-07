@@ -19,10 +19,20 @@ import {
   FilePlus,
   Pencil,
   History,
+  Users,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import type { Consultation } from '@/lib/types';
 import SafeDate from '@/components/safe-date';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 
 const consultations: Consultation[] = [
   {
@@ -47,6 +57,13 @@ const consultations: Consultation[] = [
     status: 'Completed',
   },
 ];
+
+const patients = [
+    { id: 'p-1', name: 'John Mokoena', lastSeen: '2024-08-14', totalConsults: 3 },
+    { id: 'p-2', name: 'Sarah Williams', lastSeen: '2024-07-22', totalConsults: 1 },
+    { id: 'p-3', name: 'Peter Jones', lastSeen: '2024-08-14', totalConsults: 5 },
+    { id: 'p-4', name: 'Mary Smith', lastSeen: '2023-11-01', totalConsults: 2 },
+]
 
 const StatusBadge = ({ status }: { status: Consultation['status'] }) => {
   const variant = status === 'Upcoming' ? 'default' : 'secondary';
@@ -168,6 +185,55 @@ export default function GpDashboardPage() {
           ))}
         </CardContent>
       </Card>
+
+      <Card>
+        <CardHeader>
+            <div className="flex items-center gap-2">
+                <Users className="h-5 w-5 text-primary" />
+                <CardTitle>View Patients</CardTitle>
+            </div>
+          <CardDescription>
+            Access and manage your patient records.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Patient</TableHead>
+                <TableHead>Last Seen</TableHead>
+                <TableHead className="text-right">Consults</TableHead>
+                <TableHead className="w-[100px]">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {patients.map((patient) => (
+                <TableRow key={patient.id}>
+                  <TableCell>
+                    <div className="flex items-center gap-3">
+                      <Avatar className="h-9 w-9">
+                         <AvatarImage src={`https://placehold.co/100x100.png`} data-ai-hint="person portrait" />
+                         <AvatarFallback>{patient.name.charAt(0)}</AvatarFallback>
+                      </Avatar>
+                      <div className="font-medium">{patient.name}</div>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <SafeDate dateString={patient.lastSeen} />
+                  </TableCell>
+                  <TableCell className="text-right">{patient.totalConsults}</TableCell>
+                   <TableCell>
+                    <Button variant="outline" size="sm">
+                      View Profile
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+
     </div>
   );
 }
