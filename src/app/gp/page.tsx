@@ -9,7 +9,17 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Video, User, Clock, Check, MoreVertical } from 'lucide-react';
+import {
+  Video,
+  User,
+  Clock,
+  Check,
+  MoreVertical,
+  CalendarCheck,
+  FilePlus,
+  Pencil,
+  History,
+} from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import type { Consultation } from '@/lib/types';
 import SafeDate from '@/components/safe-date';
@@ -54,6 +64,68 @@ export default function GpDashboardPage() {
           </CardDescription>
         </CardHeader>
       </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Overview</CardTitle>
+          <CardDescription>A summary of your key activities.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  Today's Appointments
+                </CardTitle>
+                <CalendarCheck className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">2</div>
+                <p className="text-xs text-muted-foreground">
+                  1 completed, 1 upcoming
+                </p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  Pending Notes
+                </CardTitle>
+                <Pencil className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">1</div>
+                 <p className="text-xs text-muted-foreground">
+                  From yesterday's consults
+                </p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  Follow-ups Due
+                </CardTitle>
+                <History className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">3</div>
+                 <p className="text-xs text-muted-foreground">
+                  This week
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <Button className="flex-1">
+              <FilePlus className="mr-2 h-4 w-4" /> New Note
+            </Button>
+            <Button variant="outline" className="flex-1">
+              <History className="mr-2 h-4 w-4" /> Schedule Follow-up
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
 
       <Card>
         <CardHeader>
