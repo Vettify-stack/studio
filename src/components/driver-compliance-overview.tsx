@@ -51,7 +51,7 @@ const drivers = [
 
 export default function DriverComplianceOverview() {
   return (
-    <Card>
+    <Card className="transition-all hover:shadow-lg hover:-translate-y-1">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>Driver Compliance</CardTitle>

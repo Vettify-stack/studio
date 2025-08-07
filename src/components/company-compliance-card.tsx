@@ -18,7 +18,7 @@ export default function CompanyComplianceCard() {
     const compliancePercentage = 85;
     
   return (
-    <Card className="bg-primary text-primary-foreground">
+    <Card className="bg-primary text-primary-foreground transition-all hover:shadow-lg hover:-translate-y-1 h-full">
       <CardHeader>
         <div className="flex justify-between items-center">
           <CardTitle>Company Compliance</CardTitle>

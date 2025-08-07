@@ -1,3 +1,4 @@
+
 'use client';
 
 import {
@@ -38,7 +39,7 @@ const documents = [
 
 export default function CompanyDocumentsCard() {
   return (
-    <Card>
+    <Card className="transition-all hover:shadow-lg hover:-translate-y-1">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>Company Documents</CardTitle>

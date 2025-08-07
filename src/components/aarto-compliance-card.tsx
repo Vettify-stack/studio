@@ -1,3 +1,4 @@
+
 'use client';
 
 import {
@@ -11,7 +12,7 @@ import { CheckSquare, AlertCircle } from 'lucide-react';
 
 export default function AartoComplianceCard() {
   return (
-    <Card className="bg-orange-500 text-white">
+    <Card className="bg-orange-500 text-white transition-all hover:shadow-lg hover:-translate-y-1 h-full">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>AARTO Compliance</CardTitle>

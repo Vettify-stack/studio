@@ -73,7 +73,7 @@ export default function EmployeeAttendancePerformance() {
   };
 
   return (
-    <Card>
+    <Card className="transition-all hover:shadow-lg hover:-translate-y-1">
       <CardHeader>
         <CardTitle>Employee Attendance & Performance</CardTitle>
         <CardDescription>

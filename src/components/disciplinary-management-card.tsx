@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -72,7 +73,7 @@ export default function DisciplinaryManagementCard() {
   };
 
   return (
-    <Card className="bg-purple-50 border border-purple-200">
+    <Card className="bg-purple-50 border border-purple-200 transition-all hover:shadow-lg hover:-translate-y-1">
       <CardHeader>
         <div className="flex items-center gap-3">
           <div className="p-2 bg-purple-100 rounded-md">

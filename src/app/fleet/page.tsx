@@ -34,6 +34,7 @@ import TrainingMatrix from '@/components/training-matrix';
 import CompanyDocumentsCard from '@/components/company-documents-card';
 import AartoComplianceCard from '@/components/aarto-compliance-card';
 import JobMarketOverviewCard from '@/components/job-market-overview-card';
+import FineManagementCard from '@/components/fine-management';
 
 const fleetVehicles: Vehicle[] = [
     {
@@ -92,7 +93,7 @@ const fleetVehicles: Vehicle[] = [
     make: 'Isuzu',
     model: 'D-Max',
     type: 'Delivery',
-    status: 'Non-Compliant',
+    status: 'Non-compliant',
     licenseExpiry: '2023-12-01',
     fines: 3,
   },
@@ -156,116 +157,140 @@ export default function FleetPage() {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      <div className="lg:col-span-2 flex flex-col gap-8">
-        <Card className="transition-all hover:shadow-lg">
-            <CardHeader>
-                <div className="flex items-center gap-4">
-                <Users className="w-8 h-8 text-primary" />
-                <div>
-                  <CardTitle>Fleet Compliance Overview</CardTitle>
-                  <CardDescription>
-                    A real-time look at your entire fleet's compliance status.
-                  </CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent className="grid gap-6 md:grid-cols-3">
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Compliant</CardTitle>
-                  <ShieldCheck className="h-4 w-4 text-green-500" />
+        <div className="lg:col-span-3 flex flex-col gap-8">
+             <Card className="transition-all hover:shadow-lg">
+                <CardHeader>
+                    <div className="flex items-center gap-4">
+                    <Users className="w-8 h-8 text-primary" />
+                    <div>
+                      <CardTitle>Fleet Compliance Overview</CardTitle>
+                      <CardDescription>
+                        A real-time look at your entire fleet's compliance status.
+                      </CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="grid gap-6 md:grid-cols-3">
+                  <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                      <CardTitle className="text-sm font-medium">Compliant</CardTitle>
+                      <ShieldCheck className="h-4 w-4 text-green-500" />
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold">{compliantCount}</div>
+                      <p className="text-xs text-muted-foreground">
+                        Vehicles meeting all requirements
+                      </p>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                      <CardTitle className="text-sm font-medium">At Risk</CardTitle>
+                      <AlertTriangle className="h-4 w-4 text-yellow-500" />
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold">{atRiskCount}</div>
+                      <p className="text-xs text-muted-foreground">
+                        Vehicles with upcoming expiries or issues
+                      </p>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                      <CardTitle className="text-sm font-medium">
+                        Non-Compliant
+                      </CardTitle>
+                      <AlertTriangle className="h-4 w-4 text-red-500" />
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold">{nonCompliantCount}</div>
+                      <p className="text-xs text-muted-foreground">
+                        Vehicles with violations or expired documents
+                      </p>
+                    </CardContent>
+                  </Card>
+                </CardContent>
+            </Card>
+        </div>
+        <div className="lg:col-span-1 space-y-6">
+            <CompanyComplianceCard />
+            <CompanyPlanAndRewards />
+        </div>
+         <div className="lg:col-span-1 space-y-6">
+            <AartoComplianceCard />
+             <Telemedicine />
+        </div>
+         <div className="lg:col-span-1 space-y-6">
+            <CommunicationsHub />
+            <NosyCorner />
+        </div>
+        <div className="lg:col-span-3">
+             <GpsTrackingCard />
+        </div>
+        <div className="lg:col-span-3">
+            <JobMarketOverviewCard />
+        </div>
+        <div className="lg:col-span-3">
+            <TrainingMatrix />
+        </div>
+        <div className="lg:col-span-3">
+            <CompanyDocumentsCard />
+        </div>
+        <div className="lg:col-span-3">
+            <VehicleManagementCard />
+        </div>
+        <div className="lg:col-span-3">
+            <FineManagementCard />
+        </div>
+         <div className="lg:col-span-3">
+            <EmployeeAttendancePerformance />
+        </div>
+         <div className="lg:col-span-3">
+            <DisciplinaryManagementCard />
+        </div>
+        <div className="lg:col-span-3">
+            <DriverComplianceOverview />
+        </div>
+        <div className="lg:col-span-3">
+            <Card className="transition-all hover:shadow-lg">
+                <CardHeader>
+                <CardTitle>All Vehicles</CardTitle>
+                <CardDescription>
+                    Detailed list of all vehicles in your fleet.
+                </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{compliantCount}</div>
-                  <p className="text-xs text-muted-foreground">
-                    Vehicles meeting all requirements
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">At Risk</CardTitle>
-                  <AlertTriangle className="h-4 w-4 text-yellow-500" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{atRiskCount}</div>
-                  <p className="text-xs text-muted-foreground">
-                    Vehicles with upcoming expiries or issues
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Non-Compliant
-                  </CardTitle>
-                  <AlertTriangle className="h-4 w-4 text-red-500" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{nonCompliantCount}</div>
-                  <p className="text-xs text-muted-foreground">
-                    Vehicles with violations or expired documents
-                  </p>
-                </CardContent>
-              </Card>
-            </CardContent>
-        </Card>
-        <JobMarketOverviewCard />
-        <TrainingMatrix />
-        <CompanyDocumentsCard />
-        <VehicleManagementCard />
-        <CompanyFineManagement />
-        <EmployeeAttendancePerformance />
-        <DisciplinaryManagementCard />
-        <DriverComplianceOverview />
-        <Card className="transition-all hover:shadow-lg">
-            <CardHeader>
-            <CardTitle>All Vehicles</CardTitle>
-            <CardDescription>
-                Detailed list of all vehicles in your fleet.
-            </CardDescription>
-            </CardHeader>
-            <CardContent>
-            <Table>
-                <TableHeader>
-                <TableRow>
-                    <TableHead>Registration</TableHead>
-                    <TableHead>Vehicle</TableHead>
-                    <TableHead>Type</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="text-right">Fines</TableHead>
-                </TableRow>
-                </TableHeader>
-                <TableBody>
-                {fleetVehicles.map((vehicle) => (
-                    <TableRow key={vehicle.id}>
-                    <TableCell className="font-medium">
-                        {vehicle.registration}
-                    </TableCell>
-                    <TableCell>
-                        {vehicle.make} {vehicle.model}
-                    </TableCell>
-                    <TableCell>{vehicle.type}</TableCell>
-                    <TableCell>
-                        <StatusBadge status={vehicle.status} />
-                    </TableCell>
-                    <TableCell className="text-right">{vehicle.fines}</TableCell>
+                <Table>
+                    <TableHeader>
+                    <TableRow>
+                        <TableHead>Registration</TableHead>
+                        <TableHead>Vehicle</TableHead>
+                        <TableHead>Type</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead className="text-right">Fines</TableHead>
                     </TableRow>
-                ))}
-                </TableBody>
-            </Table>
-            </CardContent>
-        </Card>
-      </div>
-      <div className="space-y-6">
-        <CompanyComplianceCard />
-        <AartoComplianceCard />
-        <GpsTrackingCard />
-        <CompanyPlanAndRewards />
-        <Telemedicine />
-        <CommunicationsHub />
-        <NosyCorner />
-      </div>
+                    </TableHeader>
+                    <TableBody>
+                    {fleetVehicles.map((vehicle) => (
+                        <TableRow key={vehicle.id}>
+                        <TableCell className="font-medium">
+                            {vehicle.registration}
+                        </TableCell>
+                        <TableCell>
+                            {vehicle.make} {vehicle.model}
+                        </TableCell>
+                        <TableCell>{vehicle.type}</TableCell>
+                        <TableCell>
+                            <StatusBadge status={vehicle.status} />
+                        </TableCell>
+                        <TableCell className="text-right">{vehicle.fines}</TableCell>
+                        </TableRow>
+                    ))}
+                    </TableBody>
+                </Table>
+                </CardContent>
+            </Card>
+        </div>
     </div>
   );
 }
