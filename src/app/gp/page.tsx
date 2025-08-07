@@ -22,6 +22,9 @@ import {
   History,
   Users,
   Search,
+  BookOpen,
+  PlusCircle,
+  Maximize2,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import type { Consultation } from '@/lib/types';
@@ -37,6 +40,7 @@ import {
 } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
 import PatientProfile from '@/components/patient-profile';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const consultations: Consultation[] = [
   {
@@ -69,9 +73,33 @@ const patients = [
     { id: 'p-4', patientId: 'PT-202311-004', name: 'Mary Smith', lastSeen: '2023-11-01', totalConsults: 2 },
 ]
 
-const StatusBadge = ({ status }: { status: Consultation['status'] }) => {
-  const variant = status === 'Upcoming' ? 'default' : 'secondary';
-  return <Badge variant={variant}>{status}</Badge>;
+const recentNotes = [
+  {
+    date: '2025-08-02',
+    patient: 'Emily Doe',
+    type: 'SOAP',
+    summary: 'Routine checkup, patient healthy.',
+    status: 'Signed',
+  },
+  {
+    date: '2025-07-26',
+    patient: 'David Williams',
+    type: 'Follow-up',
+    summary: 'Condition improving, continue medication.',
+    status: 'Signed',
+  },
+];
+
+const StatusBadge = ({ status }: { status: Consultation['status'] | 'Signed' }) => {
+  const statusConfig: Record<typeof status, { variant: "default" | "secondary" | "destructive" | "outline", className?: string }> = {
+    Upcoming: { variant: 'default' },
+    Completed: { variant: 'secondary' },
+    Cancelled: { variant: 'destructive' },
+    Signed: { variant: 'outline', className: 'bg-green-100 text-green-800 border-green-200' },
+  };
+
+  const config = statusConfig[status];
+  return <Badge variant={config.variant} className={config.className}>{status}</Badge>;
 };
 
 export default function GpDashboardPage() {
@@ -150,6 +178,74 @@ export default function GpDashboardPage() {
               <History className="mr-2 h-4 w-4" /> Schedule Follow-up
             </Button>
           </div>
+        </CardContent>
+      </Card>
+      
+      <Card>
+        <CardHeader>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <BookOpen className="h-6 w-6 text-primary" />
+              <CardTitle>Clinical Notes & Documentation</CardTitle>
+            </div>
+            <Button variant="outline">
+              <PlusCircle className="mr-2 h-4 w-4" />
+              New SOAP Note
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <Tabs defaultValue="recent">
+            <TabsList>
+              <TabsTrigger value="recent">Recent Notes</TabsTrigger>
+              <TabsTrigger value="templates">Templates</TabsTrigger>
+              <TabsTrigger value="drafts">Drafts (0)</TabsTrigger>
+            </TabsList>
+            <TabsContent value="recent" className="mt-4">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Date</TableHead>
+                    <TableHead>Patient</TableHead>
+                    <TableHead>Type</TableHead>
+                    <TableHead>Summary</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {recentNotes.map((note, index) => (
+                    <TableRow key={index}>
+                      <TableCell>
+                        <SafeDate dateString={note.date} />
+                      </TableCell>
+                      <TableCell>{note.patient}</TableCell>
+                      <TableCell>{note.type}</TableCell>
+                      <TableCell>{note.summary}</TableCell>
+                      <TableCell>
+                        <StatusBadge status={note.status as 'Signed'} />
+                      </TableCell>
+                      <TableCell>
+                        <Button variant="ghost" size="icon">
+                          <Maximize2 className="h-4 w-4" />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TabsContent>
+            <TabsContent value="templates" className="mt-4">
+              <div className="text-center p-8 border-2 border-dashed rounded-lg">
+                <p className="text-muted-foreground">No templates available.</p>
+              </div>
+            </TabsContent>
+            <TabsContent value="drafts" className="mt-4">
+              <div className="text-center p-8 border-2 border-dashed rounded-lg">
+                <p className="text-muted-foreground">No drafts saved.</p>
+              </div>
+            </TabsContent>
+          </Tabs>
         </CardContent>
       </Card>
 
@@ -255,3 +351,5 @@ export default function GpDashboardPage() {
     </div>
   );
 }
+
+    
