@@ -23,6 +23,16 @@ import CoreDataIntegrationsCard from '@/components/core-data-integrations-card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import NosyCorner from '@/components/nosy-corner';
+import AartoComplianceCard from '@/components/aarto-compliance-card';
+import GpsTrackingCard from '@/components/gps-tracking-card';
+import TrainingMatrix from '@/components/training-matrix';
+import JobPostingCard from '@/components/job-posting-card';
+import MatchingApplicantsCard from '@/components/matching-applicants-card';
+import CompanyDocumentsCard from '@/components/company-documents-card';
+import VehicleManagementCard from '@/components/vehicle-management-card';
+import CompanyFineManagement from '@/components/company-fine-management';
+import EmployeeAttendancePerformance from '@/components/employee-attendance-performance';
+import DisciplinaryManagementCard from '@/components/disciplinary-management-card';
 
 const FleetPage = dynamic(() => import('@/app/fleet/page'), {
   loading: () => <DashboardSkeleton />,
@@ -102,37 +112,22 @@ const AdminView = () => {
                     </CardContent>
                     </Card>
                 </div>
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Recent Activity</CardTitle>
-                        <CardDescription>An overview of recent platform activities.</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-center p-8 border-2 border-dashed rounded-lg">
-                            <p className="text-muted-foreground">No recent activity to display.</p>
-                    </div>
-                    </CardContent>
-                </Card>
-                <Card>
-                <CardHeader>
-                    <CardTitle>Driver Trainer AI Knowledge Base</CardTitle>
-                    <CardDescription>
-                    Upload training modules to be processed by the AI.
-                    </CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <div className="flex flex-col sm:flex-row gap-4">
-                    <Input type="file" className="flex-grow" />
-                    <Button>
-                        <FileUp className="mr-2 h-4 w-4" /> Upload Module
-                    </Button>
-                    </div>
-                </CardContent>
-                </Card>
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <JobPostingCard />
+                    <MatchingApplicantsCard />
+                </div>
+                <TrainingMatrix />
+                <CompanyDocumentsCard />
+                <VehicleManagementCard />
+                <CompanyFineManagement />
+                <EmployeeAttendancePerformance />
+                <DisciplinaryManagementCard />
                 <CoreDataIntegrationsCard />
             </div>
              <div className="space-y-6">
                 <NosyCorner />
+                <AartoComplianceCard />
+                <GpsTrackingCard />
              </div>
         </div>
     )
