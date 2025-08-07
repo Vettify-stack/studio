@@ -30,6 +30,7 @@ import EmployeeAttendancePerformance from '@/components/employee-attendance-perf
 import CompanyFineManagement from '@/components/company-fine-management';
 import VehicleManagementCard from '@/components/vehicle-management-card';
 import DisciplinaryManagementCard from '@/components/disciplinary-management-card';
+import TrainingMatrix from '@/components/training-matrix';
 
 const fleetVehicles: Vehicle[] = [
     {
@@ -206,6 +207,7 @@ export default function FleetPage() {
               </Card>
             </CardContent>
         </Card>
+        <TrainingMatrix />
         <VehicleManagementCard />
         <CompanyFineManagement />
         <EmployeeAttendancePerformance />
