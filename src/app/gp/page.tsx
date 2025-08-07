@@ -1,6 +1,7 @@
 
 'use client';
 
+import { useState } from 'react';
 import {
   Card,
   CardContent,
@@ -20,6 +21,7 @@ import {
   Pencil,
   History,
   Users,
+  Search,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import type { Consultation } from '@/lib/types';
@@ -33,6 +35,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { Input } from '@/components/ui/input';
+import PatientProfile from '@/components/patient-profile';
 
 const consultations: Consultation[] = [
   {
@@ -59,10 +63,10 @@ const consultations: Consultation[] = [
 ];
 
 const patients = [
-    { id: 'p-1', name: 'John Mokoena', lastSeen: '2024-08-14', totalConsults: 3 },
-    { id: 'p-2', name: 'Sarah Williams', lastSeen: '2024-07-22', totalConsults: 1 },
-    { id: 'p-3', name: 'Peter Jones', lastSeen: '2024-08-14', totalConsults: 5 },
-    { id: 'p-4', name: 'Mary Smith', lastSeen: '2023-11-01', totalConsults: 2 },
+    { id: 'p-1', patientId: 'PT-202408-001', name: 'John Mokoena', lastSeen: '2024-08-14', totalConsults: 3 },
+    { id: 'p-2', patientId: 'PT-202407-002', name: 'Sarah Williams', lastSeen: '2024-07-22', totalConsults: 1 },
+    { id: 'p-3', patientId: 'PT-202408-003', name: 'Peter Jones', lastSeen: '2024-08-14', totalConsults: 5 },
+    { id: 'p-4', patientId: 'PT-202311-004', name: 'Mary Smith', lastSeen: '2023-11-01', totalConsults: 2 },
 ]
 
 const StatusBadge = ({ status }: { status: Consultation['status'] }) => {
@@ -71,6 +75,12 @@ const StatusBadge = ({ status }: { status: Consultation['status'] }) => {
 };
 
 export default function GpDashboardPage() {
+  const [selectedPatient, setSelectedPatient] = useState<typeof patients[0] | null>(null);
+
+  if (selectedPatient) {
+      return <PatientProfile patient={selectedPatient} onBack={() => setSelectedPatient(null)} />
+  }
+
   return (
     <div className="flex flex-col gap-6">
       <Card>
@@ -188,9 +198,15 @@ export default function GpDashboardPage() {
 
       <Card>
         <CardHeader>
-            <div className="flex items-center gap-2">
-                <Users className="h-5 w-5 text-primary" />
-                <CardTitle>View Patients</CardTitle>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                 <div className="flex items-center gap-2">
+                    <Users className="h-5 w-5 text-primary" />
+                    <CardTitle>Patient Records</CardTitle>
+                </div>
+                 <div className="relative">
+                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Input placeholder="Search by name or ID..." className="pl-8 sm:w-[300px]" />
+                </div>
             </div>
           <CardDescription>
             Access and manage your patient records.
@@ -201,6 +217,7 @@ export default function GpDashboardPage() {
             <TableHeader>
               <TableRow>
                 <TableHead>Patient</TableHead>
+                <TableHead>Patient ID</TableHead>
                 <TableHead>Last Seen</TableHead>
                 <TableHead className="text-right">Consults</TableHead>
                 <TableHead className="w-[100px]">Actions</TableHead>
@@ -218,13 +235,14 @@ export default function GpDashboardPage() {
                       <div className="font-medium">{patient.name}</div>
                     </div>
                   </TableCell>
+                  <TableCell>{patient.patientId}</TableCell>
                   <TableCell>
                     <SafeDate dateString={patient.lastSeen} />
                   </TableCell>
                   <TableCell className="text-right">{patient.totalConsults}</TableCell>
                    <TableCell>
-                    <Button variant="outline" size="sm">
-                      View Profile
+                    <Button variant="outline" size="sm" onClick={() => setSelectedPatient(patient)}>
+                      View
                     </Button>
                   </TableCell>
                 </TableRow>
