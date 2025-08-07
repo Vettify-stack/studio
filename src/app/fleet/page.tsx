@@ -27,6 +27,7 @@ import Telemedicine from '@/components/telemedicine';
 import CommunicationsHub from '@/components/communications-hub';
 import GpsTrackingCard from '@/components/gps-tracking-card';
 import EmployeeAttendancePerformance from '@/components/employee-attendance-performance';
+import CompanyFineManagement from '@/components/company-fine-management';
 
 const fleetVehicles: Vehicle[] = [
     {
@@ -203,6 +204,7 @@ export default function FleetPage() {
               </Card>
             </CardContent>
         </Card>
+        <CompanyFineManagement />
         <EmployeeAttendancePerformance />
         <DriverComplianceOverview />
         <Card>
