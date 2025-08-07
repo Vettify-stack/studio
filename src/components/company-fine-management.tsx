@@ -16,8 +16,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { AlertTriangle, UploadCloud } from 'lucide-react';
+import { AlertTriangle, CreditCard, ShieldAlert, UploadCloud } from 'lucide-react';
 import SafeDate from './safe-date';
+import { Button } from './ui/button';
 
 const fines = [
   {
@@ -91,6 +92,18 @@ export default function CompanyFineManagement() {
             </Table>
           </div>
         </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Button variant="secondary" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+                <CreditCard className="mr-2 h-4 w-4" />
+                Pay Now
+            </Button>
+            <Button variant="secondary" className="bg-yellow-500 hover:bg-yellow-600 text-white">
+                <ShieldAlert className="mr-2 h-4 w-4" />
+                Dispute Selected
+            </Button>
+        </div>
+
         <div className="border-2 border-dashed border-destructive-foreground/50 rounded-lg p-8 flex flex-col items-center justify-center text-center">
           <UploadCloud className="h-10 w-10 text-destructive-foreground/80 mb-4" />
           <p className="font-semibold mb-1 text-destructive-foreground">
