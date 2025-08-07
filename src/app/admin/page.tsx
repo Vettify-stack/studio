@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/select';
 import { ShieldCheck, Users, BarChart2, Loader2 } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
+import CoreDataIntegrationsCard from '@/components/core-data-integrations-card';
 
 const FleetPage = dynamic(() => import('@/app/fleet/page'), {
   loading: () => <DashboardSkeleton />,
@@ -104,6 +105,7 @@ const AdminView = () => {
                    </div>
                 </CardContent>
              </Card>
+             <CoreDataIntegrationsCard />
         </div>
     )
 }
