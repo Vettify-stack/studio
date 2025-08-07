@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "genkit:dev",
     "genkit:dev": "genkit start -- tsx src/ai/dev.ts",
     "build": "next build",
     "start": "next start",
