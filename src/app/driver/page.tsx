@@ -22,6 +22,7 @@ import Telemedicine from '@/components/telemedicine';
 import DriverComplianceCard from '@/components/driver-compliance-card';
 import FineManagementCard from '@/components/fine-management';
 import TrainingCertificatesCard from '@/components/training-certificates-card';
+import AIDriverTrainer from '@/components/ai-driver-trainer';
 
 const driverData: DriverProfile = {
   name: 'John Mokoena',
@@ -109,6 +110,7 @@ export default function DriverDashboardPage() {
           <ComplianceScore score={driverData.complianceScore} />
           <QRCodeCard qrCodeUrl={driverData.qrCodeUrl} />
           <Telemedicine />
+          <AIDriverTrainer />
       </div>
     </div>
   );
