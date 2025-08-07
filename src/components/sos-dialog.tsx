@@ -14,6 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogFooter,
+  DialogClose,
 } from '@/components/ui/dialog';
 import {
     AlertDialog,
@@ -84,14 +85,14 @@ export default function SosDialog() {
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <Button variant="destructive" className="w-full justify-start">
+        <Button variant="destructive" className="w-full justify-start bg-red-600 hover:bg-red-700 text-white">
           <Siren className="mr-2 h-4 w-4" />
           SOS Report
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
+            <form>
                 <DialogHeader>
                 <DialogTitle>Emergency SOS Report</DialogTitle>
                 <DialogDescription>
@@ -142,6 +143,9 @@ export default function SosDialog() {
                     />
                 </div>
                 <DialogFooter>
+                    <DialogClose asChild>
+                        <Button type="button" variant="secondary">Cancel</Button>
+                    </DialogClose>
                     <AlertDialog>
                         <AlertDialogTrigger asChild>
                             <Button type="button" variant="destructive" disabled={!form.formState.isValid || isSubmitting}>
