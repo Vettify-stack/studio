@@ -17,7 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { ShieldCheck, Users, BarChart2, Loader2, Upload, FileUp } from 'lucide-react';
+import { ShieldCheck, Users, BarChart2, Loader2, FileUp } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import CoreDataIntegrationsCard from '@/components/core-data-integrations-card';
 import { Button } from '@/components/ui/button';
@@ -29,6 +29,10 @@ const FleetPage = dynamic(() => import('@/app/fleet/page'), {
 const DriverDashboardPage = dynamic(() => import('@/app/driver/page'), {
   loading: () => <DashboardSkeleton />,
 });
+const GpDashboardPage = dynamic(() => import('@/app/gp/page'), {
+  loading: () => <DashboardSkeleton />,
+});
+
 
 const FadeIn = ({ children }: { children: React.ReactNode }) => {
     return (
@@ -135,12 +139,14 @@ export default function AdminDashboardPage() {
   const renderContent = () => {
     switch (view) {
       case 'company':
-        return <FadeIn><FleetPage /></FadeIn>;
+        return <FadeIn key="company"><FleetPage /></FadeIn>;
       case 'driver':
-        return <FadeIn><DriverDashboardPage /></FadeIn>;
+        return <FadeIn key="driver"><DriverDashboardPage /></FadeIn>;
+       case 'gp':
+        return <FadeIn key="gp"><GpDashboardPage /></FadeIn>;
       case 'admin':
       default:
-        return <FadeIn><AdminView /></FadeIn>;
+        return <FadeIn key="admin"><AdminView /></FadeIn>;
     }
   };
 
@@ -170,6 +176,7 @@ export default function AdminDashboardPage() {
                   <SelectItem value="admin">Super Admin</SelectItem>
                   <SelectItem value="company">Company View</SelectItem>
                   <SelectItem value="driver">Driver View</SelectItem>
+                  <SelectItem value="gp">Medical GP View</SelectItem>
                 </SelectContent>
               </Select>
             </div>

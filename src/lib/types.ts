@@ -50,6 +50,14 @@ export interface Appointment {
   status: 'Confirmed' | 'Pending';
 }
 
+export interface Consultation {
+    id: string;
+    patientName: string;
+    date: string;
+    time: string;
+    status: 'Upcoming' | 'Completed' | 'Cancelled';
+}
+
 export interface Document {
   id: string;
   name: string;
