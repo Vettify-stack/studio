@@ -63,5 +63,7 @@ export interface Document {
   name: string;
   status: 'Verified' | 'Expiring Soon' | 'Missing' | 'Expired' | 'Pending' | 'Flagged';
   expiryDate?: string;
+  uploadDate?: string;
+  details?: string;
   adminActions?: ('Approve' | 'Flag' | 'Suspend')[];
 }
