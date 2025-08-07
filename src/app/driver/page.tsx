@@ -21,6 +21,7 @@ import QRCodeCard from '@/components/qr-code-card';
 import Telemedicine from '@/components/telemedicine';
 import DriverComplianceCard from '@/components/driver-compliance-card';
 import FineManagementCard from '@/components/fine-management';
+import TrainingCertificatesCard from '@/components/training-certificates-card';
 
 const driverData: DriverProfile = {
   name: 'John Mokoena',
@@ -100,6 +101,7 @@ export default function DriverDashboardPage() {
         <DriverComplianceCard />
         <FineManagementCard />
         <DocumentManagement />
+        <TrainingCertificatesCard />
       </div>
 
       {/* Right Column */}
