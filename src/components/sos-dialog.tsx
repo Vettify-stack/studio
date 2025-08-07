@@ -52,7 +52,6 @@ const sosSchema = z.object({
 
 export default function SosDialog() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
@@ -73,7 +72,6 @@ export default function SosDialog() {
     console.log('SOS Report:', values);
 
     setIsSubmitting(false);
-    setIsAlertOpen(false);
     setIsDialogOpen(false);
     form.reset();
     
@@ -92,81 +90,83 @@ export default function SosDialog() {
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Emergency SOS Report</DialogTitle>
-          <DialogDescription>
-            Use this form only in an emergency. Your employer will be notified immediately.
-          </DialogDescription>
-        </DialogHeader>
         <Form {...form}>
-          <div className="space-y-4 py-4">
-            <FormField
-              control={form.control}
-              name="incidentType"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Type of Incident</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select an incident type" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="mechanical_failure">Mechanical Failure</SelectItem>
-                      <SelectItem value="accident">Accident</SelectItem>
-                      <SelectItem value="medical_emergency">Medical Emergency</SelectItem>
-                      <SelectItem value="theft_or_hijacking">Theft or Hijacking</SelectItem>
-                      <SelectItem value="unexpected_delay">Report Unexpected Delay</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Brief Description</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Briefly describe the situation. e.g., 'Engine overheating on N1 highway near Midrand.'"
-                      {...field}
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+                <DialogHeader>
+                <DialogTitle>Emergency SOS Report</DialogTitle>
+                <DialogDescription>
+                    Use this form only in an emergency. Your employer will be notified immediately.
+                </DialogDescription>
+                </DialogHeader>
+                <div className="space-y-4 py-4">
+                    <FormField
+                    control={form.control}
+                    name="incidentType"
+                    render={({ field }) => (
+                        <FormItem>
+                        <FormLabel>Type of Incident</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select an incident type" />
+                            </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                            <SelectItem value="mechanical_failure">Mechanical Failure</SelectItem>
+                            <SelectItem value="accident">Accident</SelectItem>
+                            <SelectItem value="medical_emergency">Medical Emergency</SelectItem>
+                            <SelectItem value="theft_or_hijacking">Theft or Hijacking</SelectItem>
+                            <SelectItem value="unexpected_delay">Report Unexpected Delay</SelectItem>
+                            <SelectItem value="other">Other</SelectItem>
+                            </SelectContent>
+                        </Select>
+                        <FormMessage />
+                        </FormItem>
+                    )}
                     />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <DialogFooter>
-            <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
-                <AlertDialogTrigger asChild>
-                     <Button type="button" variant="destructive" disabled={!form.formState.isValid || isSubmitting}>
-                        Send SOS Report
-                    </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                    <AlertDialogHeader>
-                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                        This action will immediately send an emergency alert to your employer. 
-                        Use only in a genuine emergency.
-                    </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={form.handleSubmit(onSubmit)} disabled={isSubmitting}>
-                        {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                        Yes, send alert
-                    </AlertDialogAction>
-                    </AlertDialogFooter>
-                </AlertDialogContent>
-            </AlertDialog>
-          </DialogFooter>
+                    <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                        <FormItem>
+                        <FormLabel>Brief Description</FormLabel>
+                        <FormControl>
+                            <Textarea
+                            placeholder="Briefly describe the situation. e.g., 'Engine overheating on N1 highway near Midrand.'"
+                            {...field}
+                            />
+                        </FormControl>
+                        <FormMessage />
+                        </FormItem>
+                    )}
+                    />
+                </div>
+                <DialogFooter>
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button type="button" variant="destructive" disabled={!form.formState.isValid || isSubmitting}>
+                                Send SOS Report
+                            </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This action will immediately send an emergency alert to your employer. 
+                                Use only in a genuine emergency.
+                            </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction onClick={form.handleSubmit(onSubmit)} disabled={isSubmitting}>
+                                {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                                Yes, send alert
+                            </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+                </DialogFooter>
+            </form>
         </Form>
       </DialogContent>
     </Dialog>
