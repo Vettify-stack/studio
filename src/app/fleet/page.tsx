@@ -31,10 +31,9 @@ import CompanyFineManagement from '@/components/company-fine-management';
 import VehicleManagementCard from '@/components/vehicle-management-card';
 import DisciplinaryManagementCard from '@/components/disciplinary-management-card';
 import TrainingMatrix from '@/components/training-matrix';
-import JobPostingCard from '@/components/job-posting-card';
-import MatchingApplicantsCard from '@/components/matching-applicants-card';
 import CompanyDocumentsCard from '@/components/company-documents-card';
 import AartoComplianceCard from '@/components/aarto-compliance-card';
+import JobMarketOverviewCard from '@/components/job-market-overview-card';
 
 const fleetVehicles: Vehicle[] = [
     {
@@ -211,10 +210,7 @@ export default function FleetPage() {
               </Card>
             </CardContent>
         </Card>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <JobPostingCard />
-            <MatchingApplicantsCard />
-        </div>
+        <JobMarketOverviewCard />
         <TrainingMatrix />
         <CompanyDocumentsCard />
         <VehicleManagementCard />

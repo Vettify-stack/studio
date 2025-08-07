@@ -26,8 +26,6 @@ import NosyCorner from '@/components/nosy-corner';
 import AartoComplianceCard from '@/components/aarto-compliance-card';
 import GpsTrackingCard from '@/components/gps-tracking-card';
 import TrainingMatrix from '@/components/training-matrix';
-import JobPostingCard from '@/components/job-posting-card';
-import MatchingApplicantsCard from '@/components/matching-applicants-card';
 import CompanyDocumentsCard from '@/components/company-documents-card';
 import VehicleManagementCard from '@/components/vehicle-management-card';
 import CompanyFineManagement from '@/components/company-fine-management';
@@ -41,6 +39,7 @@ import VerificationsCenterCard from '@/components/verifications-center-card';
 import RegionalDataCard from '@/components/regional-data-card';
 import DriverComplianceSnippetCard from '@/components/driver-compliance-snippet-card';
 import VehicleManagementSnippetCard from '@/components/vehicle-management-snippet-card';
+import JobMarketOverviewCard from '@/components/job-market-overview-card';
 
 const FleetPage = dynamic(() => import('@/app/fleet/page'), {
   loading: () => <DashboardSkeleton />,
@@ -96,10 +95,7 @@ const AdminView = () => {
             </div>
             <RegionalDataCard />
             <div className="lg:col-span-4">
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <JobPostingCard />
-                    <MatchingApplicantsCard />
-                </div>
+                <JobMarketOverviewCard />
             </div>
              <div className="lg:col-span-4">
                 <CompanyDocumentsCard />
