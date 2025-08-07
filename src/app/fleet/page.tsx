@@ -23,6 +23,7 @@ import NosyCorner from '@/components/nosy-corner';
 import CompanyComplianceCard from '@/components/company-compliance-card';
 import DriverComplianceOverview from '@/components/driver-compliance-overview';
 import CompanyPlanAndRewards from '@/components/company-plan-and-rewards';
+import Telemedicine from '@/components/telemedicine';
 
 const fleetVehicles: Vehicle[] = [
     {
@@ -242,6 +243,7 @@ export default function FleetPage() {
       <div className="space-y-6">
         <CompanyComplianceCard />
         <CompanyPlanAndRewards />
+        <Telemedicine />
         <NosyCorner />
       </div>
     </div>
