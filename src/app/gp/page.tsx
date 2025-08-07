@@ -42,6 +42,7 @@ import { Input } from '@/components/ui/input';
 import PatientProfile from '@/components/patient-profile';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PatientCommunication from '@/components/patient-communication';
+import EPrescriptionManagement from '@/components/e-prescription-management';
 
 const consultations: Consultation[] = [
   {
@@ -120,6 +121,8 @@ export default function GpDashboardPage() {
           </CardDescription>
         </CardHeader>
       </Card>
+
+      <EPrescriptionManagement />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
