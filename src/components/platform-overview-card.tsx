@@ -12,7 +12,7 @@ import { Eye, TrendingUp } from 'lucide-react';
 
 export default function PlatformOverviewCard() {
   return (
-    <Card>
+    <Card className="transition-all hover:shadow-lg hover:-translate-y-1 h-full">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>Platform Overview</CardTitle>
         <TrendingUp className="h-5 w-5 text-muted-foreground" />

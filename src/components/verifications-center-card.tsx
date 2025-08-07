@@ -57,7 +57,7 @@ const StatusBadge = ({ status }: { status: 'Verified' | 'Pending' }) => {
 
 export default function VerificationsCenterCard() {
   return (
-    <Card>
+    <Card className="transition-all hover:shadow-lg hover:-translate-y-1">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>Verifications Center</CardTitle>

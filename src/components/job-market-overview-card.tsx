@@ -42,7 +42,7 @@ const pendingJobs = [
 
 export default function JobMarketOverviewCard() {
   return (
-    <Card className="bg-yellow-50 border-yellow-100">
+    <Card className="bg-yellow-50 border-yellow-100 transition-all hover:shadow-lg hover:-translate-y-1">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="text-yellow-900">Job Market Overview</CardTitle>

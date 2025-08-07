@@ -32,7 +32,7 @@ const entities = [
 
 export default function TrainingMatrix() {
   return (
-    <Card className="bg-gradient-to-br from-green-500 to-emerald-600 text-white transition-all hover:shadow-lg hover:-translate-y-1">
+    <Card className="bg-gradient-to-br from-green-500 to-emerald-600 text-white transition-all hover:shadow-lg hover:-translate-y-1 h-full">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>Training & Certification Compliance</CardTitle>

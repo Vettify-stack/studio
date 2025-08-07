@@ -13,7 +13,7 @@ import { Button } from './ui/button';
 
 export default function CompanyFineManagement() {
   return (
-    <Card className="bg-gradient-to-br from-red-500 to-orange-500 text-white transition-all hover:shadow-lg hover:-translate-y-1">
+    <Card className="bg-gradient-to-br from-red-500 to-orange-500 text-white transition-all hover:shadow-lg hover:-translate-y-1 h-full">
       <CardHeader>
         <div className="flex justify-between items-center">
           <CardTitle>Pending Fines</CardTitle>

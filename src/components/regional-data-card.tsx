@@ -32,7 +32,7 @@ const employerData = [
 
 export default function RegionalDataCard() {
   return (
-    <Card className="bg-green-50 border-green-100">
+    <Card className="bg-green-50 border-green-100 transition-all hover:shadow-lg hover:-translate-y-1 h-full">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="text-green-900">Regional Data</CardTitle>

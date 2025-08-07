@@ -35,7 +35,7 @@ const vehicleSamples = [
 
 export default function VehicleManagementSnippetCard() {
   return (
-    <Card className="bg-rose-50 border-rose-100 h-full">
+    <Card className="bg-rose-50 border-rose-100 h-full transition-all hover:shadow-lg hover:-translate-y-1">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>Vehicle Management Snippet</CardTitle>

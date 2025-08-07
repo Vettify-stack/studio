@@ -73,46 +73,56 @@ const DashboardSkeleton = () => (
 
 const AdminView = () => {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-1">
                 <PlatformOverviewCard />
             </div>
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-1">
                 <OverallComplianceCard />
             </div>
              <div className="lg:col-span-1">
+                <AartoPointsTrackerCard />
+            </div>
+            <div className="lg:col-span-1">
+                <CompanyFineManagement />
+            </div>
+            <div className="lg:col-span-1">
+                <TrainingMatrix />
+            </div>
+             <div className="lg:col-span-1">
+                <RegionalDataCard />
+            </div>
+             <div className="lg:col-span-2">
                 <DriverComplianceSnippetCard />
             </div>
             <div className="lg:col-span-1">
                 <VehicleManagementSnippetCard />
             </div>
-            <AartoPointsTrackerCard />
-            <CompanyFineManagement />
-            <TrainingMatrix />
-            <VerificationsCenterCard />
-            <div className="lg:col-span-2">
-                <GpsTrackingCard />
+            <div className="lg:col-span-3">
+                <VerificationsCenterCard />
             </div>
-            <RegionalDataCard />
-            <div className="lg:col-span-4">
+            <div className="lg:col-span-3">
                 <JobMarketOverviewCard />
             </div>
-             <div className="lg:col-span-4">
+            <div className="lg:col-span-3">
+                <GpsTrackingCard />
+            </div>
+             <div className="lg:col-span-3">
                 <CompanyDocumentsCard />
              </div>
-             <div className="lg:col-span-4">
+             <div className="lg:col-span-3">
                 <VehicleManagementCard />
              </div>
-              <div className="lg:col-span-4">
+              <div className="lg:col-span-3">
                 <EmployeeAttendancePerformance />
              </div>
-             <div className="lg:col-span-4">
+             <div className="lg:col-span-3">
                 <DisciplinaryManagementCard />
              </div>
-            <div className="lg:col-span-4">
+            <div className="lg:col-span-3">
                  <CoreDataIntegrationsCard />
             </div>
-             <div className="lg:col-span-4">
+             <div className="lg:col-span-3">
                 <NosyCorner />
              </div>
         </div>

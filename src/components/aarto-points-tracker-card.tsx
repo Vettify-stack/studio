@@ -12,7 +12,7 @@ import { Eye, ListChecks } from 'lucide-react';
 
 export default function AartoPointsTrackerCard() {
   return (
-    <Card className="bg-orange-500 text-white transition-all hover:shadow-lg hover:-translate-y-1">
+    <Card className="bg-orange-400 text-white transition-all hover:shadow-lg hover:-translate-y-1 h-full">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>AARTO Points Tracker</CardTitle>

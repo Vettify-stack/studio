@@ -26,16 +26,13 @@ const complianceItems = [
   { driver: 'Super Admin', item: 'Medical Certificate', expiry: '07 Mar 2025' },
   { driver: 'Super Admin', item: 'First Aid Certificate', expiry: '12 Apr 2025' },
   { driver: 'Macdonald Williams', item: 'Medical Certificate', expiry: '01 Jul 2025' },
-  { driver: 'Super Admin', item: 'Firefighting Certificate', expiry: '07 Jul 2025' },
-  { driver: 'Super Admin', item: 'Induction', expiry: '10 Jul 2025' },
-  { driver: 'Super Admin', item: 'Acces Card', expiry: '25 Jul 2025' },
 ];
 
 export default function DriverComplianceSnippetCard() {
   const compliancePercentage = 38;
 
   return (
-    <Card className="h-full">
+    <Card className="h-full transition-all hover:shadow-lg hover:-translate-y-1">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>Driver Compliance Snippet</CardTitle>
