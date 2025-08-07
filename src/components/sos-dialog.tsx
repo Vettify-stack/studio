@@ -92,7 +92,7 @@ export default function SosDialog() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <Form {...form}>
-            <form>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
                 <DialogHeader>
                 <DialogTitle>Emergency SOS Report</DialogTitle>
                 <DialogDescription>
