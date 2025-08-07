@@ -42,7 +42,7 @@ const pendingJobs = [
 
 export default function JobMarketOverviewCard() {
   return (
-    <Card className="bg-yellow-50 border-yellow-100 transition-all hover:shadow-lg hover:-translate-y-1">
+    <Card className="bg-yellow-50 border-yellow-100 transition-all hover:shadow-lg hover:-translate-y-1 h-full">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="text-yellow-900">Job Market Overview</CardTitle>
@@ -54,7 +54,7 @@ export default function JobMarketOverviewCard() {
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="pending">
-          <TabsList className="grid w-full grid-cols-2 bg-yellow-100">
+          <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="pending">Jobs Pending</TabsTrigger>
             <TabsTrigger value="placements">Job Placements</TabsTrigger>
           </TabsList>
