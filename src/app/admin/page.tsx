@@ -40,6 +40,7 @@ import AartoPointsTrackerCard from '@/components/aarto-points-tracker-card';
 import VerificationsCenterCard from '@/components/verifications-center-card';
 import RegionalDataCard from '@/components/regional-data-card';
 import DriverComplianceSnippetCard from '@/components/driver-compliance-snippet-card';
+import VehicleManagementSnippetCard from '@/components/vehicle-management-snippet-card';
 
 const FleetPage = dynamic(() => import('@/app/fleet/page'), {
   loading: () => <DashboardSkeleton />,
@@ -82,6 +83,9 @@ const AdminView = () => {
             </div>
              <div className="lg:col-span-1">
                 <DriverComplianceSnippetCard />
+            </div>
+            <div className="lg:col-span-1">
+                <VehicleManagementSnippetCard />
             </div>
             <AartoPointsTrackerCard />
             <CompanyFineManagement />
