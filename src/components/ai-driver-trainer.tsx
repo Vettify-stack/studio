@@ -12,7 +12,7 @@ import { BrainCircuit } from 'lucide-react';
 
 export default function AIDriverTrainer() {
   return (
-    <Card>
+    <Card className="transition-all hover:shadow-lg">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>AI Driver Trainer</CardTitle>

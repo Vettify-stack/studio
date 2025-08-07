@@ -32,7 +32,7 @@ const certificates = [
 
 export default function TrainingCertificatesCard() {
   return (
-    <Card>
+    <Card className="transition-all hover:shadow-lg">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>Training & Certificates</CardTitle>

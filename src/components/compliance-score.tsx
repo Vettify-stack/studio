@@ -13,7 +13,7 @@ export default function ComplianceScore({ score }: ComplianceScoreProps) {
   const offset = circumference - (score / 100) * circumference;
 
   return (
-    <Card>
+    <Card className="transition-all hover:shadow-lg">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">Compliance Score</CardTitle>
         <BadgePercent className="h-4 w-4 text-muted-foreground" />

@@ -158,7 +158,7 @@ export default function Telemedicine() {
 
   const renderPaymentStep = () => (
     <div>
-        <Card>
+        <Card className="transition-all hover:shadow-lg">
             <CardHeader>
                 <CardTitle>Confirm Booking</CardTitle>
                 <CardDescription>
@@ -271,7 +271,7 @@ export default function Telemedicine() {
 
 
   return (
-    <Card>
+    <Card className="transition-all hover:shadow-lg">
       <CardHeader>
         <div className="flex items-center gap-2">
           <HeartPulse className="h-6 w-6 text-primary" />

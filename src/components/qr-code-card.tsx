@@ -22,7 +22,7 @@ export default function QRCodeCard({ qrCodeUrl }: QRCodeCardProps) {
   }
 
   return (
-    <Card>
+    <Card className="transition-all hover:shadow-lg">
       <CardHeader>
         <div className="flex items-center gap-2">
             <QrCode className="h-5 w-5 text-primary" />
