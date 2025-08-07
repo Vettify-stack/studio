@@ -67,3 +67,11 @@ export interface Document {
   details?: string;
   adminActions?: ('Approve' | 'Flag' | 'Suspend')[];
 }
+
+export interface Notification {
+    id: string;
+    title: string;
+    date: string;
+    details: string;
+    status: 'Urgent' | 'New' | 'Read';
+}

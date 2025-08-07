@@ -19,6 +19,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { ShieldCheck, AlertTriangle, Car, Users } from 'lucide-react';
 import type { Vehicle } from '@/lib/types';
+import NosyCorner from '@/components/nosy-corner';
 
 const fleetVehicles: Vehicle[] = [
     {
@@ -140,99 +141,103 @@ export default function FleetPage() {
   ).length;
 
   return (
-    <div className="flex flex-col gap-8">
-      <Card>
-        <CardHeader>
-            <div className="flex items-center gap-4">
-            <Users className="w-8 h-8 text-primary" />
-            <div>
-              <CardTitle>Fleet Compliance Overview</CardTitle>
-              <CardDescription>
-                A real-time look at your entire fleet's compliance status.
-              </CardDescription>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent className="grid gap-6 md:grid-cols-3">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Compliant</CardTitle>
-              <ShieldCheck className="h-4 w-4 text-green-500" />
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="lg:col-span-2 flex flex-col gap-8">
+        <Card>
+            <CardHeader>
+                <div className="flex items-center gap-4">
+                <Users className="w-8 h-8 text-primary" />
+                <div>
+                  <CardTitle>Fleet Compliance Overview</CardTitle>
+                  <CardDescription>
+                    A real-time look at your entire fleet's compliance status.
+                  </CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="grid gap-6 md:grid-cols-3">
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Compliant</CardTitle>
+                  <ShieldCheck className="h-4 w-4 text-green-500" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{compliantCount}</div>
+                  <p className="text-xs text-muted-foreground">
+                    Vehicles meeting all requirements
+                  </p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">At Risk</CardTitle>
+                  <AlertTriangle className="h-4 w-4 text-yellow-500" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{atRiskCount}</div>
+                  <p className="text-xs text-muted-foreground">
+                    Vehicles with upcoming expiries or issues
+                  </p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">
+                    Non-Compliant
+                  </CardTitle>
+                  <AlertTriangle className="h-4 w-4 text-red-500" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{nonCompliantCount}</div>
+                  <p className="text-xs text-muted-foreground">
+                    Vehicles with violations or expired documents
+                  </p>
+                </CardContent>
+              </Card>
+            </CardContent>
+        </Card>
+        <Card>
+            <CardHeader>
+            <CardTitle>All Vehicles</CardTitle>
+            <CardDescription>
+                Detailed list of all vehicles in your fleet.
+            </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{compliantCount}</div>
-              <p className="text-xs text-muted-foreground">
-                Vehicles meeting all requirements
-              </p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">At Risk</CardTitle>
-              <AlertTriangle className="h-4 w-4 text-yellow-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{atRiskCount}</div>
-              <p className="text-xs text-muted-foreground">
-                Vehicles with upcoming expiries or issues
-              </p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Non-Compliant
-              </CardTitle>
-              <AlertTriangle className="h-4 w-4 text-red-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{nonCompliantCount}</div>
-              <p className="text-xs text-muted-foreground">
-                Vehicles with violations or expired documents
-              </p>
-            </CardContent>
-          </Card>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>All Vehicles</CardTitle>
-          <CardDescription>
-            Detailed list of all vehicles in your fleet.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Registration</TableHead>
-                <TableHead>Vehicle</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Fines</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {fleetVehicles.map((vehicle) => (
-                <TableRow key={vehicle.id}>
-                  <TableCell className="font-medium">
-                    {vehicle.registration}
-                  </TableCell>
-                  <TableCell>
-                    {vehicle.make} {vehicle.model}
-                  </TableCell>
-                  <TableCell>{vehicle.type}</TableCell>
-                  <TableCell>
-                    <StatusBadge status={vehicle.status} />
-                  </TableCell>
-                  <TableCell className="text-right">{vehicle.fines}</TableCell>
+            <Table>
+                <TableHeader>
+                <TableRow>
+                    <TableHead>Registration</TableHead>
+                    <TableHead>Vehicle</TableHead>
+                    <TableHead>Type</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead className="text-right">Fines</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+                </TableHeader>
+                <TableBody>
+                {fleetVehicles.map((vehicle) => (
+                    <TableRow key={vehicle.id}>
+                    <TableCell className="font-medium">
+                        {vehicle.registration}
+                    </TableCell>
+                    <TableCell>
+                        {vehicle.make} {vehicle.model}
+                    </TableCell>
+                    <TableCell>{vehicle.type}</TableCell>
+                    <TableCell>
+                        <StatusBadge status={vehicle.status} />
+                    </TableCell>
+                    <TableCell className="text-right">{vehicle.fines}</TableCell>
+                    </TableRow>
+                ))}
+                </TableBody>
+            </Table>
+            </CardContent>
+        </Card>
+      </div>
+      <div className="space-y-6">
+        <NosyCorner />
+      </div>
     </div>
   );
 }

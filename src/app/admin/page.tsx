@@ -22,6 +22,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import CoreDataIntegrationsCard from '@/components/core-data-integrations-card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import NosyCorner from '@/components/nosy-corner';
 
 const FleetPage = dynamic(() => import('@/app/fleet/page'), {
   loading: () => <DashboardSkeleton />,
@@ -55,79 +56,84 @@ const DashboardSkeleton = () => (
 
 const AdminView = () => {
     return (
-        <div className="space-y-6">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">
-                    Total Users
-                    </CardTitle>
-                    <Users className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                    <div className="text-2xl font-bold">1,254</div>
-                    <p className="text-xs text-muted-foreground">
-                    +150 from last month
-                    </p>
-                </CardContent>
-                </Card>
-                <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">
-                    Compliance Rate
-                    </CardTitle>
-                    <BarChart2 className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                    <div className="text-2xl font-bold">89%</div>
-                    <p className="text-xs text-muted-foreground">
-                    Across all fleets and owners
-                    </p>
-                </CardContent>
-                </Card>
-                <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">
-                    Open Disputes
-                    </CardTitle>
-                    <Users className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                    <div className="text-2xl font-bold">42</div>
-                    <p className="text-xs text-muted-foreground">
-                    Awaiting review
-                    </p>
-                </CardContent>
-                </Card>
-            </div>
-             <Card>
-                <CardHeader>
-                    <CardTitle>Recent Activity</CardTitle>
-                    <CardDescription>An overview of recent platform activities.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <div className="text-center p-8 border-2 border-dashed rounded-lg">
-                        <p className="text-muted-foreground">No recent activity to display.</p>
-                   </div>
-                </CardContent>
-             </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Driver Trainer AI Knowledge Base</CardTitle>
-                <CardDescription>
-                  Upload training modules to be processed by the AI.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Input type="file" className="flex-grow" />
-                  <Button>
-                    <FileUp className="mr-2 h-4 w-4" /> Upload Module
-                  </Button>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2 space-y-6">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">
+                        Total Users
+                        </CardTitle>
+                        <Users className="h-4 w-4 text-muted-foreground" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="text-2xl font-bold">1,254</div>
+                        <p className="text-xs text-muted-foreground">
+                        +150 from last month
+                        </p>
+                    </CardContent>
+                    </Card>
+                    <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">
+                        Compliance Rate
+                        </CardTitle>
+                        <BarChart2 className="h-4 w-4 text-muted-foreground" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="text-2xl font-bold">89%</div>
+                        <p className="text-xs text-muted-foreground">
+                        Across all fleets and owners
+                        </p>
+                    </CardContent>
+                    </Card>
+                    <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">
+                        Open Disputes
+                        </CardTitle>
+                        <Users className="h-4 w-4 text-muted-foreground" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="text-2xl font-bold">42</div>
+                        <p className="text-xs text-muted-foreground">
+                        Awaiting review
+                        </p>
+                    </CardContent>
+                    </Card>
                 </div>
-              </CardContent>
-            </Card>
-             <CoreDataIntegrationsCard />
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Recent Activity</CardTitle>
+                        <CardDescription>An overview of recent platform activities.</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="text-center p-8 border-2 border-dashed rounded-lg">
+                            <p className="text-muted-foreground">No recent activity to display.</p>
+                    </div>
+                    </CardContent>
+                </Card>
+                <Card>
+                <CardHeader>
+                    <CardTitle>Driver Trainer AI Knowledge Base</CardTitle>
+                    <CardDescription>
+                    Upload training modules to be processed by the AI.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <div className="flex flex-col sm:flex-row gap-4">
+                    <Input type="file" className="flex-grow" />
+                    <Button>
+                        <FileUp className="mr-2 h-4 w-4" /> Upload Module
+                    </Button>
+                    </div>
+                </CardContent>
+                </Card>
+                <CoreDataIntegrationsCard />
+            </div>
+             <div className="space-y-6">
+                <NosyCorner />
+             </div>
         </div>
     )
 }

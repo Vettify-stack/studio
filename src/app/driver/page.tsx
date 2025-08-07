@@ -24,6 +24,7 @@ import FineManagementCard from '@/components/fine-management';
 import TrainingCertificatesCard from '@/components/training-certificates-card';
 import AIDriverTrainer from '@/components/ai-driver-trainer';
 import LicenseRenewalCard from '@/components/license-renewal-card';
+import NosyCorner from '@/components/nosy-corner';
 
 const driverData: DriverProfile = {
   name: 'John Mokoena',
@@ -108,6 +109,7 @@ export default function DriverDashboardPage() {
 
       {/* Right Column */}
       <div className="space-y-6">
+          <NosyCorner />
           <ComplianceScore score={driverData.complianceScore} />
           <QRCodeCard qrCodeUrl={driverData.qrCodeUrl} />
           <LicenseRenewalCard />
