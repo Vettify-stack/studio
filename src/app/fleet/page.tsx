@@ -20,6 +20,7 @@ import { Badge } from '@/components/ui/badge';
 import { ShieldCheck, AlertTriangle, Car, Users } from 'lucide-react';
 import type { Vehicle } from '@/lib/types';
 import NosyCorner from '@/components/nosy-corner';
+import CompanyComplianceCard from '@/components/company-compliance-card';
 
 const fleetVehicles: Vehicle[] = [
     {
@@ -236,6 +237,7 @@ export default function FleetPage() {
         </Card>
       </div>
       <div className="space-y-6">
+        <CompanyComplianceCard />
         <NosyCorner />
       </div>
     </div>
