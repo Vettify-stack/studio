@@ -44,6 +44,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PatientCommunication from '@/components/patient-communication';
 import EPrescriptionManagement from '@/components/e-prescription-management';
 import ReportingAnalytics from '@/components/reporting-analytics';
+import SystemComplianceCard from '@/components/system-compliance-card';
 
 const consultations: Consultation[] = [
   {
@@ -360,6 +361,7 @@ export default function GpDashboardPage() {
           </Table>
         </CardContent>
       </Card>
+      <SystemComplianceCard />
     </div>
   );
 }
