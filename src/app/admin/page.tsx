@@ -37,6 +37,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PlatformOverviewCard from '@/components/platform-overview-card';
 import OverallComplianceCard from '@/components/overall-compliance-card';
 import AartoPointsTrackerCard from '@/components/aarto-points-tracker-card';
+import VerificationsCenterCard from '@/components/verifications-center-card';
 
 const FleetPage = dynamic(() => import('@/app/fleet/page'), {
   loading: () => <DashboardSkeleton />,
@@ -77,6 +78,7 @@ const AdminView = () => {
                     <JobPostingCard />
                     <MatchingApplicantsCard />
                 </div>
+                <VerificationsCenterCard />
                 <OverallComplianceCard />
                 <TrainingMatrix />
                 <CompanyDocumentsCard />
