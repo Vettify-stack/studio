@@ -43,6 +43,7 @@ import PatientProfile from '@/components/patient-profile';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PatientCommunication from '@/components/patient-communication';
 import EPrescriptionManagement from '@/components/e-prescription-management';
+import ReportingAnalytics from '@/components/reporting-analytics';
 
 const consultations: Consultation[] = [
   {
@@ -232,6 +233,7 @@ export default function GpDashboardPage() {
 
         <div className="space-y-6">
             <PatientCommunication />
+            <ReportingAnalytics />
         </div>
       </div>
 
