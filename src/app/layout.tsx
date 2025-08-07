@@ -6,6 +6,8 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import DashboardLayout from '@/components/dashboard-layout';
 import React, { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+
 
 // export const metadata: Metadata = {
 //   title: 'Vettify MCI Compliance View',
@@ -19,10 +21,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [isMounted, setIsMounted] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  const showDashboardLayout = !['/login', '/register', '/landing', '/'].includes(pathname);
+
+  if (!isMounted) {
+    return (
+       <html lang="en" suppressHydrationWarning>
+        <body className="font-body antialiased" suppressHydrationWarning></body>
+      </html>
+    )
+  }
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -39,12 +52,16 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Open+Sans:wght@400;600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=Open+Sans:wght@400;600&display=swap"
+          rel="stylesheet"
+        />
+         <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
           rel="stylesheet"
         />
       </head>
       <body className="font-body antialiased" suppressHydrationWarning>
-        <DashboardLayout>{children}</DashboardLayout>
+        {showDashboardLayout ? <DashboardLayout>{children}</DashboardLayout> : children}
         {isMounted && <Toaster />}
       </body>
     </html>

@@ -52,6 +52,7 @@ import DataUploadDialog from '@/components/data-upload';
 import SosDialog from '@/components/sos-dialog';
 import { Button } from './ui/button';
 import { usePathname } from 'next/navigation';
+import Logo from './logo';
 
 
 export default function DashboardLayout({
@@ -92,7 +93,7 @@ export default function DashboardLayout({
     }
   };
 
-  const showSidebar = !['/login', '/register'].includes(pathname);
+  const showSidebar = !['/login', '/register', '/landing', '/'].includes(pathname);
 
   if (!showSidebar) {
     return <>{children}</>;
@@ -115,15 +116,7 @@ export default function DashboardLayout({
         }
       >
         <SidebarHeader>
-           <div className="flex items-center gap-2 p-2">
-            <ShieldHalf className="w-8 h-8 text-primary" />
-             <div className="flex flex-col">
-              <h2 className={`text-lg font-semibold tracking-tight ${isDriverView ? 'text-sidebar-foreground' : 'text-primary'}`}>
-                Vettify
-              </h2>
-               {!isDriverView && <p className="text-xs text-muted-foreground">MCI Platform</p>}
-             </div>
-           </div>
+           <Logo inSidebar />
         </SidebarHeader>
         <SidebarContent
            className={
@@ -226,7 +219,7 @@ export default function DashboardLayout({
                   isActive={isMounted && (pathname === '/' || pathname === '/admin')}
                   tooltip={{ children: 'Dashboard' }}
                 >
-                  <Link href="/">
+                  <Link href="/admin">
                     <LayoutDashboard />
                     Dashboard
                   </Link>
