@@ -19,6 +19,7 @@ import DocumentManagement from '@/components/document-management';
 import ComplianceScore from '@/components/compliance-score';
 import QRCodeCard from '@/components/qr-code-card';
 import Telemedicine from '@/components/telemedicine';
+import DriverComplianceCard from '@/components/driver-compliance-card';
 
 const driverData: DriverProfile = {
   name: 'John Mokoena',
@@ -43,9 +44,9 @@ const statusColors = {
 
 export default function DriverDashboardPage() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {/* Left Column */}
-      <div className="md:col-span-2 space-y-6">
+      <div className="lg:col-span-2 space-y-6">
         <Card>
           <CardHeader className="flex flex-row items-center gap-4">
             <Avatar className="h-16 w-16">
@@ -95,6 +96,7 @@ export default function DriverDashboardPage() {
           </CardContent>
         </Card>
         
+        <DriverComplianceCard />
         <DocumentManagement />
       </div>
 
