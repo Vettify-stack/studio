@@ -33,6 +33,7 @@ import DisciplinaryManagementCard from '@/components/disciplinary-management-car
 import TrainingMatrix from '@/components/training-matrix';
 import JobPostingCard from '@/components/job-posting-card';
 import MatchingApplicantsCard from '@/components/matching-applicants-card';
+import CompanyDocumentsCard from '@/components/company-documents-card';
 
 const fleetVehicles: Vehicle[] = [
     {
@@ -214,6 +215,7 @@ export default function FleetPage() {
             <MatchingApplicantsCard />
         </div>
         <TrainingMatrix />
+        <CompanyDocumentsCard />
         <VehicleManagementCard />
         <CompanyFineManagement />
         <EmployeeAttendancePerformance />
