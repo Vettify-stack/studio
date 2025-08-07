@@ -23,6 +23,7 @@ import DriverComplianceCard from '@/components/driver-compliance-card';
 import FineManagementCard from '@/components/fine-management';
 import TrainingCertificatesCard from '@/components/training-certificates-card';
 import AIDriverTrainer from '@/components/ai-driver-trainer';
+import LicenseRenewalCard from '@/components/license-renewal-card';
 
 const driverData: DriverProfile = {
   name: 'John Mokoena',
@@ -109,6 +110,7 @@ export default function DriverDashboardPage() {
       <div className="space-y-6">
           <ComplianceScore score={driverData.complianceScore} />
           <QRCodeCard qrCodeUrl={driverData.qrCodeUrl} />
+          <LicenseRenewalCard />
           <Telemedicine />
           <AIDriverTrainer />
       </div>
