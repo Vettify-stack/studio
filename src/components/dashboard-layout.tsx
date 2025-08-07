@@ -113,7 +113,7 @@ export default function DashboardLayout({
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={pathname === '/' || pathname === '/admin'}
+                isActive={isMounted && (pathname === '/' || pathname === '/admin')}
                 tooltip={{ children: 'Dashboard' }}
               >
                 <Link href="/">
@@ -125,7 +125,7 @@ export default function DashboardLayout({
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={pathname === '/alerts'}
+                isActive={isMounted && pathname === '/alerts'}
                 tooltip={{ children: 'Alerts' }}
               >
                 <Link href="/alerts">
@@ -145,7 +145,7 @@ export default function DashboardLayout({
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={pathname === '/disputes'}
+                isActive={isMounted && pathname === '/disputes'}
                 tooltip={{ children: 'Disputes' }}
               >
                 <Link href="/disputes">
@@ -157,7 +157,7 @@ export default function DashboardLayout({
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={pathname === '/training'}
+                isActive={isMounted && pathname === '/training'}
                 tooltip={{ children: 'Training & Jobs' }}
               >
                 <Link href="/training">
@@ -169,7 +169,7 @@ export default function DashboardLayout({
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={pathname === '/utilities'}
+                isActive={isMounted && pathname === '/utilities'}
                 tooltip={{ children: 'Utilities' }}
               >
                 <Link href="/utilities">

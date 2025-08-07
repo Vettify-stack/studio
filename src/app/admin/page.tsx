@@ -17,9 +17,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { ShieldCheck, Users, BarChart2, Loader2 } from 'lucide-react';
+import { ShieldCheck, Users, BarChart2, Loader2, Upload, FileUp } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import CoreDataIntegrationsCard from '@/components/core-data-integrations-card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 const FleetPage = dynamic(() => import('@/app/fleet/page'), {
   loading: () => <DashboardSkeleton />,
@@ -105,6 +107,22 @@ const AdminView = () => {
                    </div>
                 </CardContent>
              </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Driver Trainer AI Knowledge Base</CardTitle>
+                <CardDescription>
+                  Upload training modules to be processed by the AI.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Input type="file" className="flex-grow" />
+                  <Button>
+                    <FileUp className="mr-2 h-4 w-4" /> Upload Module
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
              <CoreDataIntegrationsCard />
         </div>
     )
@@ -117,12 +135,12 @@ export default function AdminDashboardPage() {
   const renderContent = () => {
     switch (view) {
       case 'company':
-        return <FadeIn key="company"><FleetPage /></FadeIn>;
+        return <FadeIn><FleetPage /></FadeIn>;
       case 'driver':
-        return <FadeIn key="driver"><DriverDashboardPage /></FadeIn>;
+        return <FadeIn><DriverDashboardPage /></FadeIn>;
       case 'admin':
       default:
-        return <FadeIn key="admin"><AdminView /></FadeIn>;
+        return <FadeIn><AdminView /></FadeIn>;
     }
   };
 
