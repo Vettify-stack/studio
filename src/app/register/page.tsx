@@ -47,6 +47,7 @@ import { CalendarIcon, Car, Building, Stethoscope, ShieldHalf } from 'lucide-rea
 import { format } from 'date-fns';
 import Link from 'next/link';
 import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
 
 const driverFormSchema = z.object({
   fullName: z.string().min(1, 'Full name is required.'),
@@ -65,6 +66,9 @@ const driverFormSchema = z.object({
   complianceStatus: z.enum(['Valid', 'Suspended', 'Pending Renewal']),
   employer: z.string().min(1, 'Employer or association is required.'),
   password: z.string().min(8, 'Password must be at least 8 characters.'),
+  popiaConsent: z.boolean().refine(val => val === true, {
+    message: 'You must accept the terms to continue.',
+  }),
 });
 
 const companyFormSchema = z.object({
@@ -80,6 +84,9 @@ const companyFormSchema = z.object({
     fleetSize: z.coerce.number({required_error: "Fleet size is required."}).int().positive('Fleet size must be a positive number.'),
     complianceStatus: z.enum(['Compliant', 'Non-Compliant', 'Pending Review']),
     password: z.string().min(8, 'Password must be at least 8 characters.'),
+    popiaConsent: z.boolean().refine(val => val === true, {
+        message: 'You must accept the terms to continue.',
+    }),
 });
 
 const gpFormSchema = z.object({
@@ -91,6 +98,9 @@ const gpFormSchema = z.object({
     practiceAddress: z.string().min(1, 'Practice address is required.'),
     availabilityStatus: z.enum(['Available', 'Unavailable', 'On Leave']),
     password: z.string().min(8, 'Password must be at least 8 characters.'),
+    popiaConsent: z.boolean().refine(val => val === true, {
+        message: 'You must accept the terms to continue.',
+    }),
 });
 
 function DriverForm() {
@@ -107,6 +117,7 @@ function DriverForm() {
       complianceStatus: 'Valid',
       employer: '',
       password: '',
+      popiaConsent: false,
     },
   });
 
@@ -342,6 +353,26 @@ function DriverForm() {
               </FormItem>
             )}
           />
+        <FormField
+          control={form.control}
+          name="popiaConsent"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>
+                  I consent to Vettify verifying the information provided, in accordance with the Protection of Personal Information Act (POPIA).
+                </FormLabel>
+                 <FormMessage />
+              </div>
+            </FormItem>
+          )}
+        />
         <Button type="submit" className="w-full">
           Create Driver Account
         </Button>
@@ -363,6 +394,7 @@ function CompanyForm() {
             vatNumber: "",
             physicalAddress: "",
             password: "",
+            popiaConsent: false,
         },
     });
 
@@ -528,6 +560,26 @@ function CompanyForm() {
                     </FormItem>
                     )}
                 />
+                <FormField
+                control={form.control}
+                name="popiaConsent"
+                render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                    <FormControl>
+                        <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                        />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                        <FormLabel>
+                        I consent to Vettify verifying the information provided, in accordance with the Protection of Personal Information Act (POPIA).
+                        </FormLabel>
+                        <FormMessage />
+                    </div>
+                    </FormItem>
+                )}
+                />
                 <Button type="submit" className="w-full">Create Company Account</Button>
             </form>
         </Form>
@@ -545,7 +597,8 @@ function GpForm() {
             email: "",
             practiceAddress: "",
             availabilityStatus: "Available",
-            password: ""
+            password: "",
+            popiaConsent: false,
         },
     });
 
@@ -663,6 +716,26 @@ function GpForm() {
                     </FormItem>
                     )}
                 />
+                 <FormField
+                control={form.control}
+                name="popiaConsent"
+                render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                    <FormControl>
+                        <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                        />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                        <FormLabel>
+                        I consent to Vettify verifying the information provided, in accordance with the Protection of Personal Information Act (POPIA).
+                        </FormLabel>
+                        <FormMessage />
+                    </div>
+                    </FormItem>
+                )}
+                />
                 <Button type="submit" className="w-full">Create GP Account</Button>
             </form>
         </Form>
@@ -713,3 +786,5 @@ export default function RegisterPage() {
     </div>
   );
 }
+
+    
