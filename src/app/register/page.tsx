@@ -46,6 +46,7 @@ import { cn } from '@/lib/utils';
 import { CalendarIcon, Car, Building, Stethoscope, ShieldHalf } from 'lucide-react';
 import { format } from 'date-fns';
 import Link from 'next/link';
+import { Textarea } from '@/components/ui/textarea';
 
 const driverFormSchema = z.object({
   fullName: z.string().min(1, 'Full name is required.'),
@@ -68,8 +69,16 @@ const driverFormSchema = z.object({
 
 const companyFormSchema = z.object({
     companyName: z.string().min(1, 'Company name is required.'),
-    registrationNumber: z.string().min(1, 'Registration number is required.'),
+    contactPersonFirstName: z.string().min(1, 'First name is required.'),
+    contactPersonLastName: z.string().min(1, 'Last name is required.'),
     email: z.string().email('Please enter a valid email address.'),
+    phoneNumber: z.string().min(10, 'A valid phone number is required.'),
+    registrationNumber: z.string().min(1, 'Registration number is required.'),
+    vatNumber: z.string().optional(),
+    physicalAddress: z.string().min(1, 'Physical address is required.'),
+    numberOfDrivers: z.coerce.number().int().positive('Number of drivers must be a positive number.'),
+    fleetSize: z.coerce.number().int().positive('Fleet size must be a positive number.'),
+    complianceStatus: z.enum(['Compliant', 'Non-Compliant', 'Pending Review']),
     password: z.string().min(8, 'Password must be at least 8 characters.'),
 });
 
@@ -340,7 +349,17 @@ function DriverForm() {
 function CompanyForm() {
     const form = useForm<z.infer<typeof companyFormSchema>>({
         resolver: zodResolver(companyFormSchema),
-        defaultValues: { companyName: "", registrationNumber: "", email: "", password: "" },
+        defaultValues: { 
+            companyName: "",
+            contactPersonFirstName: "",
+            contactPersonLastName: "",
+            email: "",
+            phoneNumber: "",
+            registrationNumber: "",
+            vatNumber: "",
+            physicalAddress: "",
+            password: "",
+        },
     });
 
     function onSubmit(data: z.infer<typeof companyFormSchema>) {
@@ -361,26 +380,133 @@ function CompanyForm() {
                         </FormItem>
                     )}
                 />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField
+                        control={form.control}
+                        name="contactPersonFirstName"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Contact Person (First Name)</FormLabel>
+                                <FormControl><Input placeholder="Jane" {...field} /></FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="contactPersonLastName"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Contact Person (Last Name)</FormLabel>
+                                <FormControl><Input placeholder="Doe" {...field} /></FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </div>
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Email Address</FormLabel>
+                            <FormControl>
+                            <Input placeholder="company@example.com" type="email" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="phoneNumber"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Phone Number</FormLabel>
+                                <FormControl><Input placeholder="011 123 4567" {...field} /></FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                 </div>
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField
+                        control={form.control}
+                        name="registrationNumber"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Company Registration Number</FormLabel>
+                                <FormControl><Input placeholder="Your company's registration number" {...field} /></FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="vatNumber"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>VAT Number (Optional)</FormLabel>
+                                <FormControl><Input placeholder="Your company's VAT number" {...field} /></FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </div>
                  <FormField
                     control={form.control}
-                    name="registrationNumber"
+                    name="physicalAddress"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Company Registration Number</FormLabel>
-                            <FormControl><Input placeholder="Your company's registration number" {...field} /></FormControl>
+                            <FormLabel>Physical Address</FormLabel>
+                            <FormControl><Textarea placeholder="123 Main Street, Johannesburg, 2000" {...field} /></FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField
+                        control={form.control}
+                        name="numberOfDrivers"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Number of Drivers</FormLabel>
+                                <FormControl><Input type="number" placeholder="e.g., 50" {...field} /></FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="fleetSize"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Fleet Size</FormLabel>
+                                <FormControl><Input type="number" placeholder="e.g., 50" {...field} /></FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </div>
                 <FormField
                     control={form.control}
-                    name="email"
+                    name="complianceStatus"
                     render={({ field }) => (
                     <FormItem>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel>Compliance Status</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                        <Input placeholder="company@example.com" type="email" {...field} />
+                            <SelectTrigger>
+                            <SelectValue placeholder="Select status" />
+                            </SelectTrigger>
                         </FormControl>
+                        <SelectContent>
+                            <SelectItem value="Compliant">Compliant</SelectItem>
+                            <SelectItem value="Non-Compliant">Non-Compliant</SelectItem>
+                            <SelectItem value="Pending Review">Pending Review</SelectItem>
+                        </SelectContent>
+                        </Select>
                         <FormMessage />
                     </FormItem>
                     )}
