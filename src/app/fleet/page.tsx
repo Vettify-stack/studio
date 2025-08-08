@@ -35,6 +35,7 @@ import CompanyDocumentsCard from '@/components/company-documents-card';
 import AartoComplianceCard from '@/components/aarto-compliance-card';
 import JobMarketOverviewCard from '@/components/job-market-overview-card';
 import FineManagementCard from '@/components/fine-management';
+import LivelinessCheckCard from '@/components/liveliness-check-card';
 
 const fleetVehicles: Vehicle[] = [
     {
@@ -223,6 +224,9 @@ export default function FleetPage() {
          <div className="lg:col-span-1 space-y-6">
             <CommunicationsHub />
             <NosyCorner />
+        </div>
+        <div className="lg:col-span-3">
+            <LivelinessCheckCard />
         </div>
         <div className="lg:col-span-3">
              <GpsTrackingCard />

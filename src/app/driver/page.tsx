@@ -26,6 +26,7 @@ import AIDriverTrainer from '@/components/ai-driver-trainer';
 import LicenseRenewalCard from '@/components/license-renewal-card';
 import NosyCorner from '@/components/nosy-corner';
 import MyPlanAndRewards from '@/components/my-plan-and-rewards';
+import LivelinessCheckCard from '@/components/liveliness-check-card';
 
 const driverData: DriverProfile = {
   name: 'John Mokoena',
@@ -110,6 +111,7 @@ export default function DriverDashboardPage() {
 
       {/* Right Column */}
       <div className="space-y-6">
+          <LivelinessCheckCard />
           <NosyCorner />
           <MyPlanAndRewards />
           <ComplianceScore score={driverData.complianceScore} />
