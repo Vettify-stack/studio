@@ -78,7 +78,7 @@ export default function DriverDashboardPage() {
                   <p className="text-sm text-muted-foreground">Outstanding Fines</p>
                 </div>
               </div>
-              <div className="flex items-center gap-2 rounded-md border p-4" style={{ backgroundColor: '#7E57C2', color: 'white' }}>
+              <div className="flex items-center gap-2 rounded-md border p-4" style={{ backgroundColor: '#FF7043', color: 'white' }}>
                 <AlertTriangle className="h-6 w-6 text-white" />
                 <div>
                   <p className="font-bold text-lg">{driverData.demeritPoints}</p>
