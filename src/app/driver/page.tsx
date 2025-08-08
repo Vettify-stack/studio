@@ -71,11 +71,11 @@ export default function DriverDashboardPage() {
           <CardContent className="mt-4">
             <h3 className="font-semibold mb-4 text-lg">Compliance Status</h3>
             <div className="grid grid-cols-2 gap-4">
-              <div className="flex items-center gap-2 rounded-md border p-4">
-                <FileText className="h-6 w-6 text-muted-foreground" />
+              <div className="flex items-center gap-2 rounded-md border p-4" style={{ backgroundColor: '#90A4AE', color: 'white' }}>
+                <FileText className="h-6 w-6 text-white" />
                 <div>
                   <p className="font-bold text-lg">{driverData.outstandingFines}</p>
-                  <p className="text-sm text-muted-foreground">Outstanding Fines</p>
+                  <p className="text-sm text-white/80">Outstanding Fines</p>
                 </div>
               </div>
               <div className="flex items-center gap-2 rounded-md border p-4" style={{ backgroundColor: '#FF7043', color: 'white' }}>
