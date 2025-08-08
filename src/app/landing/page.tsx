@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ShieldCheck, ArrowRight, Briefcase, Users, Car } from 'lucide-react';
 import Logo from '@/components/logo';
+import { Badge } from '@/components/ui/badge';
 
 const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) => (
     <div className="bg-white p-6 rounded-lg shadow-md transition-all hover:shadow-lg hover:-translate-y-1">
