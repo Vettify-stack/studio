@@ -80,7 +80,7 @@ export default function LivelinessCheckCard() {
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="relative aspect-video w-full overflow-hidden rounded-lg border bg-muted">
+        <div className="relative h-48 w-full overflow-hidden rounded-lg border bg-muted">
           <video ref={videoRef} className="h-full w-full object-cover" autoPlay muted playsInline />
           {hasCameraPermission === false && (
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 text-white p-4">
