@@ -35,7 +35,7 @@ const matchedDrivers = [
 
 export default function MatchingApplicantsCard() {
   return (
-    <Card className="bg-rose-50 border-rose-100">
+    <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>Matched Drivers</CardTitle>
@@ -47,7 +47,7 @@ export default function MatchingApplicantsCard() {
       </CardHeader>
       <CardContent>
         <h3 className="text-sm font-semibold mb-2">Potential Hires</h3>
-        <div className="border rounded-lg bg-white">
+        <div className="border rounded-lg">
           <Table>
             <TableHeader>
               <TableRow>
