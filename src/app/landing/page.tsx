@@ -77,8 +77,8 @@ export default function LandingPage() {
                          />
                          <FeatureCard 
                             icon={<Briefcase className="w-6 h-6" />}
-                            title="Association & Fleet Views"
-                            description="Powerful overview for taxi associations and fleet managers to track member/employee compliance at a glance."
+                            title="Owner Driver's dashboard"
+                            description="A dedicated dashboard for drivers to manage their compliance, documents, and access telemedicine services."
                          />
                           <FeatureCard 
                             icon={<Car className="w-6 h-6" />}
