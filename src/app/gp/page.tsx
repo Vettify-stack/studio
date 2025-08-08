@@ -61,14 +61,14 @@ const consultations: Consultation[] = [
   },
   {
     id: 'appt-2',
-    patientName: 'Sarah Williams',
+    patientName: 'Thandi Ndlovu',
     time: '16:00',
     date: '2024-08-15',
     status: 'Upcoming',
   },
     {
     id: 'appt-3',
-    patientName: 'Peter Jones',
+    patientName: 'Pieter van der Merwe',
     time: '10:00',
     date: '2024-08-14',
     status: 'Completed',
@@ -77,14 +77,14 @@ const consultations: Consultation[] = [
 
 const patients = [
     { id: '1', patientId: 'PT-20250807-001', name: 'John Mokoena', lastSeen: '2024-08-15', totalConsults: 5 },
-    { id: '2', patientId: 'PT-20250807-002', name: 'Sarah Williams', lastSeen: '2024-08-15', totalConsults: 2 },
-    { id: '3', patientId: 'PT-20250807-003', name: 'Peter Jones', lastSeen: '2024-08-14', totalConsults: 8 },
-    { id: '4', patientId: 'PT-20250807-004', name: 'Emily Davis', lastSeen: '2024-07-21', totalConsults: 3 },
+    { id: '2', patientId: 'PT-20250807-002', name: 'Thandi Ndlovu', lastSeen: '2024-08-15', totalConsults: 2 },
+    { id: '3', patientId: 'PT-20250807-003', name: 'Pieter van der Merwe', lastSeen: '2024-08-14', totalConsults: 8 },
+    { id: '4', patientId: 'PT-20250807-004', name: 'Ayesha Patel', lastSeen: '2024-07-21', totalConsults: 3 },
 ]
 
 const notes = [
     { id: '1', date: '2024-08-15', patient: 'John Mokoena', type: 'SOAP', summary: 'Follow-up for hypertension management...', status: 'Signed' },
-    { id: '2', date: '2024-08-14', patient: 'Peter Jones', type: 'Consult', summary: 'Patient presents with flu-like symptoms...', status: 'Draft' },
+    { id: '2', date: '2024-08-14', patient: 'Pieter van der Merwe', type: 'Consult', summary: 'Patient presents with flu-like symptoms...', status: 'Draft' },
 ]
 
 
