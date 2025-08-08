@@ -7,6 +7,7 @@ import { Toaster } from '@/components/ui/toaster';
 import DashboardLayout from '@/components/dashboard-layout';
 import React, { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import { ThemeProvider } from '@/components/theme-provider';
 
 
 // export const metadata: Metadata = {
@@ -61,8 +62,15 @@ export default function RootLayout({
         />
       </head>
       <body className="font-body antialiased" suppressHydrationWarning>
-        {showDashboardLayout ? <DashboardLayout>{children}</DashboardLayout> : children}
-        {isMounted && <Toaster />}
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+        >
+            {showDashboardLayout ? <DashboardLayout>{children}</DashboardLayout> : children}
+            {isMounted && <Toaster />}
+        </ThemeProvider>
       </body>
     </html>
   );

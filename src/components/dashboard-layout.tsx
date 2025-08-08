@@ -53,6 +53,7 @@ import SosDialog from '@/components/sos-dialog';
 import { Button } from './ui/button';
 import { usePathname } from 'next/navigation';
 import Logo from './logo';
+import { ThemeToggle } from './theme-toggle';
 
 
 export default function DashboardLayout({
@@ -350,6 +351,7 @@ export default function DashboardLayout({
             {getPageTitle()}
           </h1>
           <div className="flex items-center gap-4">
+            <ThemeToggle />
             <DataUploadDialog />
           </div>
         </header>
