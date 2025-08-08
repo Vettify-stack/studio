@@ -69,30 +69,32 @@ export default function JobPostingCard() {
       </CardHeader>
       <CardContent>
         <h3 className="text-lg font-medium mb-2">Job Listings</h3>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>TITLE</TableHead>
-              <TableHead>STATUS</TableHead>
-              <TableHead>APPLICATIONS</TableHead>
-              <TableHead>POSTED</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {jobListings.map((job) => (
-              <TableRow key={job.title}>
-                <TableCell className="font-medium">{job.title}</TableCell>
-                <TableCell>
-                  <StatusBadge status={job.status} />
-                </TableCell>
-                <TableCell>{job.applications}</TableCell>
-                <TableCell>
-                  <SafeDate dateString={job.postedDate} />
-                </TableCell>
+        <div className="border rounded-lg">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>TITLE</TableHead>
+                <TableHead>STATUS</TableHead>
+                <TableHead>APPLICATIONS</TableHead>
+                <TableHead>POSTED</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {jobListings.map((job) => (
+                <TableRow key={job.title}>
+                  <TableCell className="font-medium">{job.title}</TableCell>
+                  <TableCell>
+                    <StatusBadge status={job.status} />
+                  </TableCell>
+                  <TableCell>{job.applications}</TableCell>
+                  <TableCell>
+                    <SafeDate dateString={job.postedDate} />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </CardContent>
     </Card>
   );

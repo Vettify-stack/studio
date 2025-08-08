@@ -40,6 +40,8 @@ import RegionalDataCard from '@/components/regional-data-card';
 import DriverComplianceSnippetCard from '@/components/driver-compliance-snippet-card';
 import VehicleManagementSnippetCard from '@/components/vehicle-management-snippet-card';
 import JobMarketOverviewCard from '@/components/job-market-overview-card';
+import JobPostingCard from '@/components/job-posting-card';
+import MatchingApplicantsCard from '@/components/matching-applicants-card';
 
 const FleetPage = dynamic(() => import('@/app/fleet/page'), {
   loading: () => <DashboardSkeleton />,
@@ -103,6 +105,12 @@ const AdminView = () => {
             </div>
             <div className="lg:col-span-3">
                 <JobMarketOverviewCard />
+            </div>
+             <div className="lg:col-span-2">
+                <JobPostingCard />
+            </div>
+            <div className="lg:col-span-1">
+                <MatchingApplicantsCard />
             </div>
             <div className="lg:col-span-3">
                 <GpsTrackingCard />
