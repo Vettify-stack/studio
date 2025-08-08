@@ -85,11 +85,11 @@ export default function DriverDashboardPage() {
                   <p className="text-sm text-muted-foreground">AARTO Points</p>
                 </div>
               </div>
-              <div className="flex items-center gap-2 rounded-md border p-4">
-                <BadgeCheck className="h-6 w-6 text-muted-foreground" />
+              <div className="flex items-center gap-2 rounded-md border p-4" style={{ backgroundColor: '#7E57C2', color: 'white' }}>
+                <BadgeCheck className="h-6 w-6 text-white" />
                 <div>
                   <p className={`font-bold text-lg`}>{driverData.licenseStatus}</p>
-                  <p className="text-sm text-muted-foreground">License Status</p>
+                  <p className="text-sm text-white/80">License Status</p>
                 </div>
               </div>
               <div className="flex items-center gap-2 rounded-md border p-4">
