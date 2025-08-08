@@ -84,8 +84,12 @@ const companyFormSchema = z.object({
 
 const gpFormSchema = z.object({
     fullName: z.string().min(1, 'Full name is required.'),
-    hpcsaNumber: z.string().min(1, 'HPCSA number is required.'),
+    practiceNumber: z.string().min(1, 'Practice number is required.'),
+    medicalSpecialty: z.string().min(1, 'Medical specialty is required.'),
+    contactNumber: z.string().min(10, 'A valid contact number is required.'),
     email: z.string().email('Please enter a valid email address.'),
+    practiceAddress: z.string().min(1, 'Practice address is required.'),
+    availabilityStatus: z.enum(['Available', 'Unavailable', 'On Leave']),
     password: z.string().min(8, 'Password must be at least 8 characters.'),
 });
 
@@ -533,7 +537,16 @@ function CompanyForm() {
 function GpForm() {
     const form = useForm<z.infer<typeof gpFormSchema>>({
         resolver: zodResolver(gpFormSchema),
-        defaultValues: { fullName: "", hpcsaNumber: "", email: "", password: "" },
+        defaultValues: {
+            fullName: "",
+            practiceNumber: "",
+            medicalSpecialty: "",
+            contactNumber: "",
+            email: "",
+            practiceAddress: "",
+            availabilityStatus: "Available",
+            password: ""
+        },
     });
 
      function onSubmit(data: z.infer<typeof gpFormSchema>) {
@@ -554,26 +567,85 @@ function GpForm() {
                         </FormItem>
                     )}
                 />
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField
+                        control={form.control}
+                        name="practiceNumber"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Practice Number</FormLabel>
+                                <FormControl><Input placeholder="Your practice number" {...field} /></FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="medicalSpecialty"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Medical Specialty</FormLabel>
+                                <FormControl><Input placeholder="e.g., Occupational Health" {...field} /></FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                 </div>
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                     <FormField
+                        control={form.control}
+                        name="contactNumber"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Contact Number</FormLabel>
+                                <FormControl><Input placeholder="011 987 6543" {...field} /></FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                            <Input placeholder="doctor@example.com" type="email" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                        )}
+                    />
+                 </div>
                  <FormField
                     control={form.control}
-                    name="hpcsaNumber"
+                    name="practiceAddress"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>HPCSA Number</FormLabel>
-                            <FormControl><Input placeholder="Your HPCSA registration number" {...field} /></FormControl>
+                            <FormLabel>Practice Address</FormLabel>
+                            <FormControl><Textarea placeholder="456 Medical Lane, Sandton, 2196" {...field} /></FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
                 <FormField
                     control={form.control}
-                    name="email"
+                    name="availabilityStatus"
                     render={({ field }) => (
                     <FormItem>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel>Availability Status</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                        <Input placeholder="doctor@example.com" type="email" {...field} />
+                            <SelectTrigger>
+                            <SelectValue placeholder="Select status" />
+                            </SelectTrigger>
                         </FormControl>
+                        <SelectContent>
+                            <SelectItem value="Available">Available</SelectItem>
+                            <SelectItem value="Unavailable">Unavailable</SelectItem>
+                            <SelectItem value="On Leave">On Leave</SelectItem>
+                        </SelectContent>
+                        </Select>
                         <FormMessage />
                     </FormItem>
                     )}
