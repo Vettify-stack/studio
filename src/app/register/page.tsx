@@ -51,7 +51,7 @@ import { Textarea } from '@/components/ui/textarea';
 const driverFormSchema = z.object({
   fullName: z.string().min(1, 'Full name is required.'),
   idNumber: z.string().min(1, 'ID number is required.'),
-  passportNumber: z.string().optional(),
+  passportNumber: z.string().min(1, 'Passport number is required.'),
   licenseNumber: z.string().min(1, 'Driver’s license number is required.'),
   prdpNumber: z.string().min(1, 'PrDP number is required.'),
   contactNumber: z.string().min(10, 'A valid contact number is required.'),
@@ -150,9 +150,9 @@ function DriverForm() {
             name="passportNumber"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Passport Number (Optional)</FormLabel>
+                <FormLabel>Passport Number</FormLabel>
                 <FormControl>
-                  <Input placeholder="For foreign drivers" {...field} />
+                  <Input placeholder="Required (especially for foreign drivers)" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
