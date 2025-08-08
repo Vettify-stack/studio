@@ -92,11 +92,11 @@ export default function DriverDashboardPage() {
                   <p className="text-sm text-white/80">License Status</p>
                 </div>
               </div>
-              <div className="flex items-center gap-2 rounded-md border p-4">
-                <Car className="h-6 w-6 text-muted-foreground" />
+              <div className="flex items-center gap-2 rounded-md border p-4" style={{ backgroundColor: '#26A69A', color: 'white' }}>
+                <Car className="h-6 w-6 text-white" />
                 <div>
                   <p className="font-bold text-lg">{driverData.vehicles.length}</p>
-                  <p className="text-sm text-muted-foreground">Linked Vehicles</p>
+                  <p className="text-sm text-white/80">Linked Vehicles</p>
                 </div>
               </div>
             </div>
