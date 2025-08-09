@@ -1,4 +1,3 @@
-
 'use client';
 
 import {
@@ -42,7 +41,7 @@ const complianceItems = [
 
 export default function SystemComplianceCard() {
   return (
-    <Card className="bg-emerald-600 text-white">
+    <Card className="bg-teal-50 border-teal-200 text-teal-900">
       <CardHeader>
         <div className="flex items-center gap-2">
           <ShieldAlert className="h-6 w-6" />
@@ -53,12 +52,12 @@ export default function SystemComplianceCard() {
         <ul className="space-y-3">
           {complianceItems.map((item, index) => (
             <li key={index} className="flex items-start gap-3">
-              <item.icon className="h-5 w-5 text-emerald-200 mt-0.5" />
-              <span className="text-emerald-50">{item.text}</span>
+              <item.icon className="h-5 w-5 text-teal-600 mt-0.5" />
+              <span className="text-teal-900/90">{item.text}</span>
             </li>
           ))}
         </ul>
-        <Button variant="link" className="p-0 h-auto text-emerald-100 hover:text-white">
+        <Button variant="link" className="p-0 h-auto text-teal-700 hover:text-teal-900">
           View Compliance Details
         </Button>
       </CardContent>
