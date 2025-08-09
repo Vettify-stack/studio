@@ -196,13 +196,13 @@ export default function GpDashboardPage() {
 
             <Card>
                 <CardHeader>
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                         <div className="flex items-center gap-2">
                             <ClipboardCheck className="h-6 w-6 text-primary" />
-                            <CardTitle>Clinical Notes & Documentation</CardTitle>
+                            <CardTitle>Clinical Notes</CardTitle>
                         </div>
-                        <Button variant="outline">
-                            <PlusCircle className="mr-2 h-4 w-4" />
+                        <Button variant="outline" size="sm">
+                            <PlusCircle className="mr-2 h-4 w-4 hidden md:block" />
                             New SOAP Note
                         </Button>
                     </div>
