@@ -1,3 +1,4 @@
+
 'use client';
 
 import {
@@ -31,7 +32,7 @@ export default function EmdGuidelinesCard() {
     <Card className="bg-amber-50 border-amber-200 text-amber-900 h-full">
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle>EMD Guidelines</CardTitle>
+          <CardTitle>EM Guidelines</CardTitle>
           <LifeBuoy className="h-5 w-5 text-amber-700" />
         </div>
         <CardDescription className="text-amber-800">
