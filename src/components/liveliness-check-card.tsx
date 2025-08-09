@@ -65,7 +65,7 @@ export default function LivelinessCheckCard() {
   }
 
   return (
-    <Card className="bg-blue-50 border-blue-200 transition-all hover:shadow-lg">
+    <Card className="bg-blue-50 border-blue-200 transition-all hover:shadow-lg h-full">
       <CardHeader>
         <div className="flex items-center gap-3">
           <div className="p-2 bg-blue-100 rounded-md">

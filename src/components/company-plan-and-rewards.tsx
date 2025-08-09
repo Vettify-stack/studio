@@ -21,7 +21,7 @@ import SafeDate from './safe-date';
 
 export default function CompanyPlanAndRewards() {
   return (
-    <Card className="transition-all hover:shadow-lg">
+    <Card className="transition-all hover:shadow-lg h-full">
       <CardHeader>
         <div className="flex items-center justify-between">
             <CardTitle>Company Plan & Rewards</CardTitle>

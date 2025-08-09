@@ -39,7 +39,7 @@ const notifications: Notification[] = [
 
 export default function NosyCorner() {
   return (
-    <Card className="bg-accent text-accent-foreground">
+    <Card className="bg-accent text-accent-foreground h-full">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>Nosy Corner</CardTitle>

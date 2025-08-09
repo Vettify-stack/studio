@@ -271,7 +271,7 @@ export default function Telemedicine() {
 
 
   return (
-    <Card className="transition-all hover:shadow-lg">
+    <Card className="transition-all hover:shadow-lg h-full">
       <CardHeader>
         <div className="flex items-center gap-2">
           <HeartPulse className="h-6 w-6 text-primary" />

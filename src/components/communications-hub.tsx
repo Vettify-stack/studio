@@ -13,7 +13,7 @@ import { MessageSquare } from 'lucide-react';
 
 export default function CommunicationsHub() {
   return (
-    <Card className="bg-purple-600 text-white">
+    <Card className="bg-purple-600 text-white h-full">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>Communications Hub</CardTitle>
