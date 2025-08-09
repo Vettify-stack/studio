@@ -49,7 +49,6 @@ import EPrescriptionManagement from '@/components/e-prescription-management';
 import PatientCommunication from '@/components/patient-communication';
 import ReportingAnalytics from '@/components/reporting-analytics';
 import SystemComplianceCard from '@/components/system-compliance-card';
-import NosyCorner from '@/components/nosy-corner';
 import EmdGuidelinesCard from '@/components/emd-guidelines-card';
 
 const consultations: Consultation[] = [
@@ -298,7 +297,6 @@ export default function GpDashboardPage() {
 
         </div>
         <div className="space-y-6">
-            <NosyCorner />
             <EmdGuidelinesCard />
         </div>
       </div>
