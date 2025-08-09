@@ -42,10 +42,10 @@ const complianceItems = [
 
 export default function SystemComplianceCard() {
   return (
-    <Card>
+    <Card className="bg-emerald-600 text-white">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <ShieldAlert className="h-6 w-6 text-primary" />
+          <ShieldAlert className="h-6 w-6" />
           <CardTitle>System & Compliance</CardTitle>
         </div>
       </CardHeader>
@@ -53,12 +53,12 @@ export default function SystemComplianceCard() {
         <ul className="space-y-3">
           {complianceItems.map((item, index) => (
             <li key={index} className="flex items-start gap-3">
-              <item.icon className="h-5 w-5 text-green-500 mt-0.5" />
-              <span className="text-muted-foreground">{item.text}</span>
+              <item.icon className="h-5 w-5 text-emerald-200 mt-0.5" />
+              <span className="text-emerald-50">{item.text}</span>
             </li>
           ))}
         </ul>
-        <Button variant="link" className="p-0 h-auto">
+        <Button variant="link" className="p-0 h-auto text-emerald-100 hover:text-white">
           View Compliance Details
         </Button>
       </CardContent>
