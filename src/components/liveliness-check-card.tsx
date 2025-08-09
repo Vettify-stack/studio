@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Video, Camera, AlertTriangle, RefreshCw } from 'lucide-react';
+import { Video, Camera, AlertTriangle, RefreshCw, VideoOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface LivelinessCheckCardProps {
@@ -62,17 +62,22 @@ export default function LivelinessCheckCard({ onSnapshot }: LivelinessCheckCardP
   }, [toast]);
 
   useEffect(() => {
-    // Only auto-start camera if it's not for on-demand snapshot
-    if (!onSnapshot) {
-      startCameraStream();
-    }
+    // Clean up camera stream when component unmounts
     return () => {
         stopCameraStream();
     }
-  }, [startCameraStream, stopCameraStream, onSnapshot]);
+  }, [stopCameraStream]);
+
+  const handleToggleCamera = () => {
+    if (isCameraActive) {
+      stopCameraStream();
+    } else {
+      startCameraStream();
+    }
+  };
 
   const handleTakeSnapshot = () => {
-    if (!videoRef.current || !canvasRef.current) return;
+    if (!videoRef.current || !canvasRef.current || !isCameraActive) return;
     const video = videoRef.current;
     const canvas = canvasRef.current;
     canvas.width = video.videoWidth;
@@ -95,6 +100,7 @@ export default function LivelinessCheckCard({ onSnapshot }: LivelinessCheckCardP
   }
 
   const handleRetake = () => {
+    setSnapshotDataUri(null);
     startCameraStream();
   }
 
@@ -112,6 +118,12 @@ export default function LivelinessCheckCard({ onSnapshot }: LivelinessCheckCardP
       return (
         <>
             <video ref={videoRef} className="h-full w-full object-cover" autoPlay muted playsInline />
+            {!isCameraActive && hasCameraPermission !== false && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 text-white p-4">
+                    <VideoOff className="h-8 w-8 mb-2" />
+                    <p className="text-center font-semibold">Camera is off</p>
+                </div>
+            )}
             {hasCameraPermission === false && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 text-white p-4">
                     <AlertTriangle className="h-8 w-8 mb-2" />
@@ -119,13 +131,7 @@ export default function LivelinessCheckCard({ onSnapshot }: LivelinessCheckCardP
                     <p className="text-center text-sm">Please enable camera permissions.</p>
                 </div>
             )}
-            {hasCameraPermission === null && !isCameraActive && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 text-white p-4">
-                    <Button onClick={startCameraStream} variant="secondary">
-                        <Camera className="mr-2 h-4 w-4" /> Start Camera
-                    </Button>
-                </div>
-            )}
+            <canvas ref={canvasRef} className="hidden" />
         </>
       )
   }
@@ -148,19 +154,24 @@ export default function LivelinessCheckCard({ onSnapshot }: LivelinessCheckCardP
       <CardContent className="space-y-4">
         <div className="relative h-48 w-full overflow-hidden rounded-lg border bg-muted">
             {renderContent()}
-            <canvas ref={canvasRef} className="hidden" />
         </div>
-         {snapshotDataUri ? (
-            <Button className="w-full" onClick={handleRetake} variant="outline">
-                <RefreshCw className="mr-2 h-4 w-4" />
-                Retake Photo
+        <div className="flex gap-2">
+            <Button className="w-full" onClick={handleToggleCamera} variant={isCameraActive ? "destructive" : "outline"}>
+                {isCameraActive ? <VideoOff className="mr-2 h-4 w-4" /> : <Camera className="mr-2 h-4 w-4" />}
+                {isCameraActive ? 'Stop Camera' : 'Start Camera'}
             </Button>
-         ) : (
-            <Button className="w-full" disabled={!isCameraActive} onClick={handleTakeSnapshot}>
-                <Camera className="mr-2 h-4 w-4" />
-                {onSnapshot ? 'Scan Document' : 'Take Snapshot'}
-            </Button>
-         )}
+            {snapshotDataUri ? (
+                <Button className="w-full" onClick={handleRetake} variant="outline">
+                    <RefreshCw className="mr-2 h-4 w-4" />
+                    Retake Photo
+                </Button>
+            ) : (
+                <Button className="w-full" disabled={!isCameraActive} onClick={handleTakeSnapshot}>
+                    <Camera className="mr-2 h-4 w-4" />
+                    {onSnapshot ? 'Scan Document' : 'Take Snapshot'}
+                </Button>
+            )}
+        </div>
       </CardContent>
     </Card>
   );
