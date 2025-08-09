@@ -50,42 +50,42 @@ const StatusBadge = ({ status }: { status: string }) => {
 
 export default function PatientCommunication() {
   return (
-    <Card>
+    <Card className="bg-rose-50 border-rose-200 text-rose-900">
       <CardHeader>
         <div className="flex items-center gap-2">
-            <MessageSquare className="h-6 w-6 text-primary" />
+            <MessageSquare className="h-6 w-6" />
             <CardTitle>Patient Communication</CardTitle>
         </div>
-        <CardDescription>
+        <CardDescription className="text-rose-800/90">
             Manage and respond to patient messages.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="whatsapp">
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className="grid w-full grid-cols-2 bg-rose-100/80">
                 <TabsTrigger value="whatsapp">WhatsApp</TabsTrigger>
                 <TabsTrigger value="sms">SMS/Email</TabsTrigger>
             </TabsList>
             <TabsContent value="whatsapp" className="mt-4 space-y-6">
                 <div className="space-y-4">
                     {communications.map((comm, index) => (
-                        <div key={index} className="flex flex-col gap-1 border-b pb-4 last:border-b-0">
+                        <div key={index} className="flex flex-col gap-1 border-b pb-4 last:border-b-0 border-rose-200">
                             <div className="flex items-center gap-2">
                                 <p className="font-semibold">{comm.name}</p>
                                 <StatusBadge status={comm.status} />
                             </div>
-                            <p className="text-sm text-muted-foreground">{comm.message} - {comm.time}</p>
+                            <p className="text-sm text-rose-800/80">{comm.message} - {comm.time}</p>
                         </div>
                     ))}
                 </div>
                  <Button variant="outline" className="w-full">Open WhatsApp Web</Button>
-                 <p className="text-xs text-center text-muted-foreground">
+                 <p className="text-xs text-center text-rose-800/80">
                     Select a patient from 'Patient Records' to enable sick note forwarding.
                 </p>
             </TabsContent>
             <TabsContent value="sms" className="mt-4">
-                 <div className="text-center p-8 border-2 border-dashed rounded-lg">
-                    <p className="text-muted-foreground">No SMS/Email messages.</p>
+                 <div className="text-center p-8 border-2 border-dashed rounded-lg border-rose-200">
+                    <p className="text-rose-800/80">No SMS/Email messages.</p>
                 </div>
             </TabsContent>
         </Tabs>
