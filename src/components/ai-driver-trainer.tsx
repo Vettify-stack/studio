@@ -9,9 +9,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { BrainCircuit, Bot } from 'lucide-react';
+import { BrainCircuit, Bot, Send } from 'lucide-react';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
+import { Input } from './ui/input';
 
 const trainingTopics: Record<string, string> = {
     "Defensive Driving": "Defensive driving involves anticipating dangerous situations, despite the conditions or the actions of others. Key tips: Maintain a safe following distance (3-second rule), always be aware of your surroundings, and avoid distractions like using your phone.",
@@ -22,15 +23,29 @@ const trainingTopics: Record<string, string> = {
     "Time Management": "Effective time management reduces the pressure to speed. Plan your trips in advance, check for traffic and weather, and allow for extra time. It's better to arrive a few minutes late than to take unnecessary risks on the road."
 };
 
+const genericResponse = "Thanks for your question. I can currently provide detailed information on the topics listed below. Please select one for assistance.";
+
 export default function AIDriverTrainer() {
   const [messages, setMessages] = useState<{from: 'user' | 'bot', text: string}[]>([
-      { from: 'bot', text: "Hello! I'm your AI Driver Trainer. Select a topic below to learn more." }
+      { from: 'bot', text: "Hello! I'm your AI Driver Trainer. Select a topic below or type a question to get started." }
   ]);
+  const [inputValue, setInputValue] = useState('');
 
   const handleTopicSelect = (topic: string) => {
     const userMessage = { from: 'user' as const, text: `Tell me about ${topic}` };
     const botResponse = { from: 'bot' as const, text: trainingTopics[topic] || "I don't have information on that topic right now."};
-    setMessages([...messages, userMessage, botResponse]);
+    setMessages(prev => [...prev, userMessage, botResponse]);
+  }
+
+  const handleFormSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!inputValue.trim()) return;
+
+      const userMessage = { from: 'user' as const, text: inputValue };
+      const botResponse = { from: 'bot' as const, text: genericResponse };
+      
+      setMessages(prev => [...prev, userMessage, botResponse]);
+      setInputValue('');
   }
 
   return (
@@ -66,6 +81,18 @@ export default function AIDriverTrainer() {
                 </Button>
             ))}
         </div>
+        <form onSubmit={handleFormSubmit} className="flex items-center gap-2 pt-4 border-t">
+            <Input 
+                placeholder="Type your question..."
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                className="flex-1"
+            />
+            <Button type="submit" size="icon">
+                <Send className="h-4 w-4" />
+                <span className="sr-only">Send</span>
+            </Button>
+        </form>
       </CardContent>
     </Card>
   );
