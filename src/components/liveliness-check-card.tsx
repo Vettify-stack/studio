@@ -155,7 +155,7 @@ export default function LivelinessCheckCard({ onSnapshot }: LivelinessCheckCardP
         <div className="relative h-48 w-full overflow-hidden rounded-lg border bg-muted">
             {renderContent()}
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
             <Button className="w-full" onClick={handleToggleCamera} variant={isCameraActive ? "destructive" : "outline"}>
                 {isCameraActive ? <VideoOff className="mr-2 h-4 w-4" /> : <Camera className="mr-2 h-4 w-4" />}
                 {isCameraActive ? 'Stop Camera' : 'Start Camera'}
