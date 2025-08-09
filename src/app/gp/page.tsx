@@ -50,6 +50,7 @@ import PatientCommunication from '@/components/patient-communication';
 import ReportingAnalytics from '@/components/reporting-analytics';
 import SystemComplianceCard from '@/components/system-compliance-card';
 import NosyCorner from '@/components/nosy-corner';
+import EmdGuidelinesCard from '@/components/emd-guidelines-card';
 
 const consultations: Consultation[] = [
   {
@@ -298,6 +299,7 @@ export default function GpDashboardPage() {
         </div>
         <div className="space-y-6">
             <NosyCorner />
+            <EmdGuidelinesCard />
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
