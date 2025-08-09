@@ -48,6 +48,7 @@ import { format } from 'date-fns';
 import Link from 'next/link';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
+import LivelinessCheckCard from '@/components/liveliness-check-card';
 
 const driverFormSchema = z.object({
   fullName: z.string().min(1, 'Full name is required.'),
@@ -353,6 +354,7 @@ function DriverForm() {
               </FormItem>
             )}
           />
+        <LivelinessCheckCard />
         <FormField
           control={form.control}
           name="popiaConsent"

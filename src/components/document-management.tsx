@@ -12,12 +12,14 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { UploadCloud, FileCheck2, FileClock, FileX2, FileWarning, ShieldAlert, File, MoreVertical, Trash2, Download, Eye, FileUp, Loader2, Sparkles, AlertTriangle } from 'lucide-react';
+import { UploadCloud, FileCheck2, FileClock, FileX2, FileWarning, ShieldAlert, File, MoreVertical, Trash2, Download, Eye, FileUp, Loader2, Sparkles, AlertTriangle, Camera } from 'lucide-react';
 import type { Document } from '@/lib/types';
 import SafeDate from './safe-date';
 import { Input } from './ui/input';
 import { extractTextFromImage } from '@/app/actions';
 import { Alert, AlertDescription, AlertTitle } from './ui/alert';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
+import LivelinessCheckCard from './liveliness-check-card';
 
 const initialDocuments: Document[] = [
   {
@@ -109,26 +111,32 @@ export default function DocumentManagement() {
   const [error, setError] = useState('');
   const [ocrResult, setOcrResult] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isCameraOpen, setIsCameraOpen] = useState(false);
 
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
+  const handleImageForOcr = async (dataUri: string) => {
     setIsLoading(true);
     setError('');
     setOcrResult('');
+    setIsCameraOpen(false); // Close dialog after getting image
+
+    try {
+      const result = await extractTextFromImage(dataUri);
+      setOcrResult(result.text);
+    } catch (e) {
+      setError('Failed to extract text from the document. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
 
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = async () => {
-      try {
-        const result = await extractTextFromImage(reader.result as string);
-        setOcrResult(result.text);
-      } catch (e) {
-        setError('Failed to extract text from the document. Please try again.');
-      } finally {
-        setIsLoading(false);
-      }
+    reader.onload = () => {
+      handleImageForOcr(reader.result as string);
     };
     reader.onerror = () => {
       setError('Failed to read file.');
@@ -145,10 +153,26 @@ export default function DocumentManagement() {
       <CardHeader>
         <div className="flex items-center justify-between">
             <CardTitle>Documents</CardTitle>
-            <Button variant="outline" size="sm" onClick={handleUploadClick}>
-                <FileUp className="mr-2 h-4 w-4" />
-                Upload & Scan
-            </Button>
+            <div className='flex items-center gap-2'>
+                <Button variant="outline" size="sm" onClick={handleUploadClick}>
+                    <FileUp className="mr-2 h-4 w-4" />
+                    Upload File
+                </Button>
+                <Dialog open={isCameraOpen} onOpenChange={setIsCameraOpen}>
+                    <DialogTrigger asChild>
+                        <Button variant="outline" size="sm">
+                            <Camera className="mr-2 h-4 w-4" />
+                            Scan with Camera
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle>Scan Document</DialogTitle>
+                        </DialogHeader>
+                        <LivelinessCheckCard onSnapshot={handleImageForOcr} />
+                    </DialogContent>
+                </Dialog>
+            </div>
         </div>
         <CardDescription>
           Upload CV, ID/Passport, Work Permit/Visa, Proof of address. Scanned documents will be read by AI.
