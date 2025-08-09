@@ -224,8 +224,6 @@ export default function FleetPage() {
          <div className="lg:col-span-1 space-y-6">
             <CommunicationsHub />
             <NosyCorner />
-        </div>
-        <div className="lg:col-span-3">
             <LivelinessCheckCard />
         </div>
         <div className="lg:col-span-3">
