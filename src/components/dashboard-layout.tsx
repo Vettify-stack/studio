@@ -151,6 +151,20 @@ export default function DashboardLayout({
                     </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={isMounted && pathname === '/utilities'}
+                      tooltip={{ children: 'Utilities' }}
+                      variant="ghost"
+                      className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                    >
+                      <Link href="/utilities">
+                        <Smartphone />
+                        Utilities
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                <SidebarMenuItem>
                     <SidebarMenuButton asChild tooltip={{ children: 'Pay Subscription' }} variant="ghost" className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
                         <Link href="#">
                         <CreditCard />

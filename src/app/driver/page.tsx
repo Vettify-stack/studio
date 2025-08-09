@@ -26,6 +26,7 @@ import LicenseRenewalCard from '@/components/license-renewal-card';
 import NosyCorner from '@/components/nosy-corner';
 import MyPlanAndRewards from '@/components/my-plan-and-rewards';
 import LivelinessCheckCard from '@/components/liveliness-check-card';
+import UtilitiesCard from '@/components/utilities-card';
 
 const driverData: DriverProfile = {
   name: 'John Mokoena',
@@ -118,6 +119,7 @@ export default function DriverDashboardPage() {
             <MyPlanAndRewards />
             <Telemedicine />
             <AIDriverTrainer />
+            <UtilitiesCard />
       </div>
       
       {/* Full-width detailed cards */}
