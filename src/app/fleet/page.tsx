@@ -27,7 +27,6 @@ import Telemedicine from '@/components/telemedicine';
 import CommunicationsHub from '@/components/communications-hub';
 import GpsTrackingCard from '@/components/gps-tracking-card';
 import EmployeeAttendancePerformance from '@/components/employee-attendance-performance';
-import CompanyFineManagement from '@/components/company-fine-management';
 import VehicleManagementCard from '@/components/vehicle-management-card';
 import DisciplinaryManagementCard from '@/components/disciplinary-management-card';
 import TrainingMatrix from '@/components/training-matrix';
@@ -217,7 +216,7 @@ export default function FleetPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <CompanyComplianceCard />
         <AartoComplianceCard />
-        <CompanyFineManagement />
+        <FineManagementCard />
         <CommunicationsHub />
         <Telemedicine />
         <LivelinessCheckCard />
@@ -232,7 +231,6 @@ export default function FleetPage() {
         <TrainingMatrix />
         <CompanyDocumentsCard />
         <VehicleManagementCard />
-        <FineManagementCard />
         <EmployeeAttendancePerformance />
         <DisciplinaryManagementCard />
         <DriverComplianceOverview />
