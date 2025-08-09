@@ -121,10 +121,10 @@ export default function GpDashboardPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <Card className="bg-[#1E88E5] text-white">
+      <Card className="bg-[#263238] text-white">
         <CardHeader>
           <CardTitle>GP Dashboard</CardTitle>
-          <CardDescription className="text-blue-100">
+          <CardDescription className="text-gray-300">
             Manage your virtual medical consultations.
           </CardDescription>
         </CardHeader>
