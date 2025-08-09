@@ -30,7 +30,7 @@ const fines = [
 
 export default function FineManagementCard() {
   return (
-    <Card className="bg-destructive/80 text-destructive-foreground">
+    <Card className="bg-destructive/80 text-destructive-foreground h-full">
       <CardHeader>
         <div className="flex justify-between items-center">
             <CardTitle>Fine Management</CardTitle>
@@ -70,11 +70,11 @@ export default function FineManagementCard() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
             <Button variant="secondary" className="bg-accent hover:bg-accent/90 text-accent-foreground">
                 <CreditCard className="mr-2 h-4 w-4" />
-                Pay Now
+                Pay Selected
             </Button>
             <Button variant="secondary" className="bg-yellow-500 hover:bg-yellow-600 text-white">
                 <ShieldAlert className="mr-2 h-4 w-4" />
-                Dispute Selected
+                Dispute Fine
             </Button>
         </div>
       </CardContent>
