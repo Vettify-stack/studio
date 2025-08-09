@@ -51,75 +51,81 @@ const statusColors = {
 
 export default function DriverDashboardPage() {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      {/* Left Column */}
-      <div className="lg:col-span-2 space-y-6">
-        <Card className="transition-all hover:shadow-lg">
-          <CardHeader className="flex flex-row items-center gap-4">
-            <Avatar className="h-16 w-16">
-              <AvatarImage src="https://placehold.co/100x100.png" data-ai-hint="person portrait" />
-              <AvatarFallback>{driverData.initials}</AvatarFallback>
-            </Avatar>
-            <div>
-              <CardTitle className="text-2xl">{driverData.name}</CardTitle>
-              <CardDescription>{driverData.employmentStatus}</CardDescription>
-              <Badge variant="outline" className={`mt-2 ${statusColors[driverData.idStatus]}`}>
-                ID: {driverData.idStatus}
-              </Badge>
-            </div>
-          </CardHeader>
-          <CardContent className="mt-4">
-            <h3 className="font-semibold mb-4 text-lg">Compliance Status</h3>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex items-center gap-2 rounded-md border p-4" style={{ backgroundColor: '#90A4AE', color: 'white' }}>
-                <FileText className="h-6 w-6 text-white" />
-                <div>
-                  <p className="font-bold text-lg">{driverData.outstandingFines}</p>
-                  <p className="text-sm text-white/80">Outstanding Fines</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 rounded-md border p-4" style={{ backgroundColor: '#FF7043', color: 'white' }}>
-                <AlertTriangle className="h-6 w-6 text-white" />
-                <div>
-                  <p className="font-bold text-lg">{driverData.demeritPoints}</p>
-                  <p className="text-sm text-white/80">AARTO Points</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 rounded-md border p-4" style={{ backgroundColor: '#7E57C2', color: 'white' }}>
-                <BadgeCheck className="h-6 w-6 text-white" />
-                <div>
-                  <p className={`font-bold text-lg`}>{driverData.licenseStatus}</p>
-                  <p className="text-sm text-white/80">License Status</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 rounded-md border p-4" style={{ backgroundColor: '#26A69A', color: 'white' }}>
-                <Car className="h-6 w-6 text-white" />
-                <div>
-                  <p className="font-bold text-lg">{driverData.vehicles.length}</p>
-                  <p className="text-sm text-white/80">Linked Vehicles</p>
-                </div>
+    <div className="flex flex-col gap-6">
+      {/* Primary Info Card */}
+      <Card className="transition-all hover:shadow-lg">
+        <CardHeader className="flex flex-row items-center gap-4">
+          <Avatar className="h-16 w-16">
+            <AvatarImage src="https://placehold.co/100x100.png" data-ai-hint="person portrait" />
+            <AvatarFallback>{driverData.initials}</AvatarFallback>
+          </Avatar>
+          <div>
+            <CardTitle className="text-2xl">{driverData.name}</CardTitle>
+            <CardDescription>{driverData.employmentStatus}</CardDescription>
+            <Badge variant="outline" className={`mt-2 ${statusColors[driverData.idStatus]}`}>
+              ID: {driverData.idStatus}
+            </Badge>
+          </div>
+        </CardHeader>
+        <CardContent className="mt-4">
+          <h3 className="font-semibold mb-4 text-lg">Compliance Status</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="flex items-center gap-2 rounded-md border p-4" style={{ backgroundColor: '#90A4AE', color: 'white' }}>
+              <FileText className="h-6 w-6 text-white" />
+              <div>
+                <p className="font-bold text-lg">{driverData.outstandingFines}</p>
+                <p className="text-sm text-white/80">Outstanding Fines</p>
               </div>
             </div>
-          </CardContent>
-        </Card>
-        
-        <DriverComplianceCard />
-        <FineManagementCard />
+            <div className="flex items-center gap-2 rounded-md border p-4" style={{ backgroundColor: '#FF7043', color: 'white' }}>
+              <AlertTriangle className="h-6 w-6 text-white" />
+              <div>
+                <p className="font-bold text-lg">{driverData.demeritPoints}</p>
+                <p className="text-sm text-white/80">AARTO Points</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 rounded-md border p-4" style={{ backgroundColor: '#7E57C2', color: 'white' }}>
+              <BadgeCheck className="h-6 w-6 text-white" />
+              <div>
+                <p className={`font-bold text-lg`}>{driverData.licenseStatus}</p>
+                <p className="text-sm text-white/80">License Status</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 rounded-md border p-4" style={{ backgroundColor: '#26A69A', color: 'white' }}>
+              <Car className="h-6 w-6 text-white" />
+              <div>
+                <p className="font-bold text-lg">{driverData.vehicles.length}</p>
+                <p className="text-sm text-white/80">Linked Vehicles</p>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+      
+      {/* Main Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <DriverComplianceCard />
+            <FineManagementCard />
+            <LivelinessCheckCard />
+            <NosyCorner />
+            <MyPlanAndRewards />
+            <Telemedicine />
+        </div>
+        <div className="space-y-6">
+            <ComplianceScore score={driverData.complianceScore} />
+            <QRCodeCard qrCodeUrl={driverData.qrCodeUrl} />
+            <LicenseRenewalCard />
+            <AIDriverTrainer />
+        </div>
+      </div>
+      
+      {/* Full-width detailed cards */}
+      <div className="grid grid-cols-1 gap-6">
         <DocumentManagement />
         <TrainingCertificatesCard />
       </div>
 
-      {/* Right Column */}
-      <div className="space-y-6">
-          <LivelinessCheckCard />
-          <NosyCorner />
-          <MyPlanAndRewards />
-          <ComplianceScore score={driverData.complianceScore} />
-          <QRCodeCard qrCodeUrl={driverData.qrCodeUrl} />
-          <LicenseRenewalCard />
-          <Telemedicine />
-          <AIDriverTrainer />
-      </div>
     </div>
   );
 }
