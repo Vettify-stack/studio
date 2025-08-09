@@ -135,7 +135,7 @@ export default function UtilitiesPurchase() {
         Math.floor(Math.random() * 10000),
         Math.floor(Math.random() * 10000),
         Math.floor(Math.random() * 10000)
-      ].join(' ').padStart(20, '0');
+      ].join(' ').padStart(24, '0').substring(0, 24);
       result.token = token;
       result.message = 'Electricity purchase successful! Your token is displayed below.'
     }
@@ -143,26 +143,33 @@ export default function UtilitiesPurchase() {
     setPurchaseResult(result);
 
     // Reset forms
-    airtimeForm.reset();
-    dataForm.reset();
-    electricityForm.reset();
+    airtimeForm.reset({ network: '', recipient: 'registered', phoneNumber: '', amount: '' });
+    dataForm.reset({ network: '', recipient: 'registered', phoneNumber: '', bundle: '' });
+    electricityForm.reset({ meterNumber: '', amount: '' });
   };
 
   const renderSuccessMessage = () => (
-    <div className="text-center p-8 border-2 border-dashed rounded-lg flex flex-col items-center gap-4">
-      <CheckCircle className="w-16 h-16 text-green-500" />
-      <h3 className="text-xl font-bold">Purchase Complete</h3>
-      <p className="text-muted-foreground">
-        {purchaseResult?.message}
-      </p>
-      {purchaseResult?.type === 'Electricity' && purchaseResult.token && (
-        <div className="w-full p-4 my-2 bg-muted rounded-lg">
-          <p className="text-sm font-semibold text-muted-foreground">Your electricity token:</p>
-          <p className="text-2xl font-mono tracking-widest text-primary">{purchaseResult.token}</p>
-        </div>
-      )}
-      <Button onClick={() => setPurchaseResult(null)}>Make Another Purchase</Button>
-    </div>
+    <Card>
+      <CardHeader>
+          <div className="flex items-center gap-2">
+            <CheckCircle className="h-6 w-6 text-green-500" />
+            <CardTitle>Purchase Complete</CardTitle>
+          </div>
+      </CardHeader>
+      <CardContent className="text-center p-8 border-2 border-dashed rounded-lg flex flex-col items-center gap-4">
+        <h3 className="text-xl font-bold">Success!</h3>
+        <p className="text-muted-foreground">
+          {purchaseResult?.message}
+        </p>
+        {purchaseResult?.type === 'Electricity' && purchaseResult.token && (
+          <div className="w-full p-4 my-2 bg-muted rounded-lg">
+            <p className="text-sm font-semibold text-muted-foreground">Your electricity token:</p>
+            <p className="text-2xl font-mono tracking-widest text-primary">{purchaseResult.token}</p>
+          </div>
+        )}
+        <Button onClick={() => setPurchaseResult(null)}>Make Another Purchase</Button>
+      </CardContent>
+    </Card>
   )
 
   if (purchaseResult) {
