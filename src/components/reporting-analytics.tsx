@@ -1,4 +1,3 @@
-
 'use client';
 
 import {
@@ -12,27 +11,27 @@ import { BarChart } from 'lucide-react';
 
 export default function ReportingAnalytics() {
   return (
-    <Card>
+    <Card className="bg-[#7E57C2] text-white">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <BarChart className="h-6 w-6 text-primary" />
+          <BarChart className="h-6 w-6" />
           <CardTitle>Reporting & Analytics</CardTitle>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="text-sm text-muted-foreground space-y-2">
-            <p>Consults this month: <span className="font-bold text-foreground">110</span></p>
-            <p>Avg. Consultation Time: <span className="font-bold text-foreground">15 mins</span></p>
+        <div className="text-sm text-purple-100 space-y-2">
+            <p>Consults this month: <span className="font-bold text-white">110</span></p>
+            <p>Avg. Consultation Time: <span className="font-bold text-white">15 mins</span></p>
         </div>
         <div>
-            <h4 className="font-semibold text-foreground mb-2">Top Diagnoses:</h4>
-            <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
-                <li>Common Cold: <span className="font-medium text-foreground">33</span></li>
-                <li>Hypertension Management: <span className="font-medium text-foreground">22</span></li>
-                <li>Routine Checkup: <span className="font-medium text-foreground">36</span></li>
+            <h4 className="font-semibold text-white mb-2">Top Diagnoses:</h4>
+            <ul className="list-disc list-inside text-sm text-purple-100 space-y-1">
+                <li>Common Cold: <span className="font-medium text-white">33</span></li>
+                <li>Hypertension Management: <span className="font-medium text-white">22</span></li>
+                <li>Routine Checkup: <span className="font-medium text-white">36</span></li>
             </ul>
         </div>
-        <Button variant="link" className="p-0 h-auto">View Full Report</Button>
+        <Button variant="link" className="p-0 h-auto text-purple-100 hover:text-white">View Full Report</Button>
       </CardContent>
     </Card>
   );
