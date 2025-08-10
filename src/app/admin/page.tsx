@@ -42,6 +42,7 @@ import VehicleManagementSnippetCard from '@/components/vehicle-management-snippe
 import JobMarketOverviewCard from '@/components/job-market-overview-card';
 import JobPostingCard from '@/components/job-posting-card';
 import MatchingApplicantsCard from '@/components/matching-applicants-card';
+import UserManagementPage from '@/app/admin/user-management/page';
 
 const FleetPage = dynamic(() => import('@/app/fleet/page'), {
   loading: () => <DashboardSkeleton />,
@@ -173,7 +174,7 @@ export default function AdminDashboardPage() {
                     <FadeIn key="admin"><AdminView /></FadeIn>
                 </TabsContent>
                 <TabsContent value="user_management" className="mt-6">
-                     <PlaceholderContent title="User Management" />
+                     <FadeIn key="user-management"><UserManagementPage /></FadeIn>
                 </TabsContent>
                 <TabsContent value="referrals" className="mt-6">
                      <PlaceholderContent title="Referrals" />

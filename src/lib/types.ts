@@ -75,3 +75,17 @@ export interface Notification {
     details: string;
     status: 'Urgent' | 'New' | 'Read';
 }
+
+export interface PlatformUser {
+  id: string;
+  name: string;
+  role: 'Driver' | 'Super Admin' | 'Company' | 'Medical GP';
+  email: string;
+  registeredDate: string;
+  subscriptionStatus: 'Paid' | 'Unpaid';
+  profileStatus: 'Approved' | 'Pending' | 'Rejected';
+  avatar: {
+    src: string;
+    fallback: string;
+  };
+}
