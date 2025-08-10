@@ -4,7 +4,6 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -17,6 +16,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { ShoppingCart, DollarSign, TrendingUp, BarChart } from 'lucide-react';
+import PartnerNetworkAnalytics from '@/components/partner-network-analytics';
 
 const StatCard = ({
   title,
@@ -56,97 +56,100 @@ const networkProviderData = [
 
 export default function ServicesInsightsPage() {
   return (
-    <div className="p-6 rounded-lg" style={{ background: 'linear-gradient(to right, #6b21a8, #9d24a8)' }}>
-        <div className="flex items-center justify-between mb-4">
-            <div>
-                <h1 className="text-2xl font-bold text-white">Value-Added Services Analytics</h1>
-                <p className="text-white/80">
-                    Performance and revenue from airtime, data, and electricity sales.
-                </p>
+    <div className="space-y-8">
+        <div className="p-6 rounded-lg" style={{ background: 'linear-gradient(to right, #6b21a8, #9d24a8)' }}>
+            <div className="flex items-center justify-between mb-4">
+                <div>
+                    <h1 className="text-2xl font-bold text-white">Value-Added Services Analytics</h1>
+                    <p className="text-white/80">
+                        Performance and revenue from airtime, data, and electricity sales.
+                    </p>
+                </div>
+                <ShoppingCart className="h-6 w-6 text-white" />
             </div>
-            <ShoppingCart className="h-6 w-6 text-white" />
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <StatCard title="Total Transactions" value="1250" icon={ShoppingCart} />
-            <StatCard title="Total Revenue" value="R 62500.00" icon={DollarSign} />
-            <StatCard title="Total Commission" value="R 6250.00" icon={TrendingUp} />
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <Card className="bg-white/10 text-white border-white/20">
-                <CardHeader>
-                    <CardTitle className="text-sm font-medium flex items-center gap-2"><BarChart className="h-4 w-4" /> Most Popular Service</CardTitle>
-                </CardHeader>
-                <CardContent>
-                     <p className="text-2xl font-bold">Airtime (Own Number)</p>
-                </CardContent>
-            </Card>
-             <Card className="bg-white/10 text-white border-white/20">
-                <CardHeader>
-                    <CardTitle className="text-sm font-medium flex items-center gap-2"><BarChart className="h-4 w-4" /> Most Popular Provider</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <p className="text-2xl font-bold">Vodacom</p>
-                </CardContent>
-            </Card>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <StatCard title="Total Transactions" value="1250" icon={ShoppingCart} />
+                <StatCard title="Total Revenue" value="R 62500.00" icon={DollarSign} />
+                <StatCard title="Total Commission" value="R 6250.00" icon={TrendingUp} />
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <Card className="bg-white/10 text-white border-white/20">
+                    <CardHeader>
+                        <CardTitle className="text-sm font-medium flex items-center gap-2"><BarChart className="h-4 w-4" /> Most Popular Service</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-2xl font-bold">Airtime (Own Number)</p>
+                    </CardContent>
+                </Card>
+                <Card className="bg-white/10 text-white border-white/20">
+                    <CardHeader>
+                        <CardTitle className="text-sm font-medium flex items-center gap-2"><BarChart className="h-4 w-4" /> Most Popular Provider</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-2xl font-bold">Vodacom</p>
+                    </CardContent>
+                </Card>
+            </div>
+
+            <div className="space-y-6">
+                <Card className="bg-white/90">
+                    <CardHeader>
+                        <CardTitle>Breakdown by Service Type</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>SERVICE TYPE</TableHead>
+                                    <TableHead>TRANSACTIONS</TableHead>
+                                    <TableHead>REVENUE</TableHead>
+                                    <TableHead>COMMISSION</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {serviceTypeData.map((item) => (
+                                    <TableRow key={item.type}>
+                                        <TableCell className="font-medium">{item.type}</TableCell>
+                                        <TableCell>{item.transactions}</TableCell>
+                                        <TableCell>{item.revenue}</TableCell>
+                                        <TableCell>R {item.commission.toFixed(2)}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </CardContent>
+                </Card>
+                <Card className="bg-white/90">
+                    <CardHeader>
+                        <CardTitle>Breakdown by Network Provider</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>NETWORK PROVIDER</TableHead>
+                                    <TableHead>TRANSACTIONS</TableHead>
+                                    <TableHead>REVENUE</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                            {networkProviderData.map((item) => (
+                                    <TableRow key={item.provider}>
+                                        <TableCell className="font-medium">{item.provider}</TableCell>
+                                        <TableCell>{item.transactions}</TableCell>
+                                        <TableCell>{item.revenue}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </CardContent>
+                </Card>
+            </div>
         </div>
 
-        <div className="space-y-6">
-            <Card className="bg-white/90">
-                <CardHeader>
-                    <CardTitle>Breakdown by Service Type</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>SERVICE TYPE</TableHead>
-                                <TableHead>TRANSACTIONS</TableHead>
-                                <TableHead>REVENUE</TableHead>
-                                <TableHead>COMMISSION</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {serviceTypeData.map((item) => (
-                                <TableRow key={item.type}>
-                                    <TableCell className="font-medium">{item.type}</TableCell>
-                                    <TableCell>{item.transactions}</TableCell>
-                                    <TableCell>{item.revenue}</TableCell>
-                                    <TableCell>R {item.commission.toFixed(2)}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </CardContent>
-            </Card>
-             <Card className="bg-white/90">
-                <CardHeader>
-                    <CardTitle>Breakdown by Network Provider</CardTitle>
-                </CardHeader>
-                <CardContent>
-                     <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>NETWORK PROVIDER</TableHead>
-                                <TableHead>TRANSACTIONS</TableHead>
-                                <TableHead>REVENUE</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                           {networkProviderData.map((item) => (
-                                <TableRow key={item.provider}>
-                                    <TableCell className="font-medium">{item.provider}</TableCell>
-                                    <TableCell>{item.transactions}</TableCell>
-                                    <TableCell>{item.revenue}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </CardContent>
-            </Card>
-        </div>
-
+        <PartnerNetworkAnalytics />
     </div>
   );
 }
