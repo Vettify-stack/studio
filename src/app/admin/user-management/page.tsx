@@ -14,6 +14,8 @@ import {
   Eye,
   LayoutGrid,
   List,
+  Trash2,
+  Ban,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -91,7 +93,7 @@ const profileStatusConfig = {
     Rejected: 'bg-red-100 text-red-800 border-red-200',
 }
 
-function UserCard({ user, onAction }: { user: PlatformUser, onAction: (userId: string, action: 'approve' | 'reject') => void }) {
+function UserCard({ user, onAction }: { user: PlatformUser, onAction: (userId: string, action: 'approve' | 'reject' | 'delete' | 'suspend') => void }) {
     const subscriptionColor = subscriptionStatusConfig[user.subscriptionStatus] || 'bg-gray-100 text-gray-800 border-gray-200';
     const profileColor = profileStatusConfig[user.profileStatus] || 'bg-gray-100 text-gray-800 border-gray-200';
 
@@ -139,9 +141,17 @@ function UserCard({ user, onAction }: { user: PlatformUser, onAction: (userId: s
                         </Button>
                      </div>
                 ) : (
-                    <Button variant="outline" className="w-full">
-                        <Eye className="mr-2 h-4 w-4" /> View Profile
-                    </Button>
+                    <div className="grid grid-cols-3 gap-2 w-full">
+                        <Button variant="outline" size="sm" onClick={() => onAction(user.id, 'suspend')}>
+                            <Ban className="mr-1 h-4 w-4" /> Suspend
+                        </Button>
+                        <Button variant="destructive" size="sm" onClick={() => onAction(user.id, 'delete')}>
+                           <Trash2 className="mr-1 h-4 w-4" /> Delete
+                        </Button>
+                        <Button variant="outline" size="sm" className="col-span-3">
+                            <Eye className="mr-2 h-4 w-4" /> View Profile
+                        </Button>
+                    </div>
                 )}
             </CardFooter>
         </Card>
@@ -153,7 +163,31 @@ export default function UserManagementPage() {
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
     const { toast } = useToast();
 
-    const handleAction = (userId: string, action: 'approve' | 'reject') => {
+    const handleAction = (userId: string, action: 'approve' | 'reject' | 'delete' | 'suspend') => {
+        if (action === 'delete') {
+            setUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
+            toast({
+                title: 'User Deleted',
+                description: `The user has been removed from the platform.`,
+            });
+            return;
+        }
+
+        if (action === 'suspend') {
+            setUsers(prevUsers =>
+                prevUsers.map(user =>
+                    user.id === userId
+                        ? { ...user, subscriptionStatus: 'Unpaid' }
+                        : user
+                )
+            );
+            toast({
+                title: 'User Suspended',
+                description: 'The user\'s subscription has been marked as unpaid.',
+            });
+            return;
+        }
+
         setUsers(prevUsers =>
             prevUsers.map(user =>
                 user.id === userId
@@ -229,3 +263,5 @@ export default function UserManagementPage() {
         </div>
     )
 }
+
+    
