@@ -140,7 +140,7 @@ function UserCard({ user, onAction }: { user: PlatformUser, onAction: (userId: s
                             <X className="mr-2 h-4 w-4" /> Reject
                         </Button>
                      </div>
-                ) : (
+                ) : user.role !== 'Super Admin' ? (
                     <div className="grid grid-cols-3 gap-2 w-full">
                         <Button variant="outline" size="sm" onClick={() => onAction(user.id, 'suspend')}>
                             <Ban className="mr-1 h-4 w-4" /> Suspend
@@ -152,7 +152,7 @@ function UserCard({ user, onAction }: { user: PlatformUser, onAction: (userId: s
                             <Eye className="mr-2 h-4 w-4" /> View Profile
                         </Button>
                     </div>
-                )}
+                ) : null}
             </CardFooter>
         </Card>
     )
@@ -263,5 +263,7 @@ export default function UserManagementPage() {
         </div>
     )
 }
+
+    
 
     
