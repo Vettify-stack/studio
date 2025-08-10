@@ -29,7 +29,6 @@ import { Badge } from '@/components/ui/badge';
 import { Users, BarChart, DollarSign, Percent, ClipboardList, PlusCircle, Edit, Trash2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 
 const StatCard = ({
@@ -37,25 +36,34 @@ const StatCard = ({
   value,
   icon: Icon,
   isMainStat = false,
+  onClick,
 }: {
   title: string;
   value: string;
   icon: React.ElementType;
   isMainStat?: boolean;
+  onClick?: () => void;
 }) => (
-  <Card className="bg-white/10 text-white border-white/20">
-    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-      <CardTitle className="text-sm font-medium">{title}</CardTitle>
-      <Icon className="h-4 w-4 text-white/80" />
-    </CardHeader>
-    <CardContent>
-        {isMainStat ? (
-            <div className="text-3xl font-bold">{value}</div>
-        ) : (
-            <div className="text-2xl font-bold">{value}</div>
-        )}
-    </CardContent>
-  </Card>
+  <Button
+    variant="ghost"
+    className="h-auto w-full p-0 text-left"
+    onClick={onClick}
+    disabled={!onClick}
+  >
+    <Card className="bg-white/10 text-white border-white/20 w-full transition-colors hover:bg-white/20">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <CardTitle className="text-sm font-medium">{title}</CardTitle>
+        <Icon className="h-4 w-4 text-white/80" />
+        </CardHeader>
+        <CardContent>
+            {isMainStat ? (
+                <div className="text-3xl font-bold">{value}</div>
+            ) : (
+                <div className="text-2xl font-bold">{value}</div>
+            )}
+        </CardContent>
+    </Card>
+  </Button>
 );
 
 const performanceData = [
@@ -113,6 +121,31 @@ export default function PartnerNetworkAnalytics() {
         });
     }
 
+    const handleCardClick = (title: string) => {
+        let description = '';
+        switch (title) {
+            case 'Total Partners':
+                description = 'This would navigate to a page listing all partners in the network.';
+                break;
+            case 'Total Member Engagements':
+                description = 'This would open a detailed view of all member engagements.';
+                break;
+            case 'Most Engaged Category':
+                description = 'This would open an insights page for the most popular categories.';
+                break;
+            case 'Est. Member Savings':
+                description = 'This would navigate to a report detailing member savings per partner.';
+                break;
+            case 'Vettify Commission':
+                description = 'This would open a detailed commission report.';
+                break;
+        }
+        toast({
+            title: `${title} Card Clicked`,
+            description,
+        });
+    };
+
   return (
     <div className="p-6 rounded-lg space-y-8" style={{ background: 'linear-gradient(to right, #22c55e, #16a34a)' }}>
         <div className="flex items-center justify-between">
@@ -155,14 +188,14 @@ export default function PartnerNetworkAnalytics() {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <StatCard title="Total Partners" value={String(topPartners.length)} icon={Users} />
-            <StatCard title="Total Member Engagements" value="780" icon={Users} />
-            <StatCard title="Most Engaged Category" value="Tire Shops" icon={BarChart} isMainStat={true} />
+            <StatCard title="Total Partners" value={String(topPartners.length)} icon={Users} onClick={() => handleCardClick('Total Partners')}/>
+            <StatCard title="Total Member Engagements" value="780" icon={Users} onClick={() => handleCardClick('Total Member Engagements')}/>
+            <StatCard title="Most Engaged Category" value="Tire Shops" icon={BarChart} isMainStat={true} onClick={() => handleCardClick('Most Engaged Category')}/>
         </div>
 
          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <StatCard title="Est. Member Savings" value="R 15600.00" icon={DollarSign} />
-            <StatCard title="Vettify Commission" value="R 1560.00" icon={Percent} />
+            <StatCard title="Est. Member Savings" value="R 15600.00" icon={DollarSign} onClick={() => handleCardClick('Est. Member Savings')}/>
+            <StatCard title="Vettify Commission" value="R 1560.00" icon={Percent} onClick={() => handleCardClick('Vettify Commission')}/>
         </div>
 
         <Card className="bg-white/90">
