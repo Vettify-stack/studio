@@ -48,7 +48,7 @@ const DocumentCard = ({ doc }: { doc: typeof documents[0] }) => {
             <div className='flex items-center gap-2'>
                 <File className="h-5 w-5 text-muted-foreground" />
                 <div>
-                     <p className='text-sm'><Badge variant="secondary" className="mr-2">{doc.user}</Badge>{doc.type}</p>
+                     <div className='text-sm'><Badge variant="secondary" className="mr-2">{doc.user}</Badge>{doc.type}</div>
                      <p className='text-xs text-muted-foreground'>Uploaded: {doc.uploaded}</p>
                 </div>
             </div>
