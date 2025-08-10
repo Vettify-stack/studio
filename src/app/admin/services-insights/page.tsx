@@ -15,6 +15,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 import { ShoppingCart, DollarSign, TrendingUp, BarChart } from 'lucide-react';
 import PartnerNetworkAnalytics from '@/components/partner-network-analytics';
 
@@ -22,20 +24,24 @@ const StatCard = ({
   title,
   value,
   icon: Icon,
+  onClick,
 }: {
   title: string;
   value: string;
   icon: React.ElementType;
+  onClick?: () => void;
 }) => (
-  <Card className="bg-white/10 text-white border-white/20">
-    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-      <CardTitle className="text-sm font-medium">{title}</CardTitle>
-      <Icon className="h-4 w-4 text-white/80" />
-    </CardHeader>
-    <CardContent>
-      <div className="text-2xl font-bold">{value}</div>
-    </CardContent>
-  </Card>
+    <Button variant="ghost" className="h-auto w-full p-0 text-left" onClick={onClick} disabled={!onClick}>
+        <Card className="bg-white/10 text-white border-white/20 w-full transition-colors hover:bg-white/20">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">{title}</CardTitle>
+            <Icon className="h-4 w-4 text-white/80" />
+            </CardHeader>
+            <CardContent>
+            <div className="text-2xl font-bold">{value}</div>
+            </CardContent>
+        </Card>
+    </Button>
 );
 
 const serviceTypeData = [
@@ -55,6 +61,34 @@ const networkProviderData = [
 
 
 export default function ServicesInsightsPage() {
+    const { toast } = useToast();
+
+    const handleCardClick = (title: string) => {
+        let description = '';
+        switch(title) {
+            case 'Total Transactions':
+                description = 'This would navigate to a detailed transaction log for all services.';
+                break;
+            case 'Total Revenue':
+                description = 'This would open a full revenue report, broken down by service type.';
+                break;
+            case 'Total Commission':
+                description = 'This would show a detailed commission earnings report.';
+                break;
+            case 'Most Popular Service':
+                description = 'This would open an insights page for service popularity trends.';
+                break;
+            case 'Most Popular Provider':
+                description = 'This would show analytics for network provider performance.';
+                break;
+        }
+
+        toast({
+            title: `${title} Card Clicked`,
+            description,
+        });
+    }
+
   return (
     <div className="space-y-8">
         <div className="p-6 rounded-lg" style={{ background: 'linear-gradient(to right, #6b21a8, #9d24a8)' }}>
@@ -69,28 +103,32 @@ export default function ServicesInsightsPage() {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                <StatCard title="Total Transactions" value="1250" icon={ShoppingCart} />
-                <StatCard title="Total Revenue" value="R 62500.00" icon={DollarSign} />
-                <StatCard title="Total Commission" value="R 6250.00" icon={TrendingUp} />
+                <StatCard title="Total Transactions" value="1250" icon={ShoppingCart} onClick={() => handleCardClick('Total Transactions')} />
+                <StatCard title="Total Revenue" value="R 62500.00" icon={DollarSign} onClick={() => handleCardClick('Total Revenue')} />
+                <StatCard title="Total Commission" value="R 6250.00" icon={TrendingUp} onClick={() => handleCardClick('Total Commission')} />
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <Card className="bg-white/10 text-white border-white/20">
-                    <CardHeader>
-                        <CardTitle className="text-sm font-medium flex items-center gap-2"><BarChart className="h-4 w-4" /> Most Popular Service</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-2xl font-bold">Airtime (Own Number)</p>
-                    </CardContent>
-                </Card>
-                <Card className="bg-white/10 text-white border-white/20">
-                    <CardHeader>
-                        <CardTitle className="text-sm font-medium flex items-center gap-2"><BarChart className="h-4 w-4" /> Most Popular Provider</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-2xl font-bold">Vodacom</p>
-                    </CardContent>
-                </Card>
+                <Button variant="ghost" className="h-auto w-full p-0 text-left" onClick={() => handleCardClick('Most Popular Service')}>
+                    <Card className="bg-white/10 text-white border-white/20 w-full transition-colors hover:bg-white/20">
+                        <CardHeader>
+                            <CardTitle className="text-sm font-medium flex items-center gap-2"><BarChart className="h-4 w-4" /> Most Popular Service</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-2xl font-bold">Airtime (Own Number)</p>
+                        </CardContent>
+                    </Card>
+                </Button>
+                <Button variant="ghost" className="h-auto w-full p-0 text-left" onClick={() => handleCardClick('Most Popular Provider')}>
+                    <Card className="bg-white/10 text-white border-white/20 w-full transition-colors hover:bg-white/20">
+                        <CardHeader>
+                            <CardTitle className="text-sm font-medium flex items-center gap-2"><BarChart className="h-4 w-4" /> Most Popular Provider</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-2xl font-bold">Vodacom</p>
+                        </CardContent>
+                    </Card>
+                 </Button>
             </div>
 
             <div className="space-y-6">
