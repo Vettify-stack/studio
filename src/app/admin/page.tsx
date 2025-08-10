@@ -46,6 +46,7 @@ import UserManagementPage from '@/app/admin/user-management/page';
 import ReferralsPage from '@/app/admin/referrals/page';
 import AITrainerPage from '@/app/admin/ai-trainer/page';
 import CoursesPage from '@/app/admin/courses/page';
+import DocumentsPage from '@/app/admin/documents/page';
 
 const FleetPage = dynamic(() => import('@/app/fleet/page'), {
   loading: () => <DashboardSkeleton />,
@@ -208,7 +209,7 @@ export default function AdminDashboardPage() {
                      <FadeIn key="courses"><CoursesPage /></FadeIn>
                 </TabsContent>
                 <TabsContent value="documents" className="mt-6">
-                     <PlaceholderContent title="Documents" />
+                     <FadeIn key="documents"><DocumentsPage /></FadeIn>
                 </TabsContent>
                 <TabsContent value="services_insights" className="mt-6">
                      <PlaceholderContent title="Services Insights" />
