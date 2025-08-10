@@ -163,16 +163,34 @@ export default function AdminDashboardPage() {
       default:
         return (
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                <TabsList>
-                    <TabsTrigger value="overview">Platform Overview</TabsTrigger>
-                    <TabsTrigger value="user_management">User Management</TabsTrigger>
-                    <TabsTrigger value="referrals">Referrals</TabsTrigger>
-                    <TabsTrigger value="ai_trainer">AI Trainer</TabsTrigger>
-                    <TabsTrigger value="courses">Courses</TabsTrigger>
-                    <TabsTrigger value="documents">Documents</TabsTrigger>
-                    <TabsTrigger value="services_insights">Services Insights</TabsTrigger>
-                    <TabsTrigger value="medical_insights">Medical Insights</TabsTrigger>
-                </TabsList>
+                <div className="flex items-center justify-between">
+                    <TabsList>
+                        <TabsTrigger value="overview">Platform Overview</TabsTrigger>
+                        <TabsTrigger value="user_management">User Management</TabsTrigger>
+                        <TabsTrigger value="referrals">Referrals</TabsTrigger>
+                        <TabsTrigger value="ai_trainer">AI Trainer</TabsTrigger>
+                        <TabsTrigger value="courses">Courses</TabsTrigger>
+                        <TabsTrigger value="documents">Documents</TabsTrigger>
+                        <TabsTrigger value="services_insights">Services Insights</TabsTrigger>
+                        <TabsTrigger value="medical_insights">Medical Insights</TabsTrigger>
+                    </TabsList>
+                    <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-muted-foreground hidden md:block">
+                            Switch View:
+                        </span>
+                        <Select value={view} onValueChange={setView}>
+                            <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder="Select a view" />
+                            </SelectTrigger>
+                            <SelectContent>
+                            <SelectItem value="admin">Super Admin</SelectItem>
+                            <SelectItem value="company">Company View</SelectItem>
+                            <SelectItem value="driver">Driver View</SelectItem>
+                            <SelectItem value="gp">Medical GP View</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
                 <TabsContent value="overview" className="mt-6">
                     <FadeIn key="admin"><AdminView /></FadeIn>
                 </TabsContent>
@@ -214,22 +232,7 @@ export default function AdminDashboardPage() {
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-muted-foreground">
-            Switch View:
-          </span>
-          <Select value={view} onValueChange={setView}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select a view" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="admin">Super Admin</SelectItem>
-              <SelectItem value="company">Company View</SelectItem>
-              <SelectItem value="driver">Driver View</SelectItem>
-              <SelectItem value="gp">Medical GP View</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        
       </div>
       
       {renderContent()}
