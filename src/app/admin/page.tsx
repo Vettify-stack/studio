@@ -168,6 +168,7 @@ export default function AdminDashboardPage() {
                     <TabsTrigger value="user_management">User Management</TabsTrigger>
                     <TabsTrigger value="referrals">Referrals</TabsTrigger>
                     <TabsTrigger value="ai_trainer">AI Trainer</TabsTrigger>
+                    <TabsTrigger value="courses">Courses</TabsTrigger>
                     <TabsTrigger value="documents">Documents</TabsTrigger>
                     <TabsTrigger value="services_insights">Services Insights</TabsTrigger>
                     <TabsTrigger value="medical_insights">Medical Insights</TabsTrigger>
@@ -183,6 +184,9 @@ export default function AdminDashboardPage() {
                 </TabsContent>
                 <TabsContent value="ai_trainer" className="mt-6">
                      <FadeIn key="ai-trainer"><AITrainerPage /></FadeIn>
+                </TabsContent>
+                 <TabsContent value="courses" className="mt-6">
+                     <PlaceholderContent title="Courses" />
                 </TabsContent>
                 <TabsContent value="documents" className="mt-6">
                      <PlaceholderContent title="Documents" />
