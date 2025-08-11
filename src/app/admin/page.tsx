@@ -191,56 +191,38 @@ export default function AdminDashboardPage() {
       default:
         return (
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                <div className="flex items-center justify-between flex-wrap gap-4">
-                    <TabsList className="flex-grow sm:flex-grow-0">
-                        <TabsTrigger value="overview">Platform Overview</TabsTrigger>
-                        <TabsTrigger value="user_management">User Management</TabsTrigger>
-                        <TabsTrigger value="referrals">Referrals</TabsTrigger>
-                        <TabsTrigger value="ai_trainer">AI Trainer</TabsTrigger>
-                        <TabsTrigger value="courses">Courses</TabsTrigger>
-                        <TabsTrigger value="documents">Documents</TabsTrigger>
-                        <TabsTrigger value="services_insights">Services Insights</TabsTrigger>
-                        <TabsTrigger value="medical_insights">Medical Insights</TabsTrigger>
-                    </TabsList>
-                    <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-muted-foreground hidden md:block">
-                            Switch View:
-                        </span>
-                        <Select value={view} onValueChange={setView}>
-                            <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Select a view" />
-                            </SelectTrigger>
-                            <SelectContent>
-                            <SelectItem value="admin">Super Admin</SelectItem>
-                            <SelectItem value="company">Company View</SelectItem>
-                            <SelectItem value="driver">Driver View</SelectItem>
-                            <SelectItem value="gp">Medical GP View</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                </div>
-                <TabsContent value="overview" className="mt-6">
+                <TabsList className="flex-grow sm:flex-grow-0 mb-6">
+                    <TabsTrigger value="overview">Platform Overview</TabsTrigger>
+                    <TabsTrigger value="user_management">User Management</TabsTrigger>
+                    <TabsTrigger value="referrals">Referrals</TabsTrigger>
+                    <TabsTrigger value="ai_trainer">AI Trainer</TabsTrigger>
+                    <TabsTrigger value="courses">Courses</TabsTrigger>
+                    <TabsTrigger value="documents">Documents</TabsTrigger>
+                    <TabsTrigger value="services_insights">Services Insights</TabsTrigger>
+                    <TabsTrigger value="medical_insights">Medical Insights</TabsTrigger>
+                </TabsList>
+                <TabsContent value="overview">
                     <FadeIn key="admin"><AdminView onCardClick={setEnlargedCard} /></FadeIn>
                 </TabsContent>
-                <TabsContent value="user_management" className="mt-6">
+                <TabsContent value="user_management">
                      <FadeIn key="user-management"><UserManagementPage /></FadeIn>
                 </TabsContent>
-                <TabsContent value="referrals" className="mt-6">
+                <TabsContent value="referrals">
                      <FadeIn key="referrals"><ReferralsPage /></FadeIn>
                 </TabsContent>
-                <TabsContent value="ai_trainer" className="mt-6">
+                <TabsContent value="ai_trainer">
                      <FadeIn key="ai-trainer"><AITrainerPage /></FadeIn>
                 </TabsContent>
-                 <TabsContent value="courses" className="mt-6">
+                 <TabsContent value="courses">
                      <FadeIn key="courses"><CoursesPage /></FadeIn>
                 </TabsContent>
-                <TabsContent value="documents" className="mt-6">
+                <TabsContent value="documents">
                      <FadeIn key="documents"><DocumentsPage /></FadeIn>
                 </TabsContent>
-                <TabsContent value="services_insights" className="mt-6">
+                <TabsContent value="services_insights">
                      <FadeIn key="services-insights"><ServicesInsightsPage /></FadeIn>
                 </TabsContent>
-                <TabsContent value="medical_insights" className="mt-6">
+                <TabsContent value="medical_insights">
                      <PlaceholderContent title="Medical Insights" />
                 </TabsContent>
             </Tabs>
@@ -260,7 +242,22 @@ export default function AdminDashboardPage() {
             </p>
           </div>
         </div>
-        
+        <div className="flex items-center gap-2">
+            <span className="text-sm font-medium text-muted-foreground hidden md:block">
+                Switch View:
+            </span>
+            <Select value={view} onValueChange={setView}>
+                <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select a view" />
+                </SelectTrigger>
+                <SelectContent>
+                <SelectItem value="admin">Super Admin</SelectItem>
+                <SelectItem value="company">Company View</SelectItem>
+                <SelectItem value="driver">Driver View</SelectItem>
+                <SelectItem value="gp">Medical GP View</SelectItem>
+                </SelectContent>
+            </Select>
+        </div>
       </div>
       
       {renderContent()}
