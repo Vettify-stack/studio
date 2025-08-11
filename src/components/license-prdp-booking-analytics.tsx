@@ -44,6 +44,22 @@ const bookingsByDLTC = [
     { dltc: 'Rossburgh DLTC', province: 'KZN', total: 35, confirmed: 25 },
 ];
 
+const rejectionReasonsData = [
+    { reason: 'Documentation Incomplete', count: 15, percentage: '37.5%' },
+    { reason: 'Slot Unavailable (Post-Selection)', count: 10, percentage: '25%' },
+    { reason: 'Payment Failed (Simulated)', count: 8, percentage: '20%' },
+    { reason: 'User Cancelled', count: 5, percentage: '12.5%' },
+    { reason: 'Other', count: 2, percentage: '5%' },
+];
+
+const monthlyTrendsData = [
+    { month: 'Jan 2025', total: 50, confirmed: 40, rejected: 5 },
+    { month: 'Feb 2025', total: 60, confirmed: 50, rejected: 5 },
+    { month: 'Mar 2025', total: 75, confirmed: 60, rejected: 10 },
+    { month: 'Apr 2025', total: 85, confirmed: 70, rejected: 10 },
+    { month: 'May 2025', total: 80, confirmed: 60, rejected: 10 },
+];
+
 export default function LicensePrdpBookingAnalytics() {
     return (
         <div className="p-6 rounded-lg space-y-8" style={{ background: 'linear-gradient(to right, #26A69A, #00897B)' }}>
@@ -130,8 +146,53 @@ export default function LicensePrdpBookingAnalytics() {
                 <CardHeader>
                     <CardTitle>Rejection Reasons Breakdown</CardTitle>
                 </CardHeader>
-                <CardContent className="text-center p-8 border-2 border-dashed rounded-lg">
-                    <p className="text-muted-foreground">Rejection reasons data will be displayed here.</p>
+                <CardContent>
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>REASON</TableHead>
+                                <TableHead>COUNT</TableHead>
+                                <TableHead>PERCENTAGE</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {rejectionReasonsData.map((item) => (
+                                <TableRow key={item.reason}>
+                                    <TableCell className="font-medium">{item.reason}</TableCell>
+                                    <TableCell>{item.count}</TableCell>
+                                    <TableCell>{item.percentage}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </CardContent>
+            </Card>
+            
+            <Card className="bg-white/90">
+                <CardHeader>
+                    <CardTitle>Monthly Booking Trends</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>MONTH</TableHead>
+                                <TableHead>TOTAL BOOKINGS</TableHead>
+                                <TableHead>CONFIRMED</TableHead>
+                                <TableHead>REJECTED</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {monthlyTrendsData.map((item) => (
+                                <TableRow key={item.month}>
+                                    <TableCell className="font-medium">{item.month}</TableCell>
+                                    <TableCell>{item.total}</TableCell>
+                                    <TableCell>{item.confirmed}</TableCell>
+                                    <TableCell>{item.rejected}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
                 </CardContent>
             </Card>
         </div>
