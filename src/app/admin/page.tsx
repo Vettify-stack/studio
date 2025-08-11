@@ -11,6 +11,10 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import {
+  Dialog,
+  DialogContent,
+} from '@/components/ui/dialog';
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -91,67 +95,69 @@ const FadeIn = ({ children }: { children: React.ReactNode }) => {
     )
 }
 
-const AdminView = () => {
+const AdminView = ({ onCardClick }: { onCardClick: (card: React.ReactNode) => void }) => {
+    const cardWrapperClass = "cursor-pointer transition-transform duration-200 hover:scale-[1.02]";
+
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-1">
+            <div className={cardWrapperClass} onClick={() => onCardClick(<PlatformOverviewCard />)}>
                 <PlatformOverviewCard />
             </div>
-            <div className="lg:col-span-1">
+            <div className={cardWrapperClass} onClick={() => onCardClick(<OverallComplianceCard />)}>
                 <OverallComplianceCard />
             </div>
-             <div className="lg:col-span-1">
+             <div className={cardWrapperClass} onClick={() => onCardClick(<AartoPointsTrackerCard />)}>
                 <AartoPointsTrackerCard />
             </div>
-            <div className="lg:col-span-1">
+            <div className={cardWrapperClass} onClick={() => onCardClick(<CompanyFineManagement />)}>
                 <CompanyFineManagement />
             </div>
-            <div className="lg:col-span-1">
+            <div className={cardWrapperClass} onClick={() => onCardClick(<TrainingMatrix />)}>
                 <TrainingMatrix />
             </div>
-             <div className="lg:col-span-1">
+             <div className={cardWrapperClass} onClick={() => onCardClick(<RegionalDataCard />)}>
                 <RegionalDataCard />
             </div>
-            <div className="lg:col-span-3">
+            <div className="lg:col-span-3" onClick={() => onCardClick(<LicensePrdpBookingAnalytics />)}>
                 <LicensePrdpBookingAnalytics />
             </div>
-             <div className="lg:col-span-2">
+             <div className="lg:col-span-2" onClick={() => onCardClick(<DriverComplianceSnippetCard />)}>
                 <DriverComplianceSnippetCard />
             </div>
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-1" onClick={() => onCardClick(<VehicleManagementSnippetCard />)}>
                 <VehicleManagementSnippetCard />
             </div>
-            <div className="lg:col-span-3">
+            <div className="lg:col-span-3" onClick={() => onCardClick(<VerificationsCenterCard />)}>
                 <VerificationsCenterCard />
             </div>
-            <div className="lg:col-span-3">
+            <div className="lg:col-span-3" onClick={() => onCardClick(<JobMarketOverviewCard />)}>
                 <JobMarketOverviewCard />
             </div>
-             <div className="lg:col-span-2">
+             <div className="lg:col-span-2" onClick={() => onCardClick(<JobPostingCard />)}>
                 <JobPostingCard />
             </div>
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-1" onClick={() => onCardClick(<MatchingApplicantsCard />)}>
                 <MatchingApplicantsCard />
             </div>
-            <div className="lg:col-span-3">
+            <div className="lg:col-span-3" onClick={() => onCardClick(<GpsTrackingCard />)}>
                 <GpsTrackingCard />
             </div>
-             <div className="lg:col-span-3">
+             <div className="lg:col-span-3" onClick={() => onCardClick(<CompanyDocumentsCard />)}>
                 <CompanyDocumentsCard />
              </div>
-             <div className="lg:col-span-3">
+             <div className="lg:col-span-3" onClick={() => onCardClick(<VehicleManagementCard />)}>
                 <VehicleManagementCard />
              </div>
-              <div className="lg:col-span-3">
+              <div className="lg:col-span-3" onClick={() => onCardClick(<EmployeeAttendancePerformance />)}>
                 <EmployeeAttendancePerformance />
              </div>
-             <div className="lg:col-span-3">
+             <div className="lg:col-span-3" onClick={() => onCardClick(<DisciplinaryManagementCard />)}>
                 <DisciplinaryManagementCard />
              </div>
-            <div className="lg:col-span-3">
+            <div className="lg:col-span-3" onClick={() => onCardClick(<CoreDataIntegrationsCard />)}>
                  <CoreDataIntegrationsCard />
             </div>
-             <div className="lg:col-span-3">
+             <div className="lg:col-span-3" onClick={() => onCardClick(<NosyCorner />)}>
                 <NosyCorner />
              </div>
         </div>
@@ -168,6 +174,7 @@ const PlaceholderContent = ({ title }: { title: string }) => (
 export default function AdminDashboardPage() {
   const [view, setView] = useState('admin');
   const [activeTab, setActiveTab] = useState('overview');
+  const [enlargedCard, setEnlargedCard] = useState<React.ReactNode | null>(null);
 
   const renderContent = () => {
     switch (view) {
@@ -181,8 +188,8 @@ export default function AdminDashboardPage() {
       default:
         return (
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                <div className="flex items-center justify-between">
-                    <TabsList>
+                <div className="flex items-center justify-between flex-wrap gap-4">
+                    <TabsList className="flex-grow sm:flex-grow-0">
                         <TabsTrigger value="overview">Platform Overview</TabsTrigger>
                         <TabsTrigger value="user_management">User Management</TabsTrigger>
                         <TabsTrigger value="referrals">Referrals</TabsTrigger>
@@ -210,7 +217,7 @@ export default function AdminDashboardPage() {
                     </div>
                 </div>
                 <TabsContent value="overview" className="mt-6">
-                    <FadeIn key="admin"><AdminView /></FadeIn>
+                    <FadeIn key="admin"><AdminView onCardClick={setEnlargedCard} /></FadeIn>
                 </TabsContent>
                 <TabsContent value="user_management" className="mt-6">
                      <FadeIn key="user-management"><UserManagementPage /></FadeIn>
@@ -254,6 +261,12 @@ export default function AdminDashboardPage() {
       </div>
       
       {renderContent()}
+
+       <Dialog open={!!enlargedCard} onOpenChange={(isOpen) => !isOpen && setEnlargedCard(null)}>
+        <DialogContent className="max-w-4xl w-full p-2">
+            {enlargedCard}
+        </DialogContent>
+      </Dialog>
 
     </div>
   );
