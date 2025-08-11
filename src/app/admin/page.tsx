@@ -48,6 +48,7 @@ import AITrainerPage from '@/app/admin/ai-trainer/page';
 import CoursesPage from '@/app/admin/courses/page';
 import DocumentsPage from '@/app/admin/documents/page';
 import ServicesInsightsPage from '@/app/admin/services-insights/page';
+import LicensePrdpBookingAnalytics from '@/components/license-prdp-booking-analytics';
 
 const FleetPage = dynamic(() => import('@/app/fleet/page'), {
   loading: () => <DashboardSkeleton />,
@@ -99,6 +100,9 @@ const AdminView = () => {
             </div>
              <div className="lg:col-span-1">
                 <RegionalDataCard />
+            </div>
+            <div className="lg:col-span-3">
+                <LicensePrdpBookingAnalytics />
             </div>
              <div className="lg:col-span-2">
                 <DriverComplianceSnippetCard />
