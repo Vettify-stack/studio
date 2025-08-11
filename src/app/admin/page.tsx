@@ -13,6 +13,9 @@ import {
 import {
   Dialog,
   DialogContent,
+  DialogDescription as DialogDescriptionComponent,
+  DialogHeader as DialogHeaderComponent,
+  DialogTitle as DialogTitleComponent,
 } from '@/components/ui/dialog';
 import {
   Select,
@@ -264,6 +267,10 @@ export default function AdminDashboardPage() {
 
        <Dialog open={!!enlargedCard} onOpenChange={(isOpen) => !isOpen && setEnlargedCard(null)}>
         <DialogContent className="max-w-4xl w-full p-2">
+            <DialogHeaderComponent>
+              <DialogTitleComponent className="sr-only">Enlarged Card View</DialogTitleComponent>
+              <DialogDescriptionComponent className="sr-only">An enlarged view of the selected dashboard card.</DialogDescriptionComponent>
+            </DialogHeaderComponent>
             {enlargedCard}
         </DialogContent>
       </Dialog>
