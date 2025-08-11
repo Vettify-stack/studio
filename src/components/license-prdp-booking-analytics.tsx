@@ -18,17 +18,20 @@ import {
   } from '@/components/ui/table';
 import { Button } from './ui/button';
 import { Calendar, CheckCircle, Clock, MapPin, XCircle, Building } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
   
-const StatCard = ({ title, value, icon: Icon }: { title: string; value: string; icon: React.ElementType }) => (
-    <Card className="bg-white/10 text-white border-white/20">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">{title}</CardTitle>
-        <Icon className="h-4 w-4 text-white/80" />
-      </CardHeader>
-      <CardContent>
-        <div className="text-2xl font-bold">{value}</div>
-      </CardContent>
-    </Card>
+const StatCard = ({ title, value, icon: Icon, onClick }: { title: string; value: string; icon: React.ElementType, onClick?: () => void }) => (
+    <Button variant="ghost" className="h-auto w-full p-0 text-left" onClick={onClick} disabled={!onClick}>
+        <Card className="bg-white/10 text-white border-white/20 w-full transition-colors hover:bg-white/20">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">{title}</CardTitle>
+            <Icon className="h-4 w-4 text-white/80" />
+        </CardHeader>
+        <CardContent>
+            <div className="text-2xl font-bold">{value}</div>
+        </CardContent>
+        </Card>
+    </Button>
 );
 
 const bookingsByProvince = [
@@ -61,6 +64,37 @@ const monthlyTrendsData = [
 ];
 
 export default function LicensePrdpBookingAnalytics() {
+    const { toast } = useToast();
+
+    const handleCardClick = (title: string) => {
+        let description = '';
+        switch(title) {
+            case 'Total Bookings':
+                description = 'This would navigate to a detailed log of all booking attempts.';
+                break;
+            case 'Confirmed':
+                description = 'This would open a report of all successfully confirmed bookings.';
+                break;
+            case 'Rejected':
+                description = 'This would open a report detailing all rejected bookings and reasons.';
+                break;
+            case 'Pending':
+                description = 'This would show a list of all bookings that are still pending confirmation.';
+                break;
+            case 'Most Popular Province':
+                description = 'This would open a detailed regional analytics page.';
+                break;
+            case 'Most Booked DLTC':
+                description = 'This would open analytics for the most popular testing centres.';
+                break;
+        }
+
+        toast({
+            title: `${title} Card Clicked`,
+            description,
+        });
+    }
+
     return (
         <div className="p-6 rounded-lg space-y-8" style={{ background: 'linear-gradient(to right, #26A69A, #00897B)' }}>
             <div className="flex items-center justify-between">
@@ -76,12 +110,12 @@ export default function LicensePrdpBookingAnalytics() {
             </div>
             
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
-                <StatCard title="Total Bookings" value="350" icon={Calendar} />
-                <StatCard title="Confirmed" value="280" icon={CheckCircle} />
-                <StatCard title="Rejected" value="40" icon={XCircle} />
-                <StatCard title="Pending" value="30" icon={Clock} />
-                <StatCard title="Most Popular Province" value="Gauteng" icon={MapPin} />
-                <StatCard title="Most Booked DLTC" value="Alberton DLTC" icon={Building} />
+                <StatCard title="Total Bookings" value="350" icon={Calendar} onClick={() => handleCardClick('Total Bookings')} />
+                <StatCard title="Confirmed" value="280" icon={CheckCircle} onClick={() => handleCardClick('Confirmed')} />
+                <StatCard title="Rejected" value="40" icon={XCircle} onClick={() => handleCardClick('Rejected')} />
+                <StatCard title="Pending" value="30" icon={Clock} onClick={() => handleCardClick('Pending')} />
+                <StatCard title="Most Popular Province" value="Gauteng" icon={MapPin} onClick={() => handleCardClick('Most Popular Province')} />
+                <StatCard title="Most Booked DLTC" value="Alberton DLTC" icon={Building} onClick={() => handleCardClick('Most Booked DLTC')} />
             </div>
 
             <Card className="bg-white/90">
