@@ -42,32 +42,7 @@ import VehicleManagementSnippetCard from '@/components/vehicle-management-snippe
 import JobMarketOverviewCard from '@/components/job-market-overview-card';
 import JobPostingCard from '@/components/job-posting-card';
 import MatchingApplicantsCard from '@/components/matching-applicants-card';
-import UserManagementPage from '@/app/admin/user-management/page';
-import ReferralsPage from '@/app/admin/referrals/page';
-import AITrainerPage from '@/app/admin/ai-trainer/page';
-import CoursesPage from '@/app/admin/courses/page';
-import DocumentsPage from '@/app/admin/documents/page';
-import ServicesInsightsPage from '@/app/admin/services-insights/page';
 import LicensePrdpBookingAnalytics from '@/components/license-prdp-booking-analytics';
-
-const FleetPage = dynamic(() => import('@/app/fleet/page'), {
-  loading: () => <DashboardSkeleton />,
-});
-const DriverDashboardPage = dynamic(() => import('@/app/driver/page'), {
-  loading: () => <DashboardSkeleton />,
-});
-const GpDashboardPage = dynamic(() => import('@/app/gp/page'), {
-  loading: () => <DashboardSkeleton />,
-});
-
-
-const FadeIn = ({ children }: { children: React.ReactNode }) => {
-    return (
-        <div className="animate-in fade-in duration-500">
-            {children}
-        </div>
-    )
-}
 
 const DashboardSkeleton = () => (
     <div className="space-y-6">
@@ -79,6 +54,42 @@ const DashboardSkeleton = () => (
     </div>
 )
 
+const FleetPage = dynamic(() => import('@/app/fleet/page'), {
+  loading: () => <DashboardSkeleton />,
+});
+const DriverDashboardPage = dynamic(() => import('@/app/driver/page'), {
+  loading: () => <DashboardSkeleton />,
+});
+const GpDashboardPage = dynamic(() => import('@/app/gp/page'), {
+  loading: () => <DashboardSkeleton />,
+});
+const UserManagementPage = dynamic(() => import('@/app/admin/user-management/page'), {
+    loading: () => <DashboardSkeleton />,
+});
+const ReferralsPage = dynamic(() => import('@/app/admin/referrals/page'), {
+    loading: () => <DashboardSkeleton />,
+});
+const AITrainerPage = dynamic(() => import('@/app/admin/ai-trainer/page'), {
+    loading: () => <DashboardSkeleton />,
+});
+const CoursesPage = dynamic(() => import('@/app/admin/courses/page'), {
+    loading: () => <DashboardSkeleton />,
+});
+const DocumentsPage = dynamic(() => import('@/app/admin/documents/page'), {
+    loading: () => <DashboardSkeleton />,
+});
+const ServicesInsightsPage = dynamic(() => import('@/app/admin/services-insights/page'), {
+    loading: () => <DashboardSkeleton />,
+});
+
+
+const FadeIn = ({ children }: { children: React.ReactNode }) => {
+    return (
+        <div className="animate-in fade-in duration-500">
+            {children}
+        </div>
+    )
+}
 
 const AdminView = () => {
     return (
