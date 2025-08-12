@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Smartphone, ArrowRight } from 'lucide-react';
+import UtilitiesPurchase from './utilities-purchase';
 
 export default function UtilitiesCard() {
   return (
@@ -25,15 +26,9 @@ export default function UtilitiesCard() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <p className="text-sm text-teal-800/90 mb-4">
-            Conveniently top up your prepaid services directly from your dashboard.
-        </p>
-        <Button asChild className="w-full bg-teal-600 hover:bg-teal-700 text-white">
-            <Link href="/utilities">
-                Go to Utilities
-                <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-        </Button>
+        <div className="w-full">
+         <UtilitiesPurchase />
+        </div>
       </CardContent>
     </Card>
   );
