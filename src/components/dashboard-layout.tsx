@@ -54,6 +54,7 @@ import { Button } from './ui/button';
 import { usePathname } from 'next/navigation';
 import Logo from './logo';
 import { ThemeToggle } from './theme-toggle';
+import ChatWidget from './chat-widget';
 
 
 export default function DashboardLayout({
@@ -63,13 +64,19 @@ export default function DashboardLayout({
 }) {
   const pathname = usePathname();
   const [isMounted, setIsMounted] = useState(false);
+  const [view, setView] = useState('admin');
 
   useEffect(() => {
     setIsMounted(true);
-  }, []);
+    // Sync view with path
+    if (pathname.startsWith('/driver')) setView('driver');
+    else if (pathname.startsWith('/fleet')) setView('company');
+    else if (pathname.startsWith('/gp')) setView('gp');
+    else setView('admin');
+  }, [pathname]);
 
   const getPageTitle = () => {
-    if (pathname === '/' || pathname.startsWith('/admin')) {
+    if (pathname.startsWith('/admin')) {
       return 'Super Admin Dashboard';
     }
     if (pathname.startsWith('/driver')) {
@@ -95,6 +102,7 @@ export default function DashboardLayout({
   };
 
   const showSidebar = !['/login', '/register', '/landing', '/'].includes(pathname);
+  const showChatWidget = isMounted && ['driver', 'company', 'gp'].includes(view);
 
   if (!showSidebar) {
     return <>{children}</>;
@@ -231,7 +239,7 @@ export default function DashboardLayout({
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
-                  isActive={isMounted && (pathname === '/' || pathname === '/admin')}
+                  isActive={isMounted && (pathname === '/' || pathname.startsWith('/admin'))}
                   tooltip={{ children: 'Dashboard' }}
                 >
                   <Link href="/admin">
@@ -370,6 +378,7 @@ export default function DashboardLayout({
           </div>
         </header>
         <div className="p-6">{children}</div>
+        {showChatWidget && <ChatWidget />}
       </SidebarInset>
     </SidebarProvider>
   );
