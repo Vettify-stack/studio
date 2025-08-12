@@ -64,16 +64,10 @@ export default function DashboardLayout({
 }) {
   const pathname = usePathname();
   const [isMounted, setIsMounted] = useState(false);
-  const [view, setView] = useState('admin');
 
   useEffect(() => {
     setIsMounted(true);
-    // Sync view with path
-    if (pathname.startsWith('/driver')) setView('driver');
-    else if (pathname.startsWith('/fleet')) setView('company');
-    else if (pathname.startsWith('/gp')) setView('gp');
-    else setView('admin');
-  }, [pathname]);
+  }, []);
 
   const getPageTitle = () => {
     if (pathname.startsWith('/admin')) {
@@ -102,7 +96,7 @@ export default function DashboardLayout({
   };
 
   const showSidebar = !['/login', '/register', '/landing', '/'].includes(pathname);
-  const showChatWidget = isMounted && ['driver', 'company', 'gp'].includes(view);
+  const showChatWidget = isMounted && (pathname.startsWith('/driver') || pathname.startsWith('/fleet') || pathname.startsWith('/gp'));
 
   if (!showSidebar) {
     return <>{children}</>;
@@ -378,8 +372,8 @@ export default function DashboardLayout({
           </div>
         </header>
         <div className="p-6">{children}</div>
-        {showChatWidget && <ChatWidget />}
       </SidebarInset>
+      {showChatWidget && <ChatWidget />}
     </SidebarProvider>
   );
 }
