@@ -371,9 +371,11 @@ export default function DashboardLayout({
             <DataUploadDialog />
           </div>
         </header>
-        <div className="p-6">{children}</div>
+        <div className="p-6">
+            {children}
+            {showChatWidget && <ChatWidget />}
+        </div>
       </SidebarInset>
-      {showChatWidget && <ChatWidget />}
     </SidebarProvider>
   );
 }
