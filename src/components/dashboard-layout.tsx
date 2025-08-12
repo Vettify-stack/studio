@@ -96,7 +96,6 @@ export default function DashboardLayout({
   };
 
   const showSidebar = !['/login', '/register', '/landing', '/'].includes(pathname);
-  const showChatWidget = isMounted && (pathname.startsWith('/driver') || pathname.startsWith('/fleet') || pathname.startsWith('/gp'));
 
   if (!showSidebar) {
     return <>{children}</>;
@@ -373,8 +372,8 @@ export default function DashboardLayout({
         </header>
         <div className="p-6">
             {children}
-            {showChatWidget && <ChatWidget />}
         </div>
+        <ChatWidget />
       </SidebarInset>
     </SidebarProvider>
   );

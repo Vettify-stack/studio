@@ -1,13 +1,14 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
 import { Input } from './ui/input';
 import { Bot, MessageSquare, Send, X } from 'lucide-react';
 import { ScrollArea } from './ui/scroll-area';
 import { cn } from '@/lib/utils';
+import { usePathname } from 'next/navigation';
 
 const faqs = [
     {
@@ -43,6 +44,18 @@ export default function ChatWidget() {
         { from: 'bot', text: "Hello! How can I help you today? You can select a common question below or type your own." }
     ]);
     const [inputValue, setInputValue] = useState('');
+    const [isMounted, setIsMounted] = useState(false);
+    const pathname = usePathname();
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    const showChatWidget = isMounted && (pathname.startsWith('/driver') || pathname.startsWith('/fleet') || pathname.startsWith('/gp'));
+
+    if (!showChatWidget) {
+        return null;
+    }
 
     const handleToggle = () => {
         setIsOpen(prev => !prev);
