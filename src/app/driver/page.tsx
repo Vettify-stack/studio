@@ -1,4 +1,7 @@
 
+'use client';
+
+import { useState, useEffect, useCallback } from 'react';
 import {
   Card,
   CardContent,
@@ -13,7 +16,7 @@ import {
   BadgeCheck,
   Car,
 } from 'lucide-react';
-import type { DriverProfile } from '@/lib/types';
+import type { DriverProfile, Certificate } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
 import DocumentManagement from '@/components/document-management';
 import ComplianceScore from '@/components/compliance-score';
@@ -27,8 +30,9 @@ import NosyCorner from '@/components/nosy-corner';
 import MyPlanAndRewards from '@/components/my-plan-and-rewards';
 import LivelinessCheckCard from '@/components/liveliness-check-card';
 import UtilitiesPurchase from '@/components/utilities-purchase';
+import { differenceInDays, parse } from 'date-fns';
 
-const driverData: DriverProfile = {
+const initialDriverData: DriverProfile = {
   name: 'John Mokoena',
   initials: 'JM',
   idStatus: 'Verified',
@@ -43,6 +47,21 @@ const driverData: DriverProfile = {
   qrCodeUrl: 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=JohnMokoena-DriverID-12345',
 };
 
+const initialCertificates: Certificate[] = [
+  { id: '1', name: 'Cutler Card', provider: 'Islandview Gate', certNo: 'MW85236', expiry: '06 Mar 2025' },
+  { id: '2', name: 'First Aid Certificate', provider: 'Dantran', certNo: 'FA95124', expiry: '12 Apr 2025' },
+  { id: '3', name: 'Induction', provider: 'Platinum Mine', certNo: '74125GF', expiry: '10 Jul 2025' },
+  { id: '4', name: 'Acces Card', provider: 'Platinum Mine', certNo: '4568RFT', expiry: '25 Jul 2025' },
+  { id: '5', name: 'PrDP', provider: 'DOT', certNo: 'PDP789654', expiry: '10 Sep 2025' },
+  { id: '6', name: "Driver's License", provider: 'DOT', certNo: '12547H7UY52', expiry: '08 Aug 2029' },
+  { id: '7', name: 'Medical Certificate', provider: 'Dr.Williams', certNo: 'MP8521', expiry: '07 Mar 2025' },
+  { id: '8', name: 'Firefighting Certificate', provider: 'Hazchem', certNo: '9632', expiry: '07 Jul 2025' },
+];
+
+const requiredDocuments = [
+    "Driver's License", "PrDP", "Medical Certificate", "First Aid Certificate", "Firefighting Certificate", "Dangerous Goods", "Work Permit", "Criminal Clearance"
+];
+
 const statusColors = {
   Verified: 'bg-green-100 text-green-800 border-green-200',
   Valid: 'bg-green-100 text-green-800 border-green-200',
@@ -50,6 +69,41 @@ const statusColors = {
 };
 
 export default function DriverDashboardPage() {
+    const [driverData] = useState<DriverProfile>(initialDriverData);
+    const [certificates, setCertificates] = useState<Certificate[]>(initialCertificates);
+    const [complianceScore, setComplianceScore] = useState(0);
+    
+    const calculateComplianceScore = useCallback(() => {
+        let validDocs = 0;
+        const totalRequired = requiredDocuments.length;
+
+        requiredDocuments.forEach(requiredDocName => {
+            const foundCert = certificates.find(cert => cert.name === requiredDocName);
+            if (foundCert) {
+                try {
+                    const expiryDate = parse(foundCert.expiry, 'dd MMM yyyy', new Date());
+                    if (differenceInDays(expiryDate, new Date()) >= 0) {
+                        validDocs++;
+                    }
+                } catch (e) {
+                    console.error("Could not parse date for score calculation:", foundCert.expiry);
+                }
+            }
+        });
+
+        const score = Math.round((validDocs / totalRequired) * 100);
+        setComplianceScore(score);
+    }, [certificates]);
+
+    useEffect(() => {
+        calculateComplianceScore();
+    }, [certificates, calculateComplianceScore]);
+
+
+    const handleCertificateAdd = (newCert: Certificate) => {
+        setCertificates(prev => [newCert, ...prev]);
+    }
+
   return (
     <div className="flex flex-col gap-6">
       {/* Primary Info Card & Compliance Score */}
@@ -105,13 +159,13 @@ export default function DriverDashboardPage() {
             </Card>
         </div>
         <div className="space-y-6">
-            <ComplianceScore score={driverData.complianceScore} />
+            <ComplianceScore score={complianceScore} />
         </div>
       </div>
       
       {/* Main Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <DriverComplianceCard />
+            <DriverComplianceCard certificates={certificates} requiredDocuments={requiredDocuments} />
             <FineManagementCard />
             <LicenseRenewalCard />
             <LivelinessCheckCard />
@@ -125,7 +179,7 @@ export default function DriverDashboardPage() {
       {/* Full-width detailed cards */}
       <div className="grid grid-cols-1 gap-6">
         <DocumentManagement />
-        <TrainingCertificatesCard />
+        <TrainingCertificatesCard certificates={certificates} onCertificateAdd={handleCertificateAdd} />
       </div>
 
     </div>

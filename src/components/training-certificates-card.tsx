@@ -41,18 +41,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form';
 import { Input } from './ui/input';
 import { Calendar } from './ui/calendar';
-
-const initialCertificates = [
-  { id: '1', name: 'Cutler Card', provider: 'Islandview Gate', certNo: 'MW85236', expiry: '06 Mar 2025' },
-  { id: '2', name: 'First Aid Certificate', provider: 'Dantran', certNo: 'FA95124', expiry: '12 Apr 2025' },
-  { id: '3', name: 'Induction', provider: 'Platinum Mine', certNo: '74125GF', expiry: '10 Jul 2025' },
-  { id: '4', name: 'Acces Card', provider: 'Platinum Mine', certNo: '4568RFT', expiry: '25 Jul 2025' },
-  { id: '5', name: 'PrDP', provider: 'DOT', certNo: 'PDP789654', expiry: '10 Sep 2025' },
-  { id: '6', name: 'Drivers License', provider: 'DOT', certNo: '12547H7UY52', expiry: '08 Aug 2029' },
-  { id: '7', name: 'Medical Certificate', provider: 'Dr.Williams', certNo: 'MP8521', expiry: '07 Mar 2025' },
-  { id: '8', name: 'Firefighting Certificate', provider: 'Hazchem', certNo: '9632', expiry: '07 Jul 2025' },
-  { id: '9', name: 'Dangerous Goods', provider: 'Dantran', certNo: '1452', expiry: '05 May 2026' },
-];
+import type { Certificate } from '@/lib/types';
 
 const addCertificateSchema = z.object({
   name: z.string().min(1, 'Certificate name is required.'),
@@ -90,7 +79,7 @@ const RenewalCountdown = ({ expiryDate }: { expiryDate: string }) => {
   return <TableCell className="text-green-600 font-medium">{days} days</TableCell>;
 };
 
-function AddCertificateForm({ onCertificateAdd }: { onCertificateAdd: (newCert: typeof initialCertificates[0]) => void }) {
+function AddCertificateForm({ onCertificateAdd }: { onCertificateAdd: (newCert: Certificate) => void }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
@@ -234,20 +223,19 @@ function AddCertificateForm({ onCertificateAdd }: { onCertificateAdd: (newCert: 
   );
 }
 
-export default function TrainingCertificatesCard() {
-  const [certificates, setCertificates] = useState(initialCertificates);
+interface TrainingCertificatesCardProps {
+  certificates: Certificate[];
+  onCertificateAdd: (newCert: Certificate) => void;
+}
 
-  const handleCertificateAdd = (newCert: typeof initialCertificates[0]) => {
-    setCertificates(prev => [newCert, ...prev]);
-  };
-
+export default function TrainingCertificatesCard({ certificates, onCertificateAdd }: TrainingCertificatesCardProps) {
   return (
     <Card className="transition-all hover:shadow-lg">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>Training & Certificates</CardTitle>
           <div className="flex items-center gap-2">
-            <AddCertificateForm onCertificateAdd={handleCertificateAdd} />
+            <AddCertificateForm onCertificateAdd={onCertificateAdd} />
             <Button variant="ghost" size="icon">
                 <UploadCloud className="h-5 w-5" />
             </Button>

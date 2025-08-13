@@ -19,20 +19,36 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { ShieldCheck } from 'lucide-react';
+import type { Certificate } from '@/lib/types';
+import { differenceInDays, parse } from 'date-fns';
 
-const complianceItems = [
-  { item: "Driver's License", expiry: 'N/A', renewal: 'N/A', status: 'N/A' },
-  { item: 'PrDP', expiry: 'N/A', renewal: 'N/A', status: 'N/A' },
-  { item: 'Medical Certificate', expiry: 'N/A', renewal: 'N/A', status: 'N/A' },
-  { item: 'First Aid', expiry: 'N/A', renewal: 'N/A', status: 'N/A' },
-  { item: 'Firefighting', expiry: 'N/A', renewal: 'N/A', status: 'N/A' },
-  { item: 'Dangerous Goods', expiry: 'N/A', renewal: 'N/A', status: 'N/A' },
-  { item: 'Work Permit', expiry: 'N/A', renewal: 'N/A', status: 'N/A' },
-  { item: 'Access Card', expiry: 'N/A', renewal: 'N/A', status: 'N/A' },
-  { item: 'Criminal Clearance', expiry: 'N/A', renewal: 'N/A', status: 'N/A' },
-];
+interface DriverComplianceCardProps {
+    certificates: Certificate[];
+    requiredDocuments: string[];
+}
 
-export default function DriverComplianceCard() {
+export default function DriverComplianceCard({ certificates, requiredDocuments }: DriverComplianceCardProps) {
+  
+  const getStatusForDocument = (docName: string) => {
+    const cert = certificates.find(c => c.name === docName);
+    if (!cert) {
+        return { text: 'Missing', color: 'bg-gray-100 text-gray-800' };
+    }
+    try {
+        const expiry = parse(cert.expiry, 'dd MMM yyyy', new Date());
+        const daysLeft = differenceInDays(expiry, new Date());
+
+        if (daysLeft < 0) return { text: 'Expired', color: 'bg-red-100 text-red-800' };
+        if (daysLeft <= 30) return { text: 'Expiring Soon', color: 'bg-yellow-100 text-yellow-800' };
+        return { text: 'Valid', color: 'bg-green-100 text-green-800' };
+    } catch {
+        return { text: 'Invalid Date', color: 'bg-gray-100 text-gray-800' };
+    }
+  }
+
+  const validDocs = requiredDocuments.filter(doc => getStatusForDocument(doc).text === 'Valid').length;
+  const compliancePercentage = Math.round((validDocs / requiredDocuments.length) * 100);
+
   return (
     <Card className="bg-primary text-primary-foreground">
       <CardHeader>
@@ -50,36 +66,38 @@ export default function DriverComplianceCard() {
           <div>
             <div className="flex justify-between items-center mb-1">
               <h4 className="text-sm font-semibold">Overall Compliance</h4>
-              <span className="text-sm font-bold">100%</span>
+              <span className="text-sm font-bold">{compliancePercentage}%</span>
             </div>
-            <Progress value={100} className="h-2 bg-primary-foreground/20 [&>div]:bg-accent" />
+            <Progress value={compliancePercentage} className="h-2 bg-primary-foreground/20 [&>div]:bg-accent" />
           </div>
 
           <div>
             <h4 className="text-sm font-semibold mb-2">Compliance Items</h4>
-            <div className="border rounded-lg">
+            <div className="border rounded-lg max-h-96 overflow-y-auto">
               <Table>
-                <TableHeader>
+                <TableHeader className="sticky top-0 bg-primary z-10">
                   <TableRow className="border-b-primary-foreground/20 hover:bg-transparent">
                     <TableHead className="text-primary-foreground/80">ITEM</TableHead>
                     <TableHead className="text-primary-foreground/80">EXPIRY DATE</TableHead>
-                    <TableHead className="text-primary-foreground/80">RENEWAL IN</TableHead>
                     <TableHead className="text-primary-foreground/80">STATUS</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {complianceItems.map((compliance) => (
-                    <TableRow key={compliance.item} className="border-b-primary-foreground/20 hover:bg-transparent">
-                      <TableCell className="font-medium">{compliance.item}</TableCell>
-                      <TableCell>{compliance.expiry}</TableCell>
-                      <TableCell>{compliance.renewal}</TableCell>
-                      <TableCell>
-                        <Badge variant="secondary" className="bg-primary-foreground/20 hover:bg-primary-foreground/30 text-primary-foreground">
-                          {compliance.status}
-                        </Badge>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  {requiredDocuments.map((docName) => {
+                    const cert = certificates.find(c => c.name === docName);
+                    const status = getStatusForDocument(docName);
+                    return (
+                        <TableRow key={docName} className="border-b-primary-foreground/20 hover:bg-transparent">
+                        <TableCell className="font-medium">{docName}</TableCell>
+                        <TableCell>{cert?.expiry || 'N/A'}</TableCell>
+                        <TableCell>
+                            <Badge variant="secondary" className={`${status.color} hover:${status.color}`}>
+                            {status.text}
+                            </Badge>
+                        </TableCell>
+                        </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
             </div>

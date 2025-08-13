@@ -42,6 +42,14 @@ export interface DriverProfile {
   qrCodeUrl: string;
 }
 
+export interface Certificate {
+    id: string;
+    name: string;
+    provider: string;
+    certNo: string;
+    expiry: string;
+}
+
 export interface Appointment {
   id: string;
   date: Date;
