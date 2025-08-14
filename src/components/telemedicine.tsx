@@ -48,7 +48,7 @@ import type { Appointment } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import SafeDate from './safe-date';
 import { Badge } from './ui/badge';
-import { usePlan } from '@/contexts/PlanContext';
+import { usePlan, type PlanTier } from '@/contexts/PlanContext';
 
 const timeSlots = ['09:00', '11:00', '14:00', '16:00'];
 
@@ -72,7 +72,15 @@ export default function Telemedicine() {
   const [isLoading, setIsLoading] = useState(false);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const { toast } = useToast();
-  const { plan } = usePlan();
+  
+  let plan: PlanTier = 'platinum'; // Default to full access if no provider
+  try {
+    const planContext = usePlan();
+    plan = planContext.plan;
+  } catch (e) {
+    // usePlan hook will throw if not within a PlanProvider, which is expected on the company dashboard.
+    // We can safely ignore this and default to full features.
+  }
 
   const isFreeConsultation = plan === 'gold' || plan === 'platinum';
 
