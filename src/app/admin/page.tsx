@@ -174,14 +174,16 @@ const PlaceholderContent = ({ title }: { title: string }) => (
 );
 
 
-export default function AdminDashboardPage({ setActiveView }: { setActiveView: (view: string) => void }) {
+export default function AdminDashboardPage({ setView: setParentView }: { setView: (view: string) => void }) {
   const [view, setView] = useState('admin');
   const [activeTab, setActiveTab] = useState('overview');
   const [enlargedCard, setEnlargedCard] = useState<React.ReactNode | null>(null);
 
   useEffect(() => {
-    setActiveView(view);
-  }, [view, setActiveView]);
+    if(setParentView) {
+        setParentView(view);
+    }
+  }, [view, setParentView]);
 
   const renderContent = () => {
     switch (view) {

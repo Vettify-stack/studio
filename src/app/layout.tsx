@@ -40,9 +40,9 @@ export default function RootLayout({
   }
   
   const childrenWithProps = React.Children.map(children, child => {
-    if (React.isValidElement(child)) {
+    if (React.isValidElement(child) && pathname === '/admin') {
       // @ts-ignore
-      return React.cloneElement(child, { setActiveView });
+      return React.cloneElement(child, { setView: setActiveView });
     }
     return child;
   });
