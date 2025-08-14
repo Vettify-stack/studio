@@ -10,8 +10,8 @@ import {
   CardFooter,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { BrainCircuit, Check, AreaChart, BarChart, Loader2, AlertCircle } from 'lucide-react';
-import { Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts';
+import { BrainCircuit, Check, Loader2 } from 'lucide-react';
+import { Bar, BarChart, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { Badge } from './ui/badge';
@@ -22,12 +22,6 @@ const demandTrendData = [
   { week: 'W2', drivers: 12, trucks: 10 },
   { week: 'W3', drivers: 11, trucks: 9 },
   { week: 'W4', drivers: 14, trucks: 12 },
-];
-
-const inventoryData = [
-    { name: 'Diesel', current: 80, reorder: 50 },
-    { name: 'Tires', current: 40, reorder: 60 },
-    { name: 'PPE', current: 90, reorder: 75 },
 ];
 
 const initialRecommendations = [
@@ -110,16 +104,14 @@ export default function PredictiveAnalyticsCard() {
         <div>
             <h4 className="font-semibold text-sm text-blue-800 mb-2">Demand Trend</h4>
             <ChartContainer config={chartConfig} className="h-40 w-full">
-                <ResponsiveContainer>
-                    <BarChart data={demandTrendData}>
-                        <CartesianGrid vertical={false} />
-                        <XAxis dataKey="week" tickLine={false} axisLine={false} fontSize={12} />
-                        <YAxis tickLine={false} axisLine={false} fontSize={12} />
-                        <ChartTooltip content={<ChartTooltipContent />} />
-                        <Bar dataKey="drivers" fill="var(--color-drivers)" radius={4} />
-                        <Bar dataKey="trucks" fill="var(--color-trucks)" radius={4} />
-                    </BarChart>
-                </ResponsiveContainer>
+                <BarChart data={demandTrendData} margin={{ top: 20, right: 20, bottom: 0, left: -20 }}>
+                    <CartesianGrid vertical={false} />
+                    <XAxis dataKey="week" tickLine={false} axisLine={false} fontSize={12} />
+                    <YAxis tickLine={false} axisLine={false} fontSize={12} />
+                    <ChartTooltip content={<ChartTooltipContent />} />
+                    <Bar dataKey="drivers" fill="var(--color-drivers)" radius={4} />
+                    <Bar dataKey="trucks" fill="var(--color-trucks)" radius={4} />
+                </BarChart>
             </ChartContainer>
         </div>
 
