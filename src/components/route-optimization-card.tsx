@@ -10,7 +10,7 @@ import {
   CardFooter,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Map, Zap, CloudSun, TrafficCone, Recalculate, Send } from 'lucide-react';
+import { Map, CloudSun, TrafficCone, Send, RefreshCw } from 'lucide-react';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Checkbox } from './ui/checkbox';
@@ -105,7 +105,7 @@ export default function RouteOptimizationCard() {
       </CardContent>
       <CardFooter className="pt-6 grid grid-cols-2 gap-2">
          <Button onClick={handleCalculate} disabled={isLoading} className="w-full bg-teal-600 hover:bg-teal-700 text-white">
-            <Recalculate className="mr-2 h-4 w-4" />
+            <RefreshCw className="mr-2 h-4 w-4" />
             {isLoading ? 'Calculating...' : 'Recalculate'}
         </Button>
         <Button variant="outline" className="w-full" disabled={!result}>
