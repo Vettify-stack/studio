@@ -51,6 +51,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { usePlan } from '@/contexts/PlanContext';
+import React from 'react';
 
 
 const fines = [
@@ -88,9 +89,19 @@ export default function FineManagementCard() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const { toast } = useToast();
-    const { plan } = usePlan();
+    
+    let plan = 'platinum' as const; // Default to full access if no provider
+    let planContext;
+    try {
+        planContext = usePlan();
+        plan = planContext.plan;
+    } catch (e) {
+        // usePlan hook will throw if not within a PlanProvider, which is expected on the company dashboard.
+        // We can safely ignore this and default to full features.
+    }
 
     const canDisputeFines = plan === 'gold' || plan === 'platinum';
+    const planDescription = plan === 'silver' ? 'Upgrade to Gold or Platinum to pay or dispute fines.' : 'View and manage outstanding fines.';
 
     const form = useForm<z.infer<typeof disputeFormSchema>>({
         resolver: zodResolver(disputeFormSchema),
@@ -125,7 +136,7 @@ export default function FineManagementCard() {
             </div>
         </div>
         <CardDescription className="text-destructive-foreground/80">
-          View and manage outstanding fines. {plan === 'silver' && 'Upgrade to Gold or Platinum to pay or dispute fines.'}
+          {planDescription}
         </CardDescription>
       </CardHeader>
       <CardContent>
