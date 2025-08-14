@@ -23,6 +23,7 @@ import {
   Siren,
   CreditCard,
   Receipt,
+  Gift,
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -80,6 +81,9 @@ export default function DashboardLayout({
     }
     if (pathname.startsWith('/driver/subscriptions')) {
       return 'Manage Subscription';
+    }
+    if (pathname.startsWith('/driver/referrals')) {
+      return 'Refer & Earn';
     }
     if (pathname.startsWith('/driver')) {
       return 'Driver Dashboard';
@@ -184,6 +188,20 @@ export default function DashboardLayout({
                         <Link href="/driver/subscriptions">
                         <CreditCard />
                         Manage Subscription
+                        </Link>
+                    </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                    <SidebarMenuButton
+                        asChild
+                        isActive={isMounted && pathname.startsWith('/driver/referrals')}
+                        tooltip={{ children: 'Refer & Earn' }}
+                        variant="ghost"
+                        className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                    >
+                        <Link href="/driver/referrals">
+                        <Gift />
+                        Refer & Earn
                         </Link>
                     </SidebarMenuButton>
                 </SidebarMenuItem>

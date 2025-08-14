@@ -68,7 +68,16 @@ export default function MyPlanAndRewards() {
             </TabsContent>
             <TabsContent value="refer" className="mt-6">
                  <div className="text-center p-8 border-2 border-dashed rounded-lg">
-                    <p className="text-muted-foreground">Referral program details coming soon!</p>
+                    <h3 className="font-semibold text-lg mb-2">Refer a Friend, Earn Rewards!</h3>
+                    <p className="text-muted-foreground mb-4">
+                        Share your referral link and earn R50 for every friend who subscribes.
+                    </p>
+                    <Button asChild>
+                        <Link href="/driver/referrals">
+                            Go to Referral Page
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                        </Link>
+                    </Button>
                 </div>
             </TabsContent>
         </Tabs>
