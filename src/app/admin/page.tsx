@@ -160,8 +160,8 @@ const AdminView = ({ onCardClick }: { onCardClick: (card: React.ReactNode) => vo
             <div className="lg:col-span-3" onClick={() => onCardClick(<CoreDataIntegrationsCard />)}>
                  <CoreDataIntegrationsCard />
             </div>
-             <div className="lg:col-span-3" onClick={() => onCardClick(<NosyCorner />)}>
-                <NosyCorner />
+             <div className="lg:col-span-3" onClick={() => onCardClick(<NosyCorner isAdmin />)}>
+                <NosyCorner isAdmin />
              </div>
         </div>
     )
