@@ -18,9 +18,18 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, CreditCard, Star } from 'lucide-react';
 import SafeDate from './safe-date';
 import Link from 'next/link';
+import { usePlan } from '@/contexts/PlanContext';
 
+const planDetails = {
+    silver: { name: 'Silver Plan', price: 'R99/month' },
+    gold: { name: 'Gold Plan', price: 'R149/month' },
+    platinum: { name: 'Platinum Plan', price: 'R199/month' },
+}
 
 export default function MyPlanAndRewards() {
+  const { plan } = usePlan();
+  const currentPlan = planDetails[plan];
+
   return (
     <Card className="transition-all hover:shadow-lg">
       <CardHeader>
@@ -38,16 +47,16 @@ export default function MyPlanAndRewards() {
             <TabsContent value="subscription" className="mt-6">
                 <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                        <h3 className="text-xl font-bold">Gold Plan</h3>
+                        <h3 className="text-xl font-bold">{currentPlan.name}</h3>
                         <Badge variant="outline" className="bg-yellow-100 text-yellow-800 border-yellow-200">
                             <Star className="mr-1 h-3 w-3" />
-                            Popular
+                            Current Plan
                         </Badge>
                     </div>
                     <div className="space-y-1 text-sm text-muted-foreground">
                         <div className="flex items-center gap-1">Status: <Badge className="bg-green-100 text-green-800 hover:bg-green-100">Active</Badge></div>
                         <p>Next Billing Date: <SafeDate dateString="2025-09-07" /></p>
-                        <p>Price: <span className="font-semibold text-foreground">R749/month</span></p>
+                        <p>Price: <span className="font-semibold text-foreground">{currentPlan.price}</span></p>
                     </div>
                      <Button className="w-full" asChild>
                         <Link href="/driver/subscriptions">

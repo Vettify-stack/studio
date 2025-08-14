@@ -6,6 +6,8 @@ import { Button } from './ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
+import { usePlan, type PlanTier } from '@/contexts/PlanContext';
+import { useRouter } from 'next/navigation';
 
 export type Plan = {
   name: string;
@@ -14,7 +16,7 @@ export type Plan = {
   yearlySave: number;
   description: string;
   features: { text: string; included: boolean }[];
-  tier: 'silver' | 'gold' | 'platinum';
+  tier: PlanTier;
 };
 
 const tierStyles = {
@@ -40,13 +42,17 @@ const tierStyles = {
 
 export function PricingCard({ plan }: { plan: Plan }) {
   const { toast } = useToast();
+  const { setPlan } = usePlan();
+  const router = useRouter();
   const styles = tierStyles[plan.tier];
 
   const handleChoosePlan = (type: 'Monthly' | 'Annual') => {
+    setPlan(plan.tier);
     toast({
-        title: 'Plan Selected!',
-        description: `You have chosen the ${plan.name} ${type} plan.`
+        title: 'Plan Updated!',
+        description: `You are now on the ${plan.name} ${type} plan.`
     });
+    router.push('/driver');
   }
 
   return (

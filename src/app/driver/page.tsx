@@ -31,6 +31,7 @@ import MyPlanAndRewards from '@/components/my-plan-and-rewards';
 import LivelinessCheckCard from '@/components/liveliness-check-card';
 import UtilitiesPurchase from '@/components/utilities-purchase';
 import { differenceInDays, parse } from 'date-fns';
+import { PlanProvider } from '@/contexts/PlanContext';
 
 const initialDriverData: DriverProfile = {
   name: 'John Mokoena',
@@ -68,7 +69,7 @@ const statusColors = {
   'Pending': 'bg-yellow-100 text-yellow-800 border-yellow-200',
 };
 
-export default function DriverDashboardPage() {
+function DriverDashboardContent() {
     const [driverData] = useState<DriverProfile>(initialDriverData);
     const [certificates, setCertificates] = useState<Certificate[]>(initialCertificates);
     const [complianceScore, setComplianceScore] = useState(0);
@@ -184,4 +185,12 @@ export default function DriverDashboardPage() {
 
     </div>
   );
+}
+
+export default function DriverDashboardPage() {
+    return (
+        <PlanProvider>
+            <DriverDashboardContent />
+        </PlanProvider>
+    );
 }

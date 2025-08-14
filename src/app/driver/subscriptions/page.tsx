@@ -1,5 +1,9 @@
 
+
+'use client';
+
 import { PricingCard, type Plan } from '@/components/pricing-card';
+import { PlanProvider } from '@/contexts/PlanContext';
 
 const plans: Plan[] = [
   {
@@ -100,25 +104,33 @@ const plans: Plan[] = [
   },
 ];
 
-export default function SubscriptionPage() {
-  return (
-    <div className="py-12">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
-            Choose the Plan That's Right for You
-          </h1>
-          <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-            Unlock more features and benefits by upgrading your plan. All plans can be cancelled anytime.
-          </p>
-        </div>
+function SubscriptionPageContent() {
+    return (
+        <div className="py-12">
+            <div className="container mx-auto px-4">
+                <div className="text-center mb-16">
+                <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
+                    Choose the Plan That's Right for You
+                </h1>
+                <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+                    Unlock more features and benefits by upgrading your plan. All plans can be cancelled anytime.
+                </p>
+                </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-          {plans.map((plan) => (
-            <PricingCard key={plan.name} plan={plan} />
-          ))}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                {plans.map((plan) => (
+                    <PricingCard key={plan.name} plan={plan} />
+                ))}
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
+}
+
+export default function SubscriptionPage() {
+    return (
+        <PlanProvider>
+            <SubscriptionPageContent />
+        </PlanProvider>
+    )
 }

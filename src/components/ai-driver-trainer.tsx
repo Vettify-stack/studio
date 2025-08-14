@@ -9,10 +9,12 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { BrainCircuit, Bot, Send } from 'lucide-react';
+import { BrainCircuit, Bot, Send, Lock } from 'lucide-react';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Input } from './ui/input';
+import { usePlan } from '@/contexts/PlanContext';
+import Link from 'next/link';
 
 const trainingTopics: Record<string, string> = {
     "Defensive Driving": "Defensive driving involves anticipating dangerous situations, despite the conditions or the actions of others. Key tips: Maintain a safe following distance (3-second rule), always be aware of your surroundings, and avoid distractions like using your phone.",
@@ -30,8 +32,11 @@ export default function AIDriverTrainer() {
       { from: 'bot', text: "Hello! I'm your AI Driver Trainer. Select a topic below or type a question to get started." }
   ]);
   const [inputValue, setInputValue] = useState('');
+  const { plan } = usePlan();
+  const isEnabled = plan === 'platinum';
 
   const handleTopicSelect = (topic: string) => {
+    if (!isEnabled) return;
     const userMessage = { from: 'user' as const, text: `Tell me about ${topic}` };
     const botResponse = { from: 'bot' as const, text: trainingTopics[topic] || "I don't have information on that topic right now."};
     setMessages(prev => [...prev, userMessage, botResponse]);
@@ -39,7 +44,7 @@ export default function AIDriverTrainer() {
 
   const handleFormSubmit = (e: React.FormEvent) => {
       e.preventDefault();
-      if (!inputValue.trim()) return;
+      if (!isEnabled || !inputValue.trim()) return;
 
       const userMessage = { from: 'user' as const, text: inputValue };
       const botResponse = { from: 'bot' as const, text: genericResponse };
@@ -60,39 +65,53 @@ export default function AIDriverTrainer() {
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-grow flex flex-col gap-4">
-        <div className="flex-grow space-y-4 overflow-y-auto p-4 bg-muted/50 rounded-lg h-64">
-           {messages.map((msg, index) => (
-               <div key={index} className={`flex items-start gap-3 ${msg.from === 'user' ? 'justify-end' : ''}`}>
-                   {msg.from === 'bot' && (
-                       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                            <Bot className="h-5 w-5" />
-                        </div>
-                   )}
-                    <div className={`rounded-lg p-3 text-sm max-w-[80%] ${msg.from === 'bot' ? 'bg-background' : 'bg-primary text-primary-foreground'}`}>
-                        <p>{msg.text}</p>
-                    </div>
-                </div>
-           ))}
-        </div>
-        <div className="flex flex-wrap gap-2">
-            {Object.keys(trainingTopics).map(topic => (
-                <Button key={topic} size="sm" variant="outline" onClick={() => handleTopicSelect(topic)}>
-                    {topic}
+        {!isEnabled ? (
+            <div className="flex-grow flex flex-col items-center justify-center text-center p-4 bg-muted/50 rounded-lg h-64">
+                <Lock className="h-12 w-12 text-muted-foreground mb-4" />
+                <h3 className="font-semibold text-lg">Feature Locked</h3>
+                <p className="text-muted-foreground mb-4">This feature is only available on the Platinum plan.</p>
+                <Button asChild>
+                    <Link href="/driver/subscriptions">Upgrade Plan</Link>
                 </Button>
-            ))}
-        </div>
-        <form onSubmit={handleFormSubmit} className="flex items-center gap-2 pt-4 border-t">
-            <Input 
-                placeholder="Type your question..."
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                className="flex-1"
-            />
-            <Button type="submit" size="icon">
-                <Send className="h-4 w-4" />
-                <span className="sr-only">Send</span>
-            </Button>
-        </form>
+            </div>
+        ) : (
+            <>
+                <div className="flex-grow space-y-4 overflow-y-auto p-4 bg-muted/50 rounded-lg h-64">
+                {messages.map((msg, index) => (
+                    <div key={index} className={`flex items-start gap-3 ${msg.from === 'user' ? 'justify-end' : ''}`}>
+                        {msg.from === 'bot' && (
+                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                                <Bot className="h-5 w-5" />
+                            </div>
+                        )}
+                        <div className={`rounded-lg p-3 text-sm max-w-[80%] ${msg.from === 'bot' ? 'bg-background' : 'bg-primary text-primary-foreground'}`}>
+                            <p>{msg.text}</p>
+                        </div>
+                    </div>
+                ))}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                    {Object.keys(trainingTopics).map(topic => (
+                        <Button key={topic} size="sm" variant="outline" onClick={() => handleTopicSelect(topic)} disabled={!isEnabled}>
+                            {topic}
+                        </Button>
+                    ))}
+                </div>
+                <form onSubmit={handleFormSubmit} className="flex items-center gap-2 pt-4 border-t">
+                    <Input 
+                        placeholder="Type your question..."
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        className="flex-1"
+                        disabled={!isEnabled}
+                    />
+                    <Button type="submit" size="icon" disabled={!isEnabled}>
+                        <Send className="h-4 w-4" />
+                        <span className="sr-only">Send</span>
+                    </Button>
+                </form>
+            </>
+        )}
       </CardContent>
     </Card>
   );

@@ -48,6 +48,7 @@ import type { Appointment } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import SafeDate from './safe-date';
 import { Badge } from './ui/badge';
+import { usePlan } from '@/contexts/PlanContext';
 
 const timeSlots = ['09:00', '11:00', '14:00', '16:00'];
 
@@ -71,6 +72,9 @@ export default function Telemedicine() {
   const [isLoading, setIsLoading] = useState(false);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const { toast } = useToast();
+  const { plan } = usePlan();
+
+  const isFreeConsultation = plan === 'gold' || plan === 'platinum';
 
   const form = useForm<z.infer<typeof paymentSchema>>({
     resolver: zodResolver(paymentSchema),
@@ -81,6 +85,31 @@ export default function Telemedicine() {
       cvv: '',
     },
   });
+  
+  const handleConfirmBooking = () => {
+    const newAppointment: Appointment = {
+      id: new Date().toISOString(),
+      date: selectedDate!,
+      time: selectedTime!,
+      type: 'Virtual Consultation',
+      status: 'Confirmed',
+    };
+    setAppointments(prev => [...prev, newAppointment]);
+    setStep('confirmation');
+    toast({
+      title: 'Booking Confirmed!',
+      description: 'Your consultation has been booked.',
+    });
+  }
+
+  const handleProceed = () => {
+    if (isFreeConsultation) {
+        handleConfirmBooking();
+    } else {
+        setStep('payment');
+    }
+  }
+
 
   const handlePaymentSubmit = async (values: z.infer<typeof paymentSchema>) => {
     setIsLoading(true);
@@ -89,19 +118,7 @@ export default function Telemedicine() {
     
     // Use dummy data check
     if (values.cardNumber === '4111111111111111' && values.expiryDate === '12/26' && values.cvv === '123') {
-      const newAppointment: Appointment = {
-        id: new Date().toISOString(),
-        date: selectedDate!,
-        time: selectedTime!,
-        type: 'Virtual Consultation',
-        status: 'Confirmed',
-      };
-      setAppointments(prev => [...prev, newAppointment]);
-      setStep('confirmation');
-      toast({
-        title: 'Payment Successful!',
-        description: 'Your booking is confirmed.',
-      });
+      handleConfirmBooking();
     } else {
       toast({
         variant: 'destructive',
@@ -148,9 +165,9 @@ export default function Telemedicine() {
       {selectedDate && selectedTime && (
         <Button
           className="w-full mt-4"
-          onClick={() => setStep('payment')}
+          onClick={handleProceed}
         >
-          Proceed to Payment
+          {isFreeConsultation ? 'Confirm Booking' : 'Proceed to Payment'}
         </Button>
       )}
     </div>

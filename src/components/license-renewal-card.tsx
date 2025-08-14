@@ -19,8 +19,22 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Calendar, RefreshCw } from 'lucide-react';
+import { usePlan } from '@/contexts/PlanContext';
+import { useToast } from '@/hooks/use-toast';
+import Link from 'next/link';
 
 export default function LicenseRenewalCard() {
+  const { plan } = usePlan();
+  const { toast } = useToast();
+  const canBook = plan === 'platinum';
+
+  const handleBook = () => {
+      toast({
+          title: 'Booking Confirmed!',
+          description: 'Your license renewal appointment has been booked.'
+      })
+  }
+
   return (
     <Card className="bg-primary/90 text-primary-foreground">
       <CardHeader>
@@ -29,13 +43,13 @@ export default function LicenseRenewalCard() {
           <RefreshCw className="h-4 w-4" />
         </div>
         <CardDescription className="text-primary-foreground/80">
-          Book your driver's license or PrDP renewal slot.
+          Book your driver's license or PrDP renewal slot. {plan !== 'platinum' && 'Upgrade to Platinum to use this feature.'}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2">
             <Label>Renewal Type</Label>
-            <Select>
+            <Select disabled={!canBook}>
                 <SelectTrigger className="bg-primary/80 border-primary-foreground/20">
                     <SelectValue placeholder="Driver's License Renewal" />
                 </SelectTrigger>
@@ -48,7 +62,7 @@ export default function LicenseRenewalCard() {
         <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
                 <Label>Province</Label>
-                <Select>
+                <Select disabled={!canBook}>
                     <SelectTrigger className="bg-primary/80 border-primary-foreground/20">
                         <SelectValue placeholder="Select Province" />
                     </SelectTrigger>
@@ -60,7 +74,7 @@ export default function LicenseRenewalCard() {
             </div>
             <div className="space-y-2">
                 <Label>City</Label>
-                <Select>
+                <Select disabled={!canBook}>
                     <SelectTrigger className="bg-primary/80 border-primary-foreground/20">
                         <SelectValue placeholder="Select City" />
                     </SelectTrigger>
@@ -73,7 +87,7 @@ export default function LicenseRenewalCard() {
         </div>
         <div className="space-y-2">
             <Label>Testing Centre (DLTC)</Label>
-            <Select>
+            <Select disabled={!canBook}>
                 <SelectTrigger className="bg-primary/80 border-primary-foreground/20">
                     <SelectValue placeholder="Select DLTC" />
                 </SelectTrigger>
@@ -86,7 +100,7 @@ export default function LicenseRenewalCard() {
         <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
                 <Label>Available Date</Label>
-                <Select>
+                <Select disabled={!canBook}>
                     <SelectTrigger className="bg-primary/80 border-primary-foreground/20">
                         <SelectValue placeholder="Select Date" />
                     </SelectTrigger>
@@ -98,7 +112,7 @@ export default function LicenseRenewalCard() {
             </div>
             <div className="space-y-2">
                 <Label>Available Time Slot</Label>
-                <Select>
+                <Select disabled={!canBook}>
                     <SelectTrigger className="bg-primary/80 border-primary-foreground/20">
                         <SelectValue placeholder="Select Time" />
                     </SelectTrigger>
@@ -111,16 +125,24 @@ export default function LicenseRenewalCard() {
         </div>
         <div className="space-y-2">
             <Label>Upload ID Document</Label>
-            <Input type="file" className="bg-primary/80 border-primary-foreground/20" />
+            <Input type="file" className="bg-primary/80 border-primary-foreground/20" disabled={!canBook}/>
         </div>
          <div className="space-y-2">
             <Label>Cell Number for OTP/Confirmation</Label>
-            <Input type="tel" placeholder="Enter cell number" className="bg-primary/80 border-primary-foreground/20" />
+            <Input type="tel" placeholder="Enter cell number" className="bg-primary/80 border-primary-foreground/20" disabled={!canBook}/>
         </div>
-        <Button variant="secondary" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
-            <Calendar className="mr-2 h-4 w-4" />
-            Book Appointment
-        </Button>
+        {canBook ? (
+            <Button variant="secondary" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={handleBook}>
+                <Calendar className="mr-2 h-4 w-4" />
+                Book Appointment
+            </Button>
+        ) : (
+             <Button variant="secondary" asChild className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+                <Link href="/driver/subscriptions">
+                    Upgrade to Platinum to Book
+                </Link>
+            </Button>
+        )}
       </CardContent>
     </Card>
   );

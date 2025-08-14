@@ -50,6 +50,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
+import { usePlan } from '@/contexts/PlanContext';
 
 
 const fines = [
@@ -87,6 +88,9 @@ export default function FineManagementCard() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const { toast } = useToast();
+    const { plan } = usePlan();
+
+    const canDisputeFines = plan === 'gold' || plan === 'platinum';
 
     const form = useForm<z.infer<typeof disputeFormSchema>>({
         resolver: zodResolver(disputeFormSchema),
@@ -121,7 +125,7 @@ export default function FineManagementCard() {
             </div>
         </div>
         <CardDescription className="text-destructive-foreground/80">
-          View and manage outstanding fines.
+          View and manage outstanding fines. {plan === 'silver' && 'Upgrade to Gold or Platinum to pay or dispute fines.'}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -149,13 +153,13 @@ export default function FineManagementCard() {
             </Table>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-            <Button variant="secondary" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+            <Button variant="secondary" className="bg-accent hover:bg-accent/90 text-accent-foreground" disabled={!canDisputeFines}>
                 <CreditCard className="mr-2 h-4 w-4" />
                 Pay Selected
             </Button>
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DialogTrigger asChild>
-                    <Button variant="secondary" className="bg-yellow-500 hover:bg-yellow-600 text-white">
+                    <Button variant="secondary" className="bg-yellow-500 hover:bg-yellow-600 text-white" disabled={!canDisputeFines}>
                         <ShieldAlert className="mr-2 h-4 w-4" />
                         Dispute Fine
                     </Button>
