@@ -9,6 +9,7 @@ import { Bot, MessageSquare, Send, X } from 'lucide-react';
 import { ScrollArea } from './ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
+import { useSidebar } from './ui/sidebar';
 
 const faqs = [
     {
@@ -50,8 +51,18 @@ export default function ChatWidget() {
     useEffect(() => {
         setIsMounted(true);
     }, []);
+    
+    // We need to check if the sidebar context is available before using it
+    let sidebar;
+    try {
+        sidebar = useSidebar();
+    } catch (e) {
+        sidebar = null;
+    }
 
-    const showChatWidget = isMounted && (pathname.startsWith('/driver') || pathname.startsWith('/fleet') || pathname.startsWith('/gp'));
+    const activeView = sidebar ? sidebar.activeView : 'admin';
+
+    const showChatWidget = isMounted && (pathname.startsWith('/driver') || pathname.startsWith('/fleet') || pathname.startsWith('/gp') || (pathname.startsWith('/admin') && activeView === 'driver'));
 
     if (!showChatWidget) {
         return null;

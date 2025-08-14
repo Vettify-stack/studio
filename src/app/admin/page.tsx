@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import {
   Card,
@@ -174,10 +174,14 @@ const PlaceholderContent = ({ title }: { title: string }) => (
 );
 
 
-export default function AdminDashboardPage() {
+export default function AdminDashboardPage({ setActiveView }: { setActiveView: (view: string) => void }) {
   const [view, setView] = useState('admin');
   const [activeTab, setActiveTab] = useState('overview');
   const [enlargedCard, setEnlargedCard] = useState<React.ReactNode | null>(null);
+
+  useEffect(() => {
+    setActiveView(view);
+  }, [view, setActiveView]);
 
   const renderContent = () => {
     switch (view) {

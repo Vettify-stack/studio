@@ -59,8 +59,10 @@ import ChatWidget from './chat-widget';
 
 export default function DashboardLayout({
   children,
+  activeView,
 }: {
   children: React.ReactNode;
+  activeView: string;
 }) {
   const pathname = usePathname();
   const [isMounted, setIsMounted] = useState(false);
@@ -71,7 +73,10 @@ export default function DashboardLayout({
 
   const getPageTitle = () => {
     if (pathname.startsWith('/admin')) {
-      return 'Super Admin Dashboard';
+        if (activeView === 'driver') return 'Driver Dashboard';
+        if (activeView === 'company') return 'Fleet Dashboard';
+        if (activeView === 'gp') return 'GP Dashboard';
+        return 'Super Admin Dashboard';
     }
     if (pathname.startsWith('/driver/subscriptions')) {
       return 'Manage Subscription';
@@ -109,7 +114,7 @@ export default function DashboardLayout({
     return null;
   }
 
-  const isDriverView = pathname.startsWith('/driver');
+  const isDriverView = pathname.startsWith('/driver') || activeView === 'driver';
 
   return (
     <SidebarProvider defaultOpen>
@@ -216,32 +221,36 @@ export default function DashboardLayout({
                 </SidebarMenuItem>
                  <SidebarMenu className="mt-auto">
                     <SidebarSeparator className="my-2" />
-                    <SidebarMenuItem>
-                    <SidebarMenuButton
-                        asChild
-                        tooltip={{ children: 'Return to Super Admin' }}
-                        variant="outline"
-                        className="bg-sidebar-accent text-sidebar-accent-foreground hover:bg-sidebar-accent/90"
-                    >
-                        <Link href="/admin">
-                        <ArrowLeftRight />
-                        Return to Super Admin
-                        </Link>
-                    </SidebarMenuButton>
-                    </SidebarMenuItem>
-                    <SidebarMenuItem>
-                    <SidebarMenuButton
-                        asChild
-                        tooltip={{ children: 'Viewing as Driver' }}
-                        variant="ghost"
-                        className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                    >
-                        <Link href="#">
-                        <Replace />
-                        Viewing as Driver
-                        </Link>
-                    </SidebarMenuButton>
-                    </SidebarMenuItem>
+                    {pathname.startsWith('/admin') && (
+                        <>
+                            <SidebarMenuItem>
+                            <SidebarMenuButton
+                                asChild
+                                tooltip={{ children: 'Return to Super Admin' }}
+                                variant="outline"
+                                className="bg-sidebar-accent text-sidebar-accent-foreground hover:bg-sidebar-accent/90"
+                            >
+                                <Link href="/admin">
+                                <ArrowLeftRight />
+                                Return to Super Admin
+                                </Link>
+                            </SidebarMenuButton>
+                            </SidebarMenuItem>
+                            <SidebarMenuItem>
+                            <SidebarMenuButton
+                                asChild
+                                tooltip={{ children: 'Viewing as Driver' }}
+                                variant="ghost"
+                                className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                            >
+                                <Link href="#">
+                                <Replace />
+                                Viewing as Driver
+                                </Link>
+                            </SidebarMenuButton>
+                            </SidebarMenuItem>
+                        </>
+                    )}
                 </SidebarMenu>
             </SidebarMenu>
            ) : (

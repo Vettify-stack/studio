@@ -23,6 +23,7 @@ export default function RootLayout({
 }>) {
   const [isMounted, setIsMounted] = useState(false);
   const pathname = usePathname();
+  const [activeView, setActiveView] = useState('admin');
 
   useEffect(() => {
     setIsMounted(true);
@@ -37,6 +38,14 @@ export default function RootLayout({
       </html>
     )
   }
+  
+  const childrenWithProps = React.Children.map(children, child => {
+    if (React.isValidElement(child)) {
+      // @ts-ignore
+      return React.cloneElement(child, { setActiveView });
+    }
+    return child;
+  });
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -68,7 +77,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
         >
-            {showDashboardLayout ? <DashboardLayout>{children}</DashboardLayout> : children}
+            {showDashboardLayout ? <DashboardLayout activeView={activeView}>{childrenWithProps}</DashboardLayout> : children}
             {isMounted && <Toaster />}
         </ThemeProvider>
       </body>

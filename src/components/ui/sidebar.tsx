@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -34,6 +35,7 @@ type SidebarContext = {
   setOpenMobile: (open: boolean) => void
   isMobile: boolean
   toggleSidebar: () => void
+  activeView: string;
 }
 
 const SidebarContext = React.createContext<SidebarContext | null>(null)
@@ -53,6 +55,7 @@ const SidebarProvider = React.forwardRef<
     defaultOpen?: boolean
     open?: boolean
     onOpenChange?: (open: boolean) => void
+    activeView: string;
   }
 >(
   (
@@ -63,6 +66,7 @@ const SidebarProvider = React.forwardRef<
       className,
       style,
       children,
+      activeView,
       ...props
     },
     ref
@@ -125,8 +129,9 @@ const SidebarProvider = React.forwardRef<
         openMobile,
         setOpenMobile,
         toggleSidebar,
+        activeView,
       }),
-      [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar]
+      [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar, activeView]
     )
 
     return (
