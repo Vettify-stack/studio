@@ -36,6 +36,7 @@ import JobMarketOverviewCard from '@/components/job-market-overview-card';
 import FineManagementCard from '@/components/fine-management';
 import LivelinessCheckCard from '@/components/liveliness-check-card';
 import DocumentCenterCard from '@/components/document-center-card';
+import PredictiveAnalyticsCard from '@/components/predictive-analytics-card';
 
 const fleetVehicles: Vehicle[] = [
     {
@@ -228,6 +229,7 @@ export default function FleetPage() {
 
       {/* Detailed Component Sections */}
       <div className="grid grid-cols-1 gap-8">
+        <PredictiveAnalyticsCard />
         <GpsTrackingCard />
         <JobMarketOverviewCard />
         <TrainingMatrix />
