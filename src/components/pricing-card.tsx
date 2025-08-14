@@ -62,7 +62,7 @@ export function PricingCard({ plan }: { plan: Plan }) {
         </div>
         <CardDescription>
           or R{plan.priceYearly}/year (Save R{plan.yearlySave})
-        </p>
+        </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 py-6">
         <ul className="space-y-3">
