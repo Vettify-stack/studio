@@ -73,6 +73,9 @@ export default function DashboardLayout({
     if (pathname.startsWith('/admin')) {
       return 'Super Admin Dashboard';
     }
+    if (pathname.startsWith('/driver/subscriptions')) {
+      return 'Manage Subscription';
+    }
     if (pathname.startsWith('/driver')) {
       return 'Driver Dashboard';
     }
@@ -165,6 +168,20 @@ export default function DashboardLayout({
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
+                <SidebarMenuItem>
+                    <SidebarMenuButton
+                        asChild
+                        isActive={isMounted && pathname.startsWith('/driver/subscriptions')}
+                        tooltip={{ children: 'Manage Subscription' }}
+                        variant="ghost"
+                        className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                    >
+                        <Link href="/driver/subscriptions">
+                        <CreditCard />
+                        Manage Subscription
+                        </Link>
+                    </SidebarMenuButton>
+                </SidebarMenuItem>
                 <SidebarMenuItem>
                     <SidebarMenuButton asChild tooltip={{ children: 'Pay Subscription' }} variant="ghost" className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
                         <Link href="#">

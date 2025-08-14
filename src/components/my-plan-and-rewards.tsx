@@ -17,6 +17,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, CreditCard, Star } from 'lucide-react';
 import SafeDate from './safe-date';
+import Link from 'next/link';
 
 
 export default function MyPlanAndRewards() {
@@ -48,9 +49,11 @@ export default function MyPlanAndRewards() {
                         <p>Next Billing Date: <SafeDate dateString="2025-09-07" /></p>
                         <p>Price: <span className="font-semibold text-foreground">R749/month</span></p>
                     </div>
-                     <Button className="w-full">
-                        Manage Subscription
-                        <ArrowRight className="ml-2 h-4 w-4" />
+                     <Button className="w-full" asChild>
+                        <Link href="/driver/subscriptions">
+                            Manage Subscription
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                        </Link>
                     </Button>
                 </div>
             </TabsContent>
