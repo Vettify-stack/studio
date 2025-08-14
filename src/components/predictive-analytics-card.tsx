@@ -1,156 +1,167 @@
 
 'use client';
 
+import { useState } from 'react';
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
+  CardFooter,
 } from '@/components/ui/card';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
-import { BrainCircuit, CheckCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { BrainCircuit, Check, AreaChart, BarChart, Loader2, AlertCircle } from 'lucide-react';
+import { Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { Badge } from './ui/badge';
+import { useToast } from '@/hooks/use-toast';
 
-const features = [
-  {
-    title: 'A. Anticipate Demand',
-    details: [
-      {
-        title: 'Dynamic demand forecasting',
-        description:
-          'Analyze seasonal mining output patterns, commodity prices, and transport schedules to predict driver, vehicle, and fuel requirements in advance.',
-      },
-      {
-        title: 'Real-time event triggers',
-        description:
-          'Adjust forecasts automatically based on weather changes, labor strikes, port delays, or market demand spikes.',
-      },
-      {
-        title: 'Integration with mine production systems',
-        description:
-          'Link directly to ERP and mine scheduling systems to anticipate transport needs as production ramps up or down.',
-      },
-    ],
-  },
-  {
-    title: 'B. Optimize Inventory Levels',
-    details: [
-      {
-        title: 'Fleet & fuel allocation optimization',
-        description:
-          'Determine the ideal number of vehicles and fuel loads needed for upcoming weeks, reducing idle assets.',
-      },
-      {
-        title: 'Smart route allocation',
-        description:
-          'Predict peak transport demand for certain mine shafts or delivery routes, enabling optimized driver rosters and fuel dispatch plans.',
-      },
-      {
-        title: 'Spare parts forecasting',
-        description:
-          'AI predicts wear-and-tear patterns to ensure critical spare parts and tires are stocked before breakdowns occur.',
-      },
-    ],
-  },
-  {
-    title: 'C. Reduce Waste',
-    details: [
-      {
-        title: 'Fuel usage efficiency',
-        description:
-          'AI flags underutilized trucks or excessive fuel consumption patterns, recommending consolidation of trips or driver retraining.',
-      },
-      {
-        title: 'Idle time reduction',
-        description:
-          'Predict and prevent bottlenecks at loading/unloading points to cut wasted fuel and time.',
-      },
-      {
-        title: 'Proactive compliance management',
-        description:
-          'Anticipate upcoming license, permit, and vetting renewals to avoid costly delays or downtime.',
-      },
-    ],
-  },
-  {
-    title: 'Additional Value for Mines & Fuel Transport Sector',
-    details: [
-      {
-        title: 'Safety Risk Prediction',
-        description:
-          'AI identifies high-risk driver behavior and schedules targeted refresher training before incidents occur.',
-      },
-      {
-        title: 'Regulatory Compliance Alerts',
-        description:
-          'Automatic updates on AARTO, DOT, or mining safety regulation changes, ensuring all fleet operations remain compliant.',
-      },
-      {
-        title: 'Environmental Impact Forecasting',
-        description:
-          'Predict fuel and emissions data to help mines meet ESG (Environmental, Social, Governance) goals.',
-      },
-      {
-        title: 'Supplier Reliability Index',
-        description:
-          'AI ranks fuel suppliers or sub-haulage contractors based on past performance and reliability, reducing operational risk.',
-      },
-      {
-        title: 'Incident Probability Mapping',
-        description:
-          'Based on historical accident and route hazard data, AI can forecast where accidents or delays are most likely to occur.',
-      },
-    ],
-  },
+const demandTrendData = [
+  { week: 'W1', drivers: 10, trucks: 8 },
+  { week: 'W2', drivers: 12, trucks: 10 },
+  { week: 'W3', drivers: 11, trucks: 9 },
+  { week: 'W4', drivers: 14, trucks: 12 },
 ];
 
+const inventoryData = [
+    { name: 'Diesel', current: 80, reorder: 50 },
+    { name: 'Tires', current: 40, reorder: 60 },
+    { name: 'PPE', current: 90, reorder: 75 },
+];
+
+const initialRecommendations = [
+    { id: 'rec-001', message: 'Reassign 2 drivers from Shaft B to C next week.', impact: 'high', status: 'open' },
+    { id: 'rec-002', message: 'Reduce diesel order by 4% at Depot-1 this week.', impact: 'med', status: 'open' },
+];
+
+const chartConfig = {
+    drivers: { label: 'Drivers', color: 'hsl(var(--chart-1))' },
+    trucks: { label: 'Trucks', color: 'hsl(var(--chart-2))' },
+    current: { label: 'Current Qty', color: 'hsl(var(--chart-1))' },
+    reorder: { label: 'Reorder Point', color: 'hsl(var(--chart-4))' },
+};
+
+const impactConfig = {
+    high: { text: 'High', color: 'bg-red-500' },
+    med: { text: 'Medium', color: 'bg-yellow-500' },
+    low: { text: 'Low', color: 'bg-green-500' },
+}
+
 export default function PredictiveAnalyticsCard() {
+    const [isLoading, setIsLoading] = useState(false);
+    const [recommendations, setRecommendations] = useState(initialRecommendations);
+    const { toast } = useToast();
+
+    const handleRunForecast = async () => {
+        setIsLoading(true);
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        setIsLoading(false);
+        toast({
+            title: "Forecast Generated",
+            description: "The demand forecast for the next 4 weeks has been updated.",
+        });
+    }
+
+    const handleApplyRecommendation = (recId: string, message: string) => {
+        setRecommendations(prev => prev.map(rec => rec.id === recId ? {...rec, status: 'applied'} : rec));
+        toast({
+            title: "Recommendation Applied",
+            description: `Action for: "${message}" has been initiated.`,
+        });
+    }
+
   return (
-    <Card className="bg-indigo-50 border-indigo-200 transition-all hover:shadow-lg hover:-translate-y-1">
+    <Card className="bg-blue-50 border-blue-200 text-blue-900 transition-all hover:shadow-lg hover:-translate-y-1 h-full flex flex-col">
       <CardHeader>
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-indigo-100 rounded-md">
-            <BrainCircuit className="h-6 w-6 text-indigo-700" />
-          </div>
-          <div>
-            <CardTitle className="text-indigo-900">
-              Predictive Analytics for Demand Forecasting
-            </CardTitle>
-            <CardDescription className="text-indigo-700">
-              Harness AI and historical operational data to forecast needs, reduce inefficiencies, and improve resource allocation.
-            </CardDescription>
-          </div>
+        <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+                <div className="p-2 bg-blue-100 rounded-md">
+                    <BrainCircuit className="h-6 w-6 text-blue-700" />
+                </div>
+                <div>
+                    <CardTitle className="text-blue-900">Demand Forecast</CardTitle>
+                </div>
+            </div>
+            <p className='text-xs font-semibold text-blue-800'>Next 4 Weeks</p>
         </div>
       </CardHeader>
-      <CardContent>
-        <Accordion type="single" collapsible className="w-full">
-          {features.map((feature, index) => (
-            <AccordionItem key={index} value={`item-${index}`}>
-              <AccordionTrigger className="text-indigo-800 font-semibold hover:no-underline text-left">
-                {feature.title}
-              </AccordionTrigger>
-              <AccordionContent>
-                <ul className="space-y-4 pl-2">
-                  {feature.details.map((detail, detailIndex) => (
-                    <li key={detailIndex} className="flex items-start gap-3">
-                      <CheckCircle className="h-4 w-4 mt-1 text-green-600 flex-shrink-0" />
-                      <div>
-                        <h4 className="font-semibold text-indigo-800/90">{detail.title}</h4>
-                        <p className="text-sm text-indigo-700/80">{detail.description}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+      <CardContent className="flex-grow space-y-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-center text-xs">
+            <div className="p-2 bg-blue-100 rounded">
+                <p className="font-bold text-blue-800 text-lg">12</p>
+                <p className="text-blue-700">Drivers Req.</p>
+            </div>
+             <div className="p-2 bg-blue-100 rounded">
+                <p className="font-bold text-blue-800 text-lg">10</p>
+                <p className="text-blue-700">Trucks Req.</p>
+            </div>
+             <div className="p-2 bg-blue-100 rounded">
+                <p className="font-bold text-blue-800 text-lg">95k L</p>
+                <p className="text-blue-700">Fuel Req.</p>
+            </div>
+             <div className="p-2 bg-blue-100 rounded">
+                <p className="font-bold text-blue-800 text-lg">78%</p>
+                <p className="text-blue-700">Inv. Health</p>
+            </div>
+        </div>
+
+        <div>
+            <h4 className="font-semibold text-sm text-blue-800 mb-2">Demand Trend</h4>
+            <ChartContainer config={chartConfig} className="h-40 w-full">
+                <ResponsiveContainer>
+                    <BarChart data={demandTrendData}>
+                        <CartesianGrid vertical={false} />
+                        <XAxis dataKey="week" tickLine={false} axisLine={false} fontSize={12} />
+                        <YAxis tickLine={false} axisLine={false} fontSize={12} />
+                        <ChartTooltip content={<ChartTooltipContent />} />
+                        <Bar dataKey="drivers" fill="var(--color-drivers)" radius={4} />
+                        <Bar dataKey="trucks" fill="var(--color-trucks)" radius={4} />
+                    </BarChart>
+                </ResponsiveContainer>
+            </ChartContainer>
+        </div>
+
+        <div>
+            <h4 className="font-semibold text-sm text-blue-800 mb-2">Top Recommendations</h4>
+            <div className="border rounded-lg bg-white overflow-hidden">
+                 <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead className="w-[60%]">Message</TableHead>
+                            <TableHead>Impact</TableHead>
+                            <TableHead>Action</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {recommendations.map(rec => (
+                            <TableRow key={rec.id}>
+                                <TableCell className="text-xs">{rec.message}</TableCell>
+                                <TableCell>
+                                    <Badge style={{ backgroundColor: impactConfig[rec.impact as keyof typeof impactConfig].color }} className="text-white">
+                                       {impactConfig[rec.impact as keyof typeof impactConfig].text}
+                                    </Badge>
+                                </TableCell>
+                                <TableCell>
+                                     <Button size="sm" variant="outline" disabled={rec.status === 'applied'} onClick={() => handleApplyRecommendation(rec.id, rec.message)}>
+                                        {rec.status === 'applied' ? <Check className="h-4 w-4" /> : 'Apply'}
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>
+        </div>
+
       </CardContent>
+      <CardFooter className="pt-6">
+        <Button onClick={handleRunForecast} disabled={isLoading} className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+            {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <BrainCircuit className="mr-2 h-4 w-4" />}
+            Run Forecast Now
+        </Button>
+      </CardFooter>
     </Card>
   );
 }

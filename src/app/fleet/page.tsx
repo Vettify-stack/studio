@@ -26,9 +26,6 @@ import CompanyPlanAndRewards from '@/components/company-plan-and-rewards';
 import Telemedicine from '@/components/telemedicine';
 import CommunicationsHub from '@/components/communications-hub';
 import GpsTrackingCard from '@/components/gps-tracking-card';
-import EmployeeAttendancePerformance from '@/components/employee-attendance-performance';
-import VehicleManagementCard from '@/components/vehicle-management-card';
-import DisciplinaryManagementCard from '@/components/disciplinary-management-card';
 import TrainingMatrix from '@/components/training-matrix';
 import CompanyDocumentsCard from '@/components/company-documents-card';
 import AartoComplianceCard from '@/components/aarto-compliance-card';
@@ -37,6 +34,8 @@ import FineManagementCard from '@/components/fine-management';
 import LivelinessCheckCard from '@/components/liveliness-check-card';
 import DocumentCenterCard from '@/components/document-center-card';
 import PredictiveAnalyticsCard from '@/components/predictive-analytics-card';
+import RouteOptimizationCard from '@/components/route-optimization-card';
+import FleetManagementCard from '@/components/fleet-management-card';
 
 const fleetVehicles: Vehicle[] = [
     {
@@ -213,6 +212,14 @@ export default function FleetPage() {
           </Card>
         </CardContent>
       </Card>
+      
+      {/* AI Feature Cards */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        <PredictiveAnalyticsCard />
+        <RouteOptimizationCard />
+        <FleetManagementCard />
+      </div>
+
 
       {/* Summary Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -229,14 +236,10 @@ export default function FleetPage() {
 
       {/* Detailed Component Sections */}
       <div className="grid grid-cols-1 gap-8">
-        <PredictiveAnalyticsCard />
         <GpsTrackingCard />
         <JobMarketOverviewCard />
         <TrainingMatrix />
         <CompanyDocumentsCard />
-        <VehicleManagementCard />
-        <EmployeeAttendancePerformance />
-        <DisciplinaryManagementCard />
         <DriverComplianceOverview />
       </div>
 
