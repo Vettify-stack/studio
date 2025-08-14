@@ -18,48 +18,93 @@ import { BrainCircuit, CheckCircle } from 'lucide-react';
 
 const features = [
   {
-    title: 'Demand Anticipation & Trend Detection',
+    title: 'A. Anticipate Demand',
     details: [
-      'Analyze historical driver dispatch data, seasonal mining output patterns, and transportation logs.',
-      'Incorporate external factors (fuel price trends, commodity prices, weather patterns, port congestion, and strike history).',
-      'Detect upcoming peaks in transport requirements weeks or months in advance.',
+      {
+        title: 'Dynamic demand forecasting',
+        description:
+          'Analyze seasonal mining output patterns, commodity prices, and transport schedules to predict driver, vehicle, and fuel requirements in advance.',
+      },
+      {
+        title: 'Real-time event triggers',
+        description:
+          'Adjust forecasts automatically based on weather changes, labor strikes, port delays, or market demand spikes.',
+      },
+      {
+        title: 'Integration with mine production systems',
+        description:
+          'Link directly to ERP and mine scheduling systems to anticipate transport needs as production ramps up or down.',
+      },
     ],
   },
   {
-    title: 'Optimized Asset & Inventory Levels',
+    title: 'B. Optimize Inventory Levels',
     details: [
-      'Ensure mines always have the right number of compliant drivers and fuel tankers ready.',
-      'Predict vehicle maintenance windows and prevent downtime during high-demand periods.',
-      'Avoid underutilization of fleets while preventing overstocking of consumables (e.g., tires, safety gear, PPE).',
+      {
+        title: 'Fleet & fuel allocation optimization',
+        description:
+          'Determine the ideal number of vehicles and fuel loads needed for upcoming weeks, reducing idle assets.',
+      },
+      {
+        title: 'Smart route allocation',
+        description:
+          'Predict peak transport demand for certain mine shafts or delivery routes, enabling optimized driver rosters and fuel dispatch plans.',
+      },
+      {
+        title: 'Spare parts forecasting',
+        description:
+          'AI predicts wear-and-tear patterns to ensure critical spare parts and tires are stocked before breakdowns occur.',
+      },
     ],
   },
   {
-    title: 'Waste Reduction & Cost Control',
+    title: 'C. Reduce Waste',
     details: [
-      'Use AI to flag underperforming routes and fuel inefficiencies.',
-      'Reduce overtime costs by smart driver scheduling.',
-      'Prevent costly delays by predicting high-risk operational periods (e.g., rainy season road damage).',
+      {
+        title: 'Fuel usage efficiency',
+        description:
+          'AI flags underutilized trucks or excessive fuel consumption patterns, recommending consolidation of trips or driver retraining.',
+      },
+      {
+        title: 'Idle time reduction',
+        description:
+          'Predict and prevent bottlenecks at loading/unloading points to cut wasted fuel and time.',
+      },
+      {
+        title: 'Proactive compliance management',
+        description:
+          'Anticipate upcoming license, permit, and vetting renewals to avoid costly delays or downtime.',
+      },
     ],
   },
   {
-    title: 'Cross-Sector Operational Insights',
+    title: 'Additional Value for Mines & Fuel Transport Sector',
     details: [
-      'Benchmark performance against other mines and transport operators using anonymized industry-wide data.',
-      'Identify best-performing mines/transporters and replicate their operational models.',
-    ],
-  },
-  {
-    title: 'Incident & Risk Prediction Layer',
-    details: [
-      'Predict potential compliance breaches before they occur (expired licenses, fatigue risk, unplanned breakdowns).',
-      'Integrate AARTO demerit tracking to anticipate driver suspensions and reallocate shifts accordingly.',
-    ],
-  },
-  {
-    title: 'Sustainability & ESG Reporting',
-    details: [
-      'Track CO₂ emissions per trip and optimize loads/routes to reduce environmental impact.',
-      'Provide automated ESG compliance reports for investors and regulators.',
+      {
+        title: 'Safety Risk Prediction',
+        description:
+          'AI identifies high-risk driver behavior and schedules targeted refresher training before incidents occur.',
+      },
+      {
+        title: 'Regulatory Compliance Alerts',
+        description:
+          'Automatic updates on AARTO, DOT, or mining safety regulation changes, ensuring all fleet operations remain compliant.',
+      },
+      {
+        title: 'Environmental Impact Forecasting',
+        description:
+          'Predict fuel and emissions data to help mines meet ESG (Environmental, Social, Governance) goals.',
+      },
+      {
+        title: 'Supplier Reliability Index',
+        description:
+          'AI ranks fuel suppliers or sub-haulage contractors based on past performance and reliability, reducing operational risk.',
+      },
+      {
+        title: 'Incident Probability Mapping',
+        description:
+          'Based on historical accident and route hazard data, AI can forecast where accidents or delays are most likely to occur.',
+      },
     ],
   },
 ];
@@ -77,8 +122,7 @@ export default function PredictiveAnalyticsCard() {
               Predictive Analytics for Demand Forecasting
             </CardTitle>
             <CardDescription className="text-indigo-700">
-              Leverage AI to anticipate operational demand, optimize asset
-              utilization, and reduce waste.
+              Harness AI and historical operational data to forecast needs, reduce inefficiencies, and improve resource allocation.
             </CardDescription>
           </div>
         </div>
@@ -87,15 +131,18 @@ export default function PredictiveAnalyticsCard() {
         <Accordion type="single" collapsible className="w-full">
           {features.map((feature, index) => (
             <AccordionItem key={index} value={`item-${index}`}>
-              <AccordionTrigger className="text-indigo-800 font-semibold hover:no-underline">
+              <AccordionTrigger className="text-indigo-800 font-semibold hover:no-underline text-left">
                 {feature.title}
               </AccordionTrigger>
               <AccordionContent>
-                <ul className="space-y-2 pl-2">
+                <ul className="space-y-4 pl-2">
                   {feature.details.map((detail, detailIndex) => (
-                    <li key={detailIndex} className="flex items-start gap-2">
+                    <li key={detailIndex} className="flex items-start gap-3">
                       <CheckCircle className="h-4 w-4 mt-1 text-green-600 flex-shrink-0" />
-                      <span className="text-indigo-700/90">{detail}</span>
+                      <div>
+                        <h4 className="font-semibold text-indigo-800/90">{detail.title}</h4>
+                        <p className="text-sm text-indigo-700/80">{detail.description}</p>
+                      </div>
                     </li>
                   ))}
                 </ul>
