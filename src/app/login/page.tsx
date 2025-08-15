@@ -13,9 +13,12 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { ShieldHalf } from 'lucide-react';
+import { ShieldHalf, Chrome } from 'lucide-react';
 import Link from 'next/link';
 import { useToast } from '@/hooks/use-toast';
+import { Separator } from '@/components/ui/separator';
+import { auth } from '@/lib/firebase';
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -39,6 +42,27 @@ export default function LoginPage() {
       });
     }
   };
+
+  const handleGoogleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      toast({
+        title: `Welcome, ${user.displayName}!`,
+        description: 'You have been successfully signed in.',
+      });
+      router.push('/admin');
+    } catch (error) {
+      console.error("Google Sign-In Error:", error);
+      toast({
+        variant: 'destructive',
+        title: 'Google Sign-In Failed',
+        description: 'Could not sign in with Google. Please try again.',
+      });
+    }
+  };
+
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background">
@@ -84,10 +108,24 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+            <Button className="w-full" onClick={handleLogin}>Sign in</Button>
+            <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-background px-2 text-muted-foreground">
+                    Or continue with
+                    </span>
+                </div>
+            </div>
+             <Button variant="outline" className="w-full" onClick={handleGoogleSignIn}>
+                <Chrome className="mr-2 h-4 w-4" />
+                Sign in with Google
+            </Button>
           </div>
         </CardContent>
         <CardFooter className="flex flex-col gap-4">
-          <Button className="w-full" onClick={handleLogin}>Sign in</Button>
           <div className="text-center text-sm">
             Don&apos;t have an account?{' '}
             <Link href="/register" className="underline">
