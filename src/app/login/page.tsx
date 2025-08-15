@@ -16,7 +16,6 @@ import { Label } from '@/components/ui/label';
 import { ShieldHalf, Chrome } from 'lucide-react';
 import Link from 'next/link';
 import { useToast } from '@/hooks/use-toast';
-import { Separator } from '@/components/ui/separator';
 import { auth } from '@/lib/firebase';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 
