@@ -138,7 +138,7 @@ export default function LandingPage() {
                 </p>
                 <div className="flex justify-center items-center gap-4">
                      <Button size="lg" asChild>
-                       <Link href="/register">
+                       <Link href="/welcome">
                             Get Started Free
                             <ArrowRight className="ml-2 h-5 w-5" />
                         </Link>

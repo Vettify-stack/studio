@@ -29,7 +29,7 @@ export default function RootLayout({
     setIsMounted(true);
   }, []);
 
-  const showDashboardLayout = !['/login', '/register', '/landing', '/'].includes(pathname);
+  const showDashboardLayout = !['/login', '/register', '/landing', '/', '/welcome'].includes(pathname);
 
   if (!isMounted) {
     return (
