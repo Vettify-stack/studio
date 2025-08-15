@@ -36,6 +36,10 @@ import DocumentCenterCard from '@/components/document-center-card';
 import PredictiveAnalyticsCard from '@/components/predictive-analytics-card';
 import RouteOptimizationCard from '@/components/route-optimization-card';
 import FleetManagementCard from '@/components/fleet-management-card';
+import DemandForecastForm from '@/components/demand-forecast-form';
+import RouteOptimizationForm from '@/components/route-optimization-form';
+import FleetManagementForm from '@/components/fleet-management-form';
+import { Separator } from '@/components/ui/separator';
 
 const fleetVehicles: Vehicle[] = [
     {
@@ -211,6 +215,21 @@ export default function FleetPage() {
             </CardContent>
           </Card>
         </CardContent>
+      </Card>
+
+      {/* AI Query Forms Section */}
+      <Card>
+          <CardHeader>
+              <CardTitle>AI Query Center</CardTitle>
+              <CardDescription>Provide data to generate AI-powered insights and optimizations for your fleet.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+              <DemandForecastForm />
+              <Separator />
+              <RouteOptimizationForm />
+              <Separator />
+              <FleetManagementForm />
+          </CardContent>
       </Card>
       
       {/* AI Feature Cards */}
